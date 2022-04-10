@@ -13,6 +13,7 @@ import {
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Layout } from "../components/Layout";
+import { WorkCard } from "../components/WorkCard";
 import { useAuth } from "../contexts/AuthContext";
 
 export default function Homepage() {
@@ -38,6 +39,7 @@ export default function Homepage() {
         </Button>
         <Button bg={"pink.400"}>Даалгавар авах</Button>
       </Box>
+      <WorkCard />
     </Layout>
   );
 }
