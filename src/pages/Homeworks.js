@@ -1,8 +1,9 @@
-import { Container, Heading, Text } from "@chakra-ui/react";
+import { Container, Heading, Text, Box } from "@chakra-ui/react";
 import React from "react";
 import { Layout } from "../components/Layout";
-
+import { useState } from "react";
 export default function Homeworks() {
+  const [Payment, Setpayment] = useState(false);
   return (
     <Layout>
       <Heading>Түүхийн бие даалт</Heading>
@@ -11,6 +12,7 @@ export default function Homeworks() {
         <Text> SAMPLE IMAGE WILL BE HERE I GUESS</Text>
         <Text>Drop-box link or some shite fuck sake</Text>
       </Container>
+      <Box>{Payment && <Box>end link baina</Box>}</Box>
     </Layout>
   );
 }

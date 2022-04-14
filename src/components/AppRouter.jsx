@@ -12,7 +12,9 @@ import Homepage from "../pages/Homepage";
 import Homeworks from "../pages/Homeworks";
 import Loginpage from "../pages/Loginpage";
 import NotfoundPage from "../pages/NotfoundPage";
+import Ordered from "../pages/Ordered";
 import Profilepage from "../pages/Profilepage";
+import Ready from "../pages/Ready";
 import Registerpage from "../pages/Registerpage";
 import ResetPasswordPage from "../pages/ResetPasswordPage";
 import TestPage from "../pages/TestPage";
@@ -28,6 +30,8 @@ export default function AppRouter(props) {
           <ProtectedRoute exact path="/profile" component={Profilepage} />
           <ProtectedRoute exact path="/test" component={TestPage} />
           <ProtectedRoute exact path="/homeworks" component={Homeworks} />
+          <ProtectedRoute exact path="/ordered" component={Ordered} />
+          <ProtectedRoute exact path="/ready" component={Ready} />
           <ProtectedRoute
             exact
             path="/forgot-password"
