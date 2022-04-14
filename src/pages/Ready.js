@@ -40,6 +40,7 @@ export default function Ready() {
               </Button>
             </Box>
           </Box> */}
+
       <Box display={"flex"} alignItems={"center"}>
         <Text mr={"3"} fontWeight={"black"} fontSize={"4xl"}>
           Бэлэн{" "}

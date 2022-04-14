@@ -31,8 +31,12 @@ export function Navbar() {
       >
         <Navlink to="/" name="Nelp" size="lg" />
         <Spacer />
-        {!currentUser && <Navlink to="/login" name="Нэвтрэх" />}
-        {!currentUser && <Navlink to="/register" name="Бүртгүүлэх" />}
+        <Box display={"flex"} flexDir={{ md: "row", base: "column" }}>
+          <Box color={"teal.400"}>
+            {!currentUser && <Navlink to="/login" name="Нэвтрэх" />}
+          </Box>
+          {!currentUser && <Navlink to="/register" name="Бүртгүүлэх" />}
+        </Box>
         {currentUser && <Navlink to="/profile" name="Профайл" />}
         {currentUser && (
           <Navlink

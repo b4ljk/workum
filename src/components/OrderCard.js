@@ -12,7 +12,7 @@ import {
   Flex,
 } from "@chakra-ui/react";
 
-export const WorkCard = () => {
+export const OrderCard = () => {
   return (
     <LinkBox
       boxShadow="base"
@@ -27,8 +27,33 @@ export const WorkCard = () => {
             <Text fontWeight="bold" fontSize="2xl" py="2">
               Түүх бие даалт
             </Text>
-            <Text>Үйл явц : Дууссан</Text>
-            <Text>Эцсийн хугацаа : 2022/22/22 </Text>
+            <Text>
+              <Text fontWeight={"bold"} display={"inline"}>
+                Үйл явц :{" "}
+              </Text>
+              Хүлээгдэж буй{" "}
+            </Text>
+            <Text>
+              {" "}
+              <Text fontWeight={"bold"} display={"inline"}>
+                Эцсийн хугацаа :{" "}
+              </Text>{" "}
+              2022/22/22{" "}
+            </Text>
+            <Text>
+              {" "}
+              <Text fontWeight={"bold"} display={"inline"}>
+                Санал болгох үнэ :{" "}
+              </Text>{" "}
+              14000 ₮{" "}
+            </Text>
+            <Text color={"facebook.600"}>
+              {" "}
+              <Text fontWeight={"bold"} display={"inline"}>
+                Нэмэлт тайлбар :{" "}
+              </Text>{" "}
+              Энэ даалгавар 5 аас 10 хууда...{" "}
+            </Text>
           </Box>
         </Box>
         <Divider my="3" />
