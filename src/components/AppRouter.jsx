@@ -9,6 +9,7 @@ import {
 import { useAuth } from "../contexts/AuthContext";
 import ForgotPasswordPage from "../pages/ForgotPasswordPage";
 import Homepage from "../pages/Homepage";
+import HomworkOrder from "../pages/HomeworkOrder";
 import Homeworks from "../pages/Homeworks";
 import Loginpage from "../pages/Loginpage";
 import NotfoundPage from "../pages/NotfoundPage";
@@ -32,6 +33,11 @@ export default function AppRouter(props) {
           <ProtectedRoute exact path="/homeworks" component={Homeworks} />
           <ProtectedRoute exact path="/ordered" component={Ordered} />
           <ProtectedRoute exact path="/ready" component={Ready} />
+          <ProtectedRoute
+            exact
+            path="/homeworkorder"
+            component={HomworkOrder}
+          />
           <ProtectedRoute
             exact
             path="/forgot-password"

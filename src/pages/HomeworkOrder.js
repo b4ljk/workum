@@ -3,7 +3,7 @@ import React from "react";
 import { Layout } from "../components/Layout";
 import { useState } from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
-export default function Homeworks() {
+export default function HomworkOrder() {
   const [Payment, Setpayment] = useState(false);
   return (
     <Layout>
@@ -23,7 +23,7 @@ export default function Homeworks() {
           in faucibus orci luctus et ultrices posuere cubilia curae; Nam
           pulvinar orci sed dui gravida, ut dapibus ex ultrices.
         </Text>
-        <Text as={"u"} _hover={{ color: "blue.500" }}>
+        <Text as={"u"} _hover={{ color: "blue" }}>
           <Link href="https://chakra-ui.com" isExternal>
             Chakra Design system{" "}
           </Link>

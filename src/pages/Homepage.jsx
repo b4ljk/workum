@@ -42,7 +42,12 @@ export default function Homepage() {
           </Button>
         </Link>
         <Link as={ReachLink} width="100%" to="ordered">
-          <Button width={"100%"} color="white" bg={"pink.400"}>
+          <Button
+            _hover={{ bg: "pink.700" }}
+            width={"100%"}
+            color="white"
+            bg={"pink.400"}
+          >
             Даалгавраа хийлгэх
           </Button>
         </Link>

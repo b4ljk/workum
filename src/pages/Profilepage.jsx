@@ -43,9 +43,11 @@ export default function Profilepage() {
           </Text>
         </Box>
         <Divider my="3" />
-        <Box alignItems={"center"}>
-          <Button mr={"3"}>Миний захиалсан</Button>
-          <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
+        <Box display={"flex"} alignItems={"center"}>
+          <Button flex={1} mr={"3"}>
+            Миний захиалсан
+          </Button>
+          <Button flex={1} ref={btnRef} onClick={onOpen}>
             Миний хийсэн
           </Button>
         </Box>

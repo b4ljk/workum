@@ -22,6 +22,7 @@ export function Navbar() {
       borderBottomColor={useColorModeValue("gray.100", "gray.700")}
       mb={4}
       py={4}
+      px={4}
     >
       <HStack
         justifyContent="flex-end"
@@ -32,9 +33,7 @@ export function Navbar() {
         <Navlink to="/" name="Nelp" size="lg" />
         <Spacer />
         <Box display={"flex"} flexDir={{ md: "row", base: "column" }}>
-          <Box color={"teal.400"}>
-            {!currentUser && <Navlink to="/login" name="Нэвтрэх" />}
-          </Box>
+          <Box>{!currentUser && <Navlink to="/login" name="Нэвтрэх" />}</Box>
           {!currentUser && <Navlink to="/register" name="Бүртгүүлэх" />}
         </Box>
         {currentUser && <Navlink to="/profile" name="Профайл" />}

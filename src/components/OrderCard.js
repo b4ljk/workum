@@ -21,7 +21,7 @@ export const OrderCard = () => {
       w={{ md: "xl", base: "100%" }}
       mt="5"
     >
-      <LinkOverlay as={ReachLink} to="homeworks">
+      <LinkOverlay as={ReachLink} to="homeworkorder">
         <Box display="flex" flexDir={{ md: "row", base: "column" }}>
           <Box mr="5" flex="1">
             <Text fontWeight="bold" fontSize="2xl" py="2">

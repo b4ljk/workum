@@ -8,121 +8,121 @@ import {
   Input,
   Stack,
   useToast,
-} from '@chakra-ui/react'
-import React, { useEffect, useRef, useState } from 'react'
-import { FaGoogle } from 'react-icons/fa'
-import { useHistory } from 'react-router-dom'
-import { Card } from '../components/Card'
-import DividerWithText from '../components/DividerWithText'
-import { Layout } from '../components/Layout'
-import { useAuth } from '../contexts/AuthContext'
+} from "@chakra-ui/react";
+import React, { useEffect, useRef, useState } from "react";
+import { FaGoogle } from "react-icons/fa";
+import { useHistory } from "react-router-dom";
+import { Card } from "../components/Card";
+import DividerWithText from "../components/DividerWithText";
+import { Layout } from "../components/Layout";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Registerpage() {
-  const history = useHistory()
-  const { signInWithGoogle, register } = useAuth()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const toast = useToast()
-  const mounted = useRef(false)
+  const history = useHistory();
+  const { signInWithGoogle, register } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const toast = useToast();
+  const mounted = useRef(false);
 
   useEffect(() => {
-    mounted.current = true
+    mounted.current = true;
     return () => {
-      mounted.current = false
-    }
-  }, [])
+      mounted.current = false;
+    };
+  }, []);
 
   return (
     <Layout>
-      <Heading textAlign='center' my={12}>
-        Register
+      <Heading textAlign="center" my={12}>
+        Бүртгэл үүсгэх
       </Heading>
-      <Card maxW='md' mx='auto' mt={4}>
+      <Card maxW="md" mx="auto" mt={4}>
         <chakra.form
-          onSubmit={async e => {
-            e.preventDefault()
+          onSubmit={async (e) => {
+            e.preventDefault();
             if (!email || !password) {
               toast({
-                description: 'Credentials not valid.',
-                status: 'error',
+                description: "Credentials not valid.",
+                status: "error",
                 duration: 9000,
                 isClosable: true,
-              })
-              return
+              });
+              return;
             }
             // your register logic here
-            setIsSubmitting(true)
+            setIsSubmitting(true);
             register(email, password)
-              .then(res => {})
-              .catch(error => {
-                console.log(error.message)
+              .then((res) => {})
+              .catch((error) => {
+                console.log(error.message);
                 toast({
                   description: error.message,
-                  status: 'error',
+                  status: "error",
                   duration: 9000,
                   isClosable: true,
-                })
+                });
               })
               .finally(() => {
-                mounted.current && setIsSubmitting(false)
-              })
+                mounted.current && setIsSubmitting(false);
+              });
           }}
         >
-          <Stack spacing='6'>
-            <FormControl id='email'>
-              <FormLabel>Email address</FormLabel>
+          <Stack spacing="6">
+            <FormControl id="email">
+              <FormLabel>Цахим шуудан</FormLabel>
               <Input
-                name='email'
-                type='email'
-                autoComplete='email'
+                name="email"
+                type="email"
+                autoComplete="email"
                 required
                 value={email}
-                onChange={e => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </FormControl>
-            <FormControl id='password'>
-              <FormLabel>Password</FormLabel>
+            <FormControl id="password">
+              <FormLabel>Нууц үг</FormLabel>
               <Input
-                name='password'
-                type='password'
-                autoComplete='password'
+                name="password"
+                type="password"
+                autoComplete="password"
                 required
                 value={password}
-                onChange={e => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </FormControl>
             <Button
-              type='submit'
-              colorScheme='pink'
-              size='lg'
-              fontSize='md'
+              type="submit"
+              colorScheme="pink"
+              size="lg"
+              fontSize="md"
               isLoading={isSubmitting}
             >
-              Sign up
+              Бүртгүүлэх
             </Button>
           </Stack>
         </chakra.form>
         <Center my={4}>
-          <Button variant='link' onClick={() => history.push('/login')}>
-            Login
+          <Button variant="link" onClick={() => history.push("/login")}>
+            Нэвтрэх
           </Button>
         </Center>
-        <DividerWithText my={6}>OR</DividerWithText>
+        <DividerWithText my={6}>эсвэл</DividerWithText>
         <Button
-          variant='outline'
+          variant="outline"
           isFullWidth
-          colorScheme='red'
+          colorScheme="red"
           leftIcon={<FaGoogle />}
           onClick={() =>
             signInWithGoogle()
-              .then(user => console.log(user))
-              .catch(e => console.log(e.message))
+              .then((user) => console.log(user))
+              .catch((e) => console.log(e.message))
           }
         >
-          Sign in with Google
+          Google хаягаараа нэвтрэх
         </Button>
       </Card>
     </Layout>
-  )
+  );
 }
