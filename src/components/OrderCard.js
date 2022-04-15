@@ -11,7 +11,7 @@ import {
   Divider,
   Flex,
 } from "@chakra-ui/react";
-
+import { useLocation, Link as ReachLink } from "react-router-dom";
 export const OrderCard = () => {
   return (
     <LinkBox
@@ -21,7 +21,7 @@ export const OrderCard = () => {
       w={{ md: "xl", base: "100%" }}
       mt="5"
     >
-      <LinkOverlay href="homeworks">
+      <LinkOverlay as={ReachLink} to="homeworks">
         <Box display="flex" flexDir={{ md: "row", base: "column" }}>
           <Box mr="5" flex="1">
             <Text fontWeight="bold" fontSize="2xl" py="2">
@@ -59,13 +59,7 @@ export const OrderCard = () => {
         <Divider my="3" />
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex" alignItems="center">
-            <Avatar h="10" w="10" mr="2" />
-            <Text>
-              Батаа{" "}
-              <Text fontSize={"sm"} color={"gray.400"}>
-                /Гүйцэтгэгч/
-              </Text>
-            </Text>
+            <Button>Мэдээлэлтэй танилцах</Button>
           </Box>
           <Box>
             <Text>2022.12.12</Text>

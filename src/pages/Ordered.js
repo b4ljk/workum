@@ -27,7 +27,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, Link as ReachLink } from "react-router-dom";
 import { Layout } from "../components/Layout";
 import { WorkCard } from "../components/WorkCard";
 import { useAuth } from "../contexts/AuthContext";
