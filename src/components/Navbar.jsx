@@ -22,7 +22,7 @@ export function Navbar() {
       borderBottomColor={useColorModeValue("gray.100", "gray.700")}
       mb={4}
       py={4}
-      px={4}
+      pl="10"
     >
       <HStack
         justifyContent="flex-end"
