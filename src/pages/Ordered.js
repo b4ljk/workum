@@ -15,6 +15,8 @@ import {
   InputRightElement,
   InputLeftAddon,
   Textarea,
+  showToast,
+  useToast,
 } from "@chakra-ui/react";
 import {
   Modal,
@@ -27,14 +29,58 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import React from "react";
-import { useLocation, Link as ReachLink } from "react-router-dom";
+import { OrderCard } from "../components/OrderCard";
+
+import { Link, useLocation } from "react-router-dom";
 import { Layout } from "../components/Layout";
 import { WorkCard } from "../components/WorkCard";
 import { useAuth } from "../contexts/AuthContext";
-import { FaPlus } from "react-icons/fa";
-import { OrderCard } from "../components/OrderCard";
-export default function Ready() {
+import { FaPlus, FaLink, FaLock } from "react-icons/fa";
+import { db } from "../utils/init-firebase";
+import { useState } from "react";
+import { addDoc, setDoc, doc, collection } from "firebase/firestore";
+export default function Ordered() {
+  const toast = useToast();
+  const { currentUser } = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [title, setTitle] = useState();
+  const [Class, setClass] = useState();
+  const [price, setPrice] = useState();
+  const [date, setDate] = useState();
+  const [additionalInfo, setAdditionalInfo] = useState();
+  const showToast = () => {
+    toast({
+      title: "Амжилттай",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+      variant: "left-accent",
+      position: "top-right",
+    });
+  };
+  const sendReadyData = () => {
+    setDoc(
+      doc(
+        db,
+        "num",
+        "numedu",
+        "Orders",
+        `${Class}`,
+        `${currentUser?.email}`,
+        `${title}`
+      ),
+      {
+        title: title,
+        price: price,
+        additionalInfo: additionalInfo,
+        lastestDate: date,
+        class: Class,
+      }
+    );
+    // onNewClassClose();
+    onClose();
+    showToast();
+  };
   return (
     <Layout>
       {/* <Box display="flex" flexDir={{ md: "row", base: "column" }} mt="6">
@@ -72,7 +118,22 @@ export default function Ready() {
           <ModalHeader>Даалгаврын захиалга үүсгэх</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Input mb={"2px"} variant="outline" placeholder="Гарчиг" />
+            <Input
+              mb={"2px"}
+              variant="outline"
+              placeholder="Гарчиг"
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
+            />
+            <Input
+              mb={"3px"}
+              variant="outline"
+              placeholder="Хичээлийн нэр"
+              onChange={(e) => {
+                setClass(e.target.value);
+              }}
+            />
             <InputGroup mb={"2px"}>
               <InputRightElement
                 pointerEvents="none"
@@ -80,7 +141,13 @@ export default function Ready() {
                 fontSize="1.2em"
                 children="₮"
               />
-              <Input type={"number"} placeholder="Санал болгох үнэ" />
+              <Input
+                type={"number"}
+                placeholder="Санал болгох үнэ"
+                onChange={(e) => {
+                  setPrice(e.target.value);
+                }}
+              />
             </InputGroup>
             <InputGroup mb={"2px"}>
               <InputLeftAddon
@@ -89,9 +156,19 @@ export default function Ready() {
                 color="gray.400"
                 children="Сүүлийн хугацаа"
               />
-              <Input type={"date"} />
+              <Input
+                type={"date"}
+                onChange={(e) => {
+                  setDate(e.target.value);
+                }}
+              />
             </InputGroup>
-            <Textarea placeholder="Нэмэлт тайлбараа энд үлдээнэ үү " />
+            <Textarea
+              placeholder="Нэмэлт тайлбараа энд үлдээнэ үү "
+              onChange={(e) => {
+                setAdditionalInfo(e.target.value);
+              }}
+            />
           </ModalBody>
 
           <ModalFooter>
@@ -99,7 +176,7 @@ export default function Ready() {
               color={"white"}
               backgroundColor={"pink.400"}
               mr={3}
-              onClick={""}
+              onClick={sendReadyData}
             >
               Нэмэх
             </Button>

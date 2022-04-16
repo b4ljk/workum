@@ -1,14 +1,18 @@
-import { Container, Heading, Text } from '@chakra-ui/react'
-import React from 'react'
-import { Layout } from '../components/Layout'
+import { chakra, Container, Heading } from "@chakra-ui/react";
+import React from "react";
+import { Layout } from "../components/Layout";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function TestPage() {
+  const { currentUser } = useAuth();
   return (
     <Layout>
-      <Heading>Test page</Heading>
-      <Container maxW='container.lg' py={4}>
-        <Text>Only for showing how redirects work, i.e. redict to or back</Text>
+      <Heading>Profile page</Heading>
+      <Container maxW="container.lg" overflowX="auto" py={4}>
+        <chakra.pre p={4}>
+          {currentUser && <pre> {JSON.stringify(currentUser, null, 2)}</pre>}
+        </chakra.pre>
       </Container>
     </Layout>
-  )
+  );
 }

@@ -29,9 +29,9 @@ export const WorkCard = () => {
             </Text>
             <Text>
               <Text fontWeight={"bold"} display={"inline"}>
-                Үйл явц :{" "}
+                Хичээлийн нэр :{" "}
               </Text>
-              Дууссан
+              Түүх
             </Text>
             <Text>
               <Text fontWeight={"bold"} display={"inline"}>

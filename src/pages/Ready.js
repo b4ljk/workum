@@ -15,6 +15,8 @@ import {
   InputRightElement,
   InputLeftAddon,
   Textarea,
+  showToast,
+  useToast,
 } from "@chakra-ui/react";
 import {
   Modal,
@@ -27,13 +29,62 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import React from "react";
+
 import { Link, useLocation } from "react-router-dom";
 import { Layout } from "../components/Layout";
 import { WorkCard } from "../components/WorkCard";
 import { useAuth } from "../contexts/AuthContext";
 import { FaPlus, FaLink, FaLock } from "react-icons/fa";
+import { db } from "../utils/init-firebase";
+import { useState } from "react";
+import { addDoc, setDoc, doc, collection } from "firebase/firestore";
 export default function Ready() {
+  const toast = useToast();
+  const { currentUser } = useAuth();
+  const [title, setTitle] = useState();
+  const [Class, setClass] = useState();
+  const [price, setPrice] = useState();
+  const [additionalInfo, setAdditionalInfo] = useState();
+  const [privateInfo, setPrivateInfo] = useState();
+  const [privateLink, setPrivateLink] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  console.log(currentUser.photoURL);
+  const showToast = () => {
+    toast({
+      title: "Амжилттай",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+      variant: "left-accent",
+      position: "top-right",
+    });
+  };
+  const sendReadyData = () => {
+    setDoc(
+      doc(
+        db,
+        "num",
+        "numedu",
+        "readyClass",
+        `${Class}`,
+        `${currentUser?.email}`,
+        `${title}`
+      ),
+      {
+        title: title,
+        class: Class,
+        price: price,
+        additionalInfo: additionalInfo,
+        privateInfo: privateInfo,
+        privateLink: privateLink,
+        photo: currentUser.photoURL,
+        ownerName: currentUser.displayName,
+      }
+    );
+    // onNewClassClose();
+    onClose();
+    showToast();
+  };
   return (
     <Layout>
       {/* <Box display="flex" flexDir={{ md: "row", base: "column" }} mt="6">
@@ -70,7 +121,22 @@ export default function Ready() {
           <ModalHeader>Бэлэн даалгавар нэмэх</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Input mb={"3px"} variant="outline" placeholder="Гарчиг" />
+            <Input
+              mb={"3px"}
+              variant="outline"
+              placeholder="Гарчиг жишээ нь : БИЕ ДААЛТ"
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
+            />
+            <Input
+              mb={"3px"}
+              variant="outline"
+              placeholder="Хичээлийн нэр"
+              onChange={(e) => {
+                setClass(e.target.value);
+              }}
+            />
             <InputGroup mb={"3px"}>
               <InputRightElement
                 pointerEvents="none"
@@ -78,16 +144,31 @@ export default function Ready() {
                 fontSize="1.2em"
                 children="₮"
               />
-              <Input type={"number"} placeholder="Санал болгох үнэ" />
+              <Input
+                type={"number"}
+                placeholder="Санал болгох үнэ"
+                onChange={(e) => {
+                  setPrice(e.target.value);
+                }}
+              />
             </InputGroup>
 
             <Textarea
               mb={"3px"}
               placeholder="Нэмэлт тайлбараа энд үлдээнэ үү "
+              onChange={(e) => {
+                setAdditionalInfo(e.target.value);
+              }}
             />
             <InputGroup>
               {/* <InputRightElement children={<FaLock />} /> */}
-              <Textarea height={"20vh"} placeholder="Нууцлал бүхий хэсэг " />
+              <Textarea
+                height={"20vh"}
+                placeholder="Нууцлал бүхий хэсэг "
+                onChange={(e) => {
+                  setPrivateInfo(e.target.value);
+                }}
+              />
             </InputGroup>
             <InputGroup>
               <InputLeftElement children={<FaLink />} />
@@ -95,6 +176,9 @@ export default function Ready() {
                 mb={"3px"}
                 variant="outline"
                 placeholder="Зураг файлын линкыг оруулна уу"
+                onChange={(e) => {
+                  setPrivateLink(e.target.value);
+                }}
               />
             </InputGroup>
           </ModalBody>
@@ -104,7 +188,7 @@ export default function Ready() {
               color={"white"}
               backgroundColor={"pink.400"}
               mr={3}
-              onClick={""}
+              onClick={sendReadyData}
             >
               Нэмэх
             </Button>
