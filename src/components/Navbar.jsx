@@ -18,8 +18,8 @@ export function Navbar() {
 
   return (
     <Box
-      borderBottom="2px"
-      borderBottomColor={useColorModeValue("gray.100", "gray.700")}
+      // borderBottom="2px"
+      // borderBottomColor={useColorModeValue("gray.100", "gray.700")}
       mb={4}
       py={4}
       pl="10"
@@ -28,7 +28,7 @@ export function Navbar() {
         justifyContent="flex-end"
         maxW="container.lg"
         mx="auto"
-        spacing={4}
+        // spacing={}
       >
         <Navlink to="/" name="Nelp" size="lg" />
         <Spacer />

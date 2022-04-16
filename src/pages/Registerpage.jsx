@@ -8,6 +8,8 @@ import {
   Input,
   Stack,
   useToast,
+  useColorMode,
+  Box,
 } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import { FaGoogle } from "react-icons/fa";
@@ -18,6 +20,7 @@ import { Layout } from "../components/Layout";
 import { useAuth } from "../contexts/AuthContext";
 
 export default function Registerpage() {
+  const { colorMode, toggleColorMode } = useColorMode();
   const history = useHistory();
   const { signInWithGoogle, register } = useAuth();
   const [email, setEmail] = useState("");
@@ -34,95 +37,108 @@ export default function Registerpage() {
   }, []);
 
   return (
-    <Layout>
-      <Heading textAlign="center" my={12}>
-        Бүртгэл үүсгэх
-      </Heading>
-      <Card maxW="md" mx="auto" mt={4}>
-        <chakra.form
-          onSubmit={async (e) => {
-            e.preventDefault();
-            if (!email || !password) {
-              toast({
-                description: "Credentials not valid.",
-                status: "error",
-                duration: 9000,
-                isClosable: true,
-              });
-              return;
-            }
-            // your register logic here
-            setIsSubmitting(true);
-            register(email, password)
-              .then((res) => {})
-              .catch((error) => {
-                console.log(error.message);
+    <Box>
+      {colorMode === "light" ? (
+        <Box
+          w="100%"
+          h="100vh"
+          position={"absolute"}
+          zIndex={"-1"}
+          bg="gray.200"
+        />
+      ) : (
+        <Box></Box>
+      )}
+      <Layout>
+        <Heading textAlign="center" my={12}>
+          Бүртгэл үүсгэх
+        </Heading>
+        <Card maxW="md" mx="auto" mt={4}>
+          <chakra.form
+            onSubmit={async (e) => {
+              e.preventDefault();
+              if (!email || !password) {
                 toast({
-                  description: error.message,
+                  description: "Credentials not valid.",
                   status: "error",
                   duration: 9000,
                   isClosable: true,
                 });
-              })
-              .finally(() => {
-                mounted.current && setIsSubmitting(false);
-              });
-          }}
-        >
-          <Stack spacing="6">
-            <FormControl id="email">
-              <FormLabel>Цахим шуудан</FormLabel>
-              <Input
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </FormControl>
-            <FormControl id="password">
-              <FormLabel>Нууц үг</FormLabel>
-              <Input
-                name="password"
-                type="password"
-                autoComplete="password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </FormControl>
-            <Button
-              type="submit"
-              colorScheme="pink"
-              size="lg"
-              fontSize="md"
-              isLoading={isSubmitting}
-            >
-              Бүртгүүлэх
+                return;
+              }
+              // your register logic here
+              setIsSubmitting(true);
+              register(email, password)
+                .then((res) => {})
+                .catch((error) => {
+                  console.log(error.message);
+                  toast({
+                    description: error.message,
+                    status: "error",
+                    duration: 9000,
+                    isClosable: true,
+                  });
+                })
+                .finally(() => {
+                  mounted.current && setIsSubmitting(false);
+                });
+            }}
+          >
+            <Stack spacing="6">
+              <FormControl id="email">
+                <FormLabel>Цахим шуудан</FormLabel>
+                <Input
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </FormControl>
+              <FormControl id="password">
+                <FormLabel>Нууц үг</FormLabel>
+                <Input
+                  name="password"
+                  type="password"
+                  autoComplete="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </FormControl>
+              <Button
+                type="submit"
+                colorScheme="pink"
+                size="lg"
+                fontSize="md"
+                isLoading={isSubmitting}
+              >
+                Бүртгүүлэх
+              </Button>
+            </Stack>
+          </chakra.form>
+          <Center my={4}>
+            <Button variant="link" onClick={() => history.push("/login")}>
+              Нэвтрэх
             </Button>
-          </Stack>
-        </chakra.form>
-        <Center my={4}>
-          <Button variant="link" onClick={() => history.push("/login")}>
-            Нэвтрэх
+          </Center>
+          <DividerWithText my={6}>эсвэл</DividerWithText>
+          <Button
+            variant="outline"
+            isFullWidth
+            colorScheme="red"
+            leftIcon={<FaGoogle />}
+            onClick={() =>
+              signInWithGoogle()
+                .then((user) => console.log(user))
+                .catch((e) => console.log(e.message))
+            }
+          >
+            Google хаягаараа бүртгүүлэх
           </Button>
-        </Center>
-        <DividerWithText my={6}>эсвэл</DividerWithText>
-        <Button
-          variant="outline"
-          isFullWidth
-          colorScheme="red"
-          leftIcon={<FaGoogle />}
-          onClick={() =>
-            signInWithGoogle()
-              .then((user) => console.log(user))
-              .catch((e) => console.log(e.message))
-          }
-        >
-          Google хаягаараа нэвтрэх
-        </Button>
-      </Card>
-    </Layout>
+        </Card>
+      </Layout>
+    </Box>
   );
 }

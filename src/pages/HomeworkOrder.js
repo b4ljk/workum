@@ -8,8 +8,8 @@ export default function HomworkOrder() {
   return (
     <Layout>
       <Container maxW="container.md" py={3}>
-        <Text fontWeight={"black"} fontSize={"3xl"}>
-          Бие даалт
+        <Text fontWeight={"black"} textTransform={"uppercase"} fontSize={"3xl"}>
+          THIS IS TITLE BABY
         </Text>
         <Text>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae
@@ -25,7 +25,7 @@ export default function HomworkOrder() {
         </Text>
         <Text as={"u"} _hover={{ color: "blue" }}>
           <Link href="https://chakra-ui.com" isExternal>
-            Chakra Design system{" "}
+            Link: Chakra Design system{" "}
           </Link>
         </Text>
         {/* <FaExternalLinkAlt /> */}

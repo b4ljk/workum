@@ -8,8 +8,8 @@ export default function Homeworks() {
   return (
     <Layout>
       <Container maxW="container.md" py={3}>
-        <Text fontWeight={"black"} fontSize={"3xl"}>
-          Бие даалт
+        <Text textTransform={"uppercase"} fontWeight={"black"} fontSize={"3xl"}>
+          түхүийн бишдйыбротйы йыбхйыбй абөах
         </Text>
         <Text>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae

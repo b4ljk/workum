@@ -11,43 +11,55 @@ import {
   Button,
   Link,
   Center,
+  useColorMode,
 } from "@chakra-ui/react";
 import React from "react";
 import { useLocation, Link as ReachLink } from "react-router-dom";
 import { Layout } from "../components/Layout";
 import { WorkCard } from "../components/WorkCard";
 import { useAuth } from "../contexts/AuthContext";
-import { FaPlus } from "react-icons/fa";
 import { useState } from "react";
+import { FaCheck, FaBook, FaBookMedical } from "react-icons/fa";
+
 export default function Homepage() {
+  const { colorMode, toggleColorMode } = useColorMode();
   return (
     <Box>
-      {/* <Box
-        w="100%"
-        h="100vh"
-        position={"absolute"}
-        zIndex={"-1"}
-        bgGradient="linear(to-r, white, blue.400, white)"
-      /> */}
+      {colorMode === "light" ? (
+        <Box
+          w="100%"
+          h="100vh"
+          position={"absolute"}
+          zIndex={"-1"}
+          bgGradient="linear(to-bl, blue.100, secondary, pink.100, blue.100)"
+        />
+      ) : (
+        <Box></Box>
+      )}
       <Layout>
         <Box
           display={"flex"}
           flexDir={"column"}
           justifyContent="center"
-          height={"40vh"}
+          height={"65vh"}
         >
           <Center>
-            <Text fontWeight="medium" fontSize="4xl">
-              Гэрийн даалгавраа{" "}
+            <Text
+              textTransform={"uppercase"}
+              textAlign={"center"}
+              fontWeight="black"
+              fontSize="5xl"
+            >
+              гэрийн{" "}
               <Text
                 display="inline"
                 color="pink.400"
                 fontWeight="black"
-                fontSize="4xl"
+                fontSize="5xl"
               >
-                хийх
+                даалгавраа хийх
               </Text>{" "}
-              <Box display="inline" fontSize="4xl">
+              <Box display="inline" fontSize="5xl">
                 шилдэг арга
               </Box>
             </Text>
@@ -55,12 +67,23 @@ export default function Homepage() {
 
           <Box display="flex" flexDir={{ md: "row", base: "column" }} mt="6">
             <Link as={ReachLink} width={"100%"} to="ready" mr={"3px"}>
-              <Button width={"100%"} variant={"outline"} mb={"3"} mr={"3"}>
+              <Button
+                fontSize={"xl"}
+                leftIcon={<FaBook />}
+                width={"100%"}
+                bg="transparent"
+                border={"2px"}
+                mb={"3"}
+                mr={"3"}
+                borderColor="white"
+              >
                 Бэлэн даалгавар үзэх/нэмэх
               </Button>
             </Link>
             <Link as={ReachLink} width="100%" to="ordered">
               <Button
+                leftIcon={<FaBookMedical />}
+                fontSize={"xl"}
                 _hover={{ bg: "pink.700" }}
                 width={"100%"}
                 color="white"

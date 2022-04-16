@@ -47,7 +47,7 @@ export const OrderCard = () => {
               </Text>{" "}
               14000 ₮{" "}
             </Text>
-            <Text color={"facebook.600"}>
+            <Text>
               {" "}
               <Text fontWeight={"bold"} display={"inline"}>
                 Нэмэлт тайлбар :{" "}

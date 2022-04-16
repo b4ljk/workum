@@ -9,6 +9,12 @@ import {
   Box,
   Text,
   Button,
+  Input,
+  InputLeftElement,
+  InputGroup,
+  InputRightElement,
+  InputLeftAddon,
+  Textarea,
 } from "@chakra-ui/react";
 import {
   Modal,
@@ -25,7 +31,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Layout } from "../components/Layout";
 import { WorkCard } from "../components/WorkCard";
 import { useAuth } from "../contexts/AuthContext";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaLink, FaLock } from "react-icons/fa";
 export default function Ready() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
@@ -58,12 +64,40 @@ export default function Ready() {
         <WorkCard />
       </Box>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal size={"5xl"} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Бэлэн даалгавар нэмэх</ModalHeader>
           <ModalCloseButton />
-          <ModalBody></ModalBody>
+          <ModalBody>
+            <Input mb={"3px"} variant="outline" placeholder="Гарчиг" />
+            <InputGroup mb={"3px"}>
+              <InputRightElement
+                pointerEvents="none"
+                color="gray.300"
+                fontSize="1.2em"
+                children="₮"
+              />
+              <Input type={"number"} placeholder="Санал болгох үнэ" />
+            </InputGroup>
+
+            <Textarea
+              mb={"3px"}
+              placeholder="Нэмэлт тайлбараа энд үлдээнэ үү "
+            />
+            <InputGroup>
+              {/* <InputRightElement children={<FaLock />} /> */}
+              <Textarea height={"20vh"} placeholder="Нууцлал бүхий хэсэг " />
+            </InputGroup>
+            <InputGroup>
+              <InputLeftElement children={<FaLink />} />
+              <Input
+                mb={"3px"}
+                variant="outline"
+                placeholder="Зураг файлын линкыг оруулна уу"
+              />
+            </InputGroup>
+          </ModalBody>
 
           <ModalFooter>
             <Button
