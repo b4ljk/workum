@@ -27,8 +27,30 @@ export const WorkCard = () => {
             <Text fontWeight="bold" fontSize="2xl" py="2">
               Түүх бие даалт
             </Text>
-            <Text>Үйл явц : Дууссан</Text>
-            <Text>Эцсийн хугацаа : 2022/22/22 </Text>
+            <Text>
+              <Text fontWeight={"bold"} display={"inline"}>
+                Үйл явц :{" "}
+              </Text>
+              Дууссан
+            </Text>
+            <Text>
+              <Text fontWeight={"bold"} display={"inline"}>
+                Хэн багш дээр :{" "}
+              </Text>
+              Б.Батням
+            </Text>
+            <Text>
+              <Text fontWeight={"bold"} display={"inline"}>
+                {" "}
+                Нэмэлт тайлбар :{" "}
+              </Text>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
+              euismod gravida velit, nec lobortis tortor venenatis in. Lorem
+              ipsum dolor sit amet, consectetur adipiscing elit. Cras ac mi ac
+              tellus posuere elementum ac vitae ipsum. Donec efficitur lacinia
+              leo at sodales. Nullam semper ornare velit, id mollis dolor
+              vehicula at.
+            </Text>
           </Box>
         </Box>
         <Box></Box>
