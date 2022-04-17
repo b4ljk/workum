@@ -47,6 +47,7 @@ export default function Homepage() {
           <Center>
             <Text
               textTransform={"uppercase"}
+              fontFamily={"heading"}
               textAlign={"center"}
               fontWeight="black"
               fontSize="5xl"

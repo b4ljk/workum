@@ -38,12 +38,25 @@ import { useAuth } from "../contexts/AuthContext";
 import { FaPlus, FaLink, FaLock } from "react-icons/fa";
 import { db } from "../utils/init-firebase";
 import { useState } from "react";
-import { addDoc, setDoc, doc, collection } from "firebase/firestore";
+import { Data } from "../contexts/Data";
+import {
+  addDoc,
+  setDoc,
+  doc,
+  collection,
+  serverTimestamp,
+} from "firebase/firestore";
+import { v4 as uuidv4 } from "uuid";
 export default function Ordered() {
+  const { orderData, readyData } = Data();
+  console.log("haha");
+  console.log(orderData);
+  // console.log(readyData);
   const toast = useToast();
   const { currentUser } = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [title, setTitle] = useState();
+  const [setU, setSetu] = useState(false);
   const [Class, setClass] = useState();
   const [price, setPrice] = useState();
   const [date, setDate] = useState();
@@ -59,28 +72,46 @@ export default function Ordered() {
     });
   };
   const sendReadyData = () => {
-    setDoc(
-      doc(
-        db,
-        "num",
-        "numedu",
-        "Orders",
-        `${Class}`,
-        `${currentUser?.email}`,
-        `${title}`
-      ),
-      {
-        title: title,
-        price: price,
-        additionalInfo: additionalInfo,
-        lastestDate: date,
-        class: Class,
-      }
-    );
+    const generatedId = uuidv4();
+    setDoc(doc(db, "num", "numedu", "Orders", `${generatedId}`), {
+      uniqueid: generatedId,
+      title: title,
+      price: price,
+      additionalInfo: additionalInfo,
+      lastestDate: date,
+      class: Class,
+      setU: setU,
+      ownerMail: currentUser?.email,
+      timestamp: serverTimestamp(),
+    });
     // onNewClassClose();
     onClose();
     showToast();
   };
+  const orders = orderData?.map((value) => {
+    value.timestamp?.toDate();
+    const year = new Date(value.timestamp?.seconds * 1000)
+      .getFullYear()
+      .toString();
+    const month = new Date(value.timestamp?.seconds * 1000)
+      .getMonth()
+      .toString();
+    const days = new Date(value.timestamp?.seconds * 1000).getDate().toString();
+    // month++;
+    return (
+      <OrderCard
+        uniquekey={value.uniqueid}
+        title={value.title}
+        price={value.price}
+        additionalInfo={value.additionalInfo}
+        duedate={value.lastestDate}
+        classname={value.class}
+        ownerMail={value.ownerMail}
+        Udata={value.setU}
+        timestamp={year + "-" + month + "-" + days}
+      />
+    );
+  });
   return (
     <Layout>
       {/* <Box display="flex" flexDir={{ md: "row", base: "column" }} mt="6">
@@ -95,7 +126,12 @@ export default function Ordered() {
             </Box> */}
 
       <Box display={"flex"} alignItems={"center"}>
-        <Text mr={"3"} fontWeight={"black"} fontSize={"4xl"}>
+        <Text
+          fontFamily={"heading"}
+          mr={"3"}
+          fontWeight={"bold"}
+          fontSize={"4xl"}
+        >
           Даалгавраа{" "}
           <Text color={"pink.400"} display={"inline"}>
             хийлгэх
@@ -105,12 +141,7 @@ export default function Ordered() {
           <FaPlus />
         </Button>
       </Box>
-      <Box>
-        <OrderCard />
-        <OrderCard />
-        <OrderCard />
-        <OrderCard />
-      </Box>
+      <Box>{orders}</Box>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

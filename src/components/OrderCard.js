@@ -11,8 +11,10 @@ import {
   Divider,
   Flex,
 } from "@chakra-ui/react";
-import { useLocation, Link as ReachLink } from "react-router-dom";
-export const OrderCard = () => {
+import { useLocation, Link as ReachLink, useParams } from "react-router-dom";
+export const OrderCard = (props) => {
+  const { orderid } = useParams();
+  console.log("here>>>>" + orderid);
   return (
     <LinkBox
       boxShadow="base"
@@ -21,11 +23,14 @@ export const OrderCard = () => {
       w={{ md: "xl", base: "100%" }}
       mt="5"
     >
-      <LinkOverlay as={ReachLink} to="homeworkorder">
+      <LinkOverlay
+        as={ReachLink}
+        to={"homeworkorder?uniqueid=" + props.uniquekey}
+      >
         <Box display="flex" flexDir={{ md: "row", base: "column" }}>
           <Box mr="5" flex="1">
             <Text fontWeight="bold" fontSize="2xl" py="2">
-              Түүх бие даалт
+              {props.title}
             </Text>
             <Text>
               <Text fontWeight={"bold"} display={"inline"}>
@@ -38,21 +43,21 @@ export const OrderCard = () => {
               <Text fontWeight={"bold"} display={"inline"}>
                 Эцсийн хугацаа :{" "}
               </Text>{" "}
-              2022/22/22{" "}
+              {props.duedate}{" "}
             </Text>
             <Text>
               {" "}
               <Text fontWeight={"bold"} display={"inline"}>
                 Санал болгох үнэ :{" "}
               </Text>{" "}
-              14000 ₮{" "}
+              {props.price} ₮{" "}
             </Text>
             <Text>
               {" "}
               <Text fontWeight={"bold"} display={"inline"}>
                 Нэмэлт тайлбар :{" "}
               </Text>{" "}
-              Энэ даалгавар 5 аас 10 хууда...{" "}
+              {props.additionalInfo.slice(0, 40)}...{" "}
             </Text>
           </Box>
         </Box>
@@ -62,7 +67,7 @@ export const OrderCard = () => {
             <Button>Мэдээлэлтэй танилцах</Button>
           </Box>
           <Box>
-            <Text>2022.12.12</Text>
+            <Text>{props.timestamp}</Text>
           </Box>
         </Box>
       </LinkOverlay>

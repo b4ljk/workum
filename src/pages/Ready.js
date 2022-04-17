@@ -99,7 +99,12 @@ export default function Ready() {
           </Box> */}
 
       <Box display={"flex"} alignItems={"center"}>
-        <Text mr={"3"} fontWeight={"black"} fontSize={"4xl"}>
+        <Text
+          fontFamily={"heading"}
+          mr={"3"}
+          fontWeight={"bold"}
+          fontSize={"4xl"}
+        >
           Бэлэн{" "}
           <Text color={"pink.400"} display={"inline"}>
             даалгаврууд

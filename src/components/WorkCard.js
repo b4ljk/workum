@@ -11,7 +11,7 @@ import {
   Divider,
   Flex,
 } from "@chakra-ui/react";
-import { useLocation, Link as ReachLink } from "react-router-dom";
+import { useLocation, Link as ReachLink, useParams } from "react-router-dom";
 export const WorkCard = () => {
   return (
     <LinkBox

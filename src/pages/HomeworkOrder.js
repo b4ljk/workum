@@ -1,9 +1,17 @@
-import { Container, Heading, Text, Box, Link } from "@chakra-ui/react";
+import { Container, Heading, Text, Box } from "@chakra-ui/react";
 import React from "react";
 import { Layout } from "../components/Layout";
 import { useState } from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
+import { BrowserRouter as Router, Link, useLocation } from "react-router-dom";
+
 export default function HomworkOrder() {
+  function useQuery() {
+    const { search } = useLocation();
+
+    return React.useMemo(() => new URLSearchParams(search), [search]);
+  }
+  let query = useQuery();
   const [Payment, Setpayment] = useState(false);
   return (
     <Layout>
@@ -23,6 +31,7 @@ export default function HomworkOrder() {
           in faucibus orci luctus et ultrices posuere cubilia curae; Nam
           pulvinar orci sed dui gravida, ut dapibus ex ultrices.
         </Text>
+        {/* <Text>{query.get("uniqueid")}</Text> */}
         <Text as={"u"} _hover={{ color: "blue" }}>
           <Link href="https://chakra-ui.com" isExternal>
             Link: Chakra Design system{" "}
