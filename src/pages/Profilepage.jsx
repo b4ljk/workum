@@ -25,7 +25,15 @@ import { Navbar } from "../components/Navbar";
 import { WorkCard } from "../components/WorkCard";
 import { useAuth } from "../contexts/AuthContext";
 import { useEffect, useState } from "react";
+import { Data } from "../contexts/Data";
+import { OrderCard } from "../components/OrderCard";
+import { ProfileOrderCard } from "../components/ProfileOrderCard";
+import { ProfileClientCard } from "../components/ProfileClientCard";
 export default function Profilepage() {
+  let currenTaskCounter = 0;
+
+  const { orderData, readyData } = Data();
+  console.log(orderData);
   let activecards;
   const [active, setActive] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -41,13 +49,71 @@ export default function Profilepage() {
     setActive(false);
   };
   if (!active) {
-    buttonBg = "gray.200";
+    buttonBg = "gray.500";
     buttonBg2 = "transparent";
     activecards = <WorkCard />;
   } else {
     buttonBg = "transparent";
-    buttonBg2 = "gray.200";
+    buttonBg2 = "gray.500";
   }
+  const meDoing = orderData?.map((value) => {
+    value.timestamp?.toDate();
+    const year = new Date(value.timestamp?.seconds * 1000)
+      .getFullYear()
+      .toString();
+    const month = new Date(value.timestamp?.seconds * 1000)
+      .getMonth()
+      .toString();
+    const days = new Date(value.timestamp?.seconds * 1000).getDate().toString();
+    // month++;
+    if (currentUser.email == value.processingPerson) {
+      currenTaskCounter++;
+      console.log(currenTaskCounter);
+      return (
+        <ProfileClientCard
+          uniquekey={value.uniqueid}
+          title={value.title}
+          price={value.price}
+          additionalInfo={value.additionalInfo}
+          duedate={value.lastestDate}
+          classname={value.class}
+          ownerMail={value.ownerMail}
+          Udata={value.setU}
+          timestamp={year + "-" + month + "-" + days}
+          ownerProfile={value.ownerProfile}
+        />
+      );
+    }
+  });
+  const orders = orderData?.map((value) => {
+    value.timestamp?.toDate();
+    const year = new Date(value.timestamp?.seconds * 1000)
+      .getFullYear()
+      .toString();
+    const month = new Date(value.timestamp?.seconds * 1000)
+      .getMonth()
+      .toString();
+    const days = new Date(value.timestamp?.seconds * 1000).getDate().toString();
+    // month++;
+    if (currentUser.email == value.ownerMail) {
+      return (
+        <ProfileOrderCard
+          uniquekey={value.uniqueid}
+          title={value.title}
+          price={value.price}
+          additionalInfo={value.additionalInfo}
+          duedate={value.lastestDate}
+          classname={value.class}
+          ownerMail={value.ownerMail}
+          Udata={value.setU}
+          timestamp={year + "-" + month + "-" + days}
+          processingPerson={value.processingPerson}
+          processingPersonProfile={value.processingPersonProfile}
+        />
+      );
+    }
+  });
+
   return (
     <Box display={"flex"} flexDir={"column"} justifyContent={"center"}>
       <Box mb={"15"}>
@@ -69,7 +135,10 @@ export default function Profilepage() {
             Миний хийж буй
           </Button>
         </Box>
-        <Box>{activecards}</Box>
+        <Box>
+          {active && meDoing}
+          {!active && orders}
+        </Box>
       </Box>
       <Drawer
         isOpen={isOpen}

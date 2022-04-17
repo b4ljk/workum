@@ -52,17 +52,17 @@ export default function Homepage() {
               fontWeight="black"
               fontSize="5xl"
             >
-              гэрийн{" "}
+              гэрийн даалгавраа{" "}
               <Text
                 display="inline"
                 color="pink.400"
                 fontWeight="black"
                 fontSize="5xl"
               >
-                даалгавраа хийх
+                хийх шинэ
               </Text>{" "}
               <Box display="inline" fontSize="5xl">
-                шилдэг арга
+                арга
               </Box>
             </Text>
           </Center>

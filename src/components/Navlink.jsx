@@ -10,6 +10,9 @@ export default function Navlink({ to, name, ...rest }) {
   return (
     <Link to={to}>
       <Button
+        fontFamily={"heading"}
+        fontSize="xl"
+        fontWeight={"bold"}
         variant={isActive ? "outline" : "ghost"}
         colorScheme={isActive ? "pink" : ""}
         {...rest}

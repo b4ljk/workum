@@ -15,7 +15,6 @@ export const Data = () => {
       let tmpArray = [];
       querySnapshot.forEach((doc) => {
         tmpArray.push({ ...doc.data(), id: doc.id });
-        console.log("hello fuck");
       });
       setOrderData(tmpArray);
     });

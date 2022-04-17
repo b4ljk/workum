@@ -52,7 +52,6 @@ export default function Ordered() {
   console.log("haha");
   console.log(orderData);
   // console.log(readyData);
-  const toast = useToast();
   const { currentUser } = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [title, setTitle] = useState();
@@ -61,6 +60,7 @@ export default function Ordered() {
   const [price, setPrice] = useState();
   const [date, setDate] = useState();
   const [additionalInfo, setAdditionalInfo] = useState();
+  const toast = useToast();
   const showToast = () => {
     toast({
       title: "Амжилттай",
@@ -75,6 +75,7 @@ export default function Ordered() {
     const generatedId = uuidv4();
     setDoc(doc(db, "num", "numedu", "Orders", `${generatedId}`), {
       uniqueid: generatedId,
+      ownerProfile: currentUser?.photoURL,
       title: title,
       price: price,
       additionalInfo: additionalInfo,
@@ -109,6 +110,7 @@ export default function Ordered() {
         ownerMail={value.ownerMail}
         Udata={value.setU}
         timestamp={year + "-" + month + "-" + days}
+        processingPerson={value.processingPerson}
       />
     );
   });
