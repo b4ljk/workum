@@ -104,6 +104,7 @@ export default function Ordered() {
         uniquekey={value.uniqueid}
         title={value.title}
         price={value.price}
+        class={value.class}
         additionalInfo={value.additionalInfo}
         duedate={value.lastestDate}
         classname={value.class}
@@ -115,8 +116,9 @@ export default function Ordered() {
     );
   });
   return (
-    <Layout>
-      {/* <Box display="flex" flexDir={{ md: "row", base: "column" }} mt="6">
+    <Box h={"100vh"} bg={"BlackAlpha 100"}>
+      <Layout>
+        {/* <Box display="flex" flexDir={{ md: "row", base: "column" }} mt="6">
               <Button width={"100%"} variant={"outline"} mb={"3"} mr={"3"}>
                 Бэлэн даалгавар үзэх/нэмэх
               </Button>
@@ -127,95 +129,96 @@ export default function Ordered() {
               </Box>
             </Box> */}
 
-      <Box display={"flex"} alignItems={"center"}>
-        <Text
-          fontFamily={"heading"}
-          mr={"3"}
-          fontWeight={"bold"}
-          fontSize={"4xl"}
-        >
-          Даалгавраа{" "}
-          <Text color={"pink.400"} display={"inline"}>
-            хийлгэх
+        <Box display={"flex"} alignItems={"center"}>
+          <Text
+            fontFamily={"heading"}
+            mr={"3"}
+            fontWeight={"bold"}
+            fontSize={"4xl"}
+          >
+            Даалгавраа{" "}
+            <Text color={"pink.400"} display={"inline"}>
+              хийлгэх
+            </Text>
           </Text>
-        </Text>
-        <Button onClick={onOpen} color={"pink.400"}>
-          <FaPlus />
-        </Button>
-      </Box>
-      <Box>{orders}</Box>
+          <Button onClick={onOpen} color={"pink.400"}>
+            <FaPlus />
+          </Button>
+        </Box>
+        <Box>{orders}</Box>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Даалгаврын захиалга үүсгэх</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Input
-              mb={"2px"}
-              variant="outline"
-              placeholder="Гарчиг"
-              onChange={(e) => {
-                setTitle(e.target.value);
-              }}
-            />
-            <Input
-              mb={"3px"}
-              variant="outline"
-              placeholder="Хичээлийн нэр"
-              onChange={(e) => {
-                setClass(e.target.value);
-              }}
-            />
-            <InputGroup mb={"2px"}>
-              <InputRightElement
-                pointerEvents="none"
-                color="gray.300"
-                fontSize="1.2em"
-                children="₮"
-              />
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Даалгаврын захиалга үүсгэх</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
               <Input
-                type={"number"}
-                placeholder="Санал болгох үнэ"
+                mb={"2px"}
+                variant="outline"
+                placeholder="Гарчиг"
                 onChange={(e) => {
-                  setPrice(e.target.value);
+                  setTitle(e.target.value);
                 }}
               />
-            </InputGroup>
-            <InputGroup mb={"2px"}>
-              <InputLeftAddon
-                bg={"whiteAlpha.50"}
-                pointerEvents="none"
-                color="gray.400"
-                children="Сүүлийн хугацаа"
-              />
               <Input
-                type={"date"}
+                mb={"3px"}
+                variant="outline"
+                placeholder="Хичээлийн нэр"
                 onChange={(e) => {
-                  setDate(e.target.value);
+                  setClass(e.target.value);
                 }}
               />
-            </InputGroup>
-            <Textarea
-              placeholder="Нэмэлт тайлбараа энд үлдээнэ үү "
-              onChange={(e) => {
-                setAdditionalInfo(e.target.value);
-              }}
-            />
-          </ModalBody>
+              <InputGroup mb={"2px"}>
+                <InputRightElement
+                  pointerEvents="none"
+                  color="gray.300"
+                  fontSize="1.2em"
+                  children="₮"
+                />
+                <Input
+                  type={"number"}
+                  placeholder="Санал болгох үнэ"
+                  onChange={(e) => {
+                    setPrice(e.target.value);
+                  }}
+                />
+              </InputGroup>
+              <InputGroup mb={"2px"}>
+                <InputLeftAddon
+                  bg={"whiteAlpha.50"}
+                  pointerEvents="none"
+                  color="gray.400"
+                  children="Сүүлийн хугацаа"
+                />
+                <Input
+                  type={"date"}
+                  onChange={(e) => {
+                    setDate(e.target.value);
+                  }}
+                />
+              </InputGroup>
+              <Textarea
+                placeholder="Нэмэлт тайлбараа энд үлдээнэ үү "
+                onChange={(e) => {
+                  setAdditionalInfo(e.target.value);
+                }}
+              />
+            </ModalBody>
 
-          <ModalFooter>
-            <Button
-              color={"white"}
-              backgroundColor={"pink.400"}
-              mr={3}
-              onClick={sendReadyData}
-            >
-              Нэмэх
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </Layout>
+            <ModalFooter>
+              <Button
+                color={"white"}
+                backgroundColor={"pink.400"}
+                mr={3}
+                onClick={sendReadyData}
+              >
+                Нэмэх
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      </Layout>
+    </Box>
   );
 }

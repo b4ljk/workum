@@ -12,8 +12,8 @@ import CustomTheme from "./utils/theme";
 // import "@fontsource/Roboto/900.css";
 
 const config = {
-  initialColorMode: "light",
-  useSystemColorMode: false,
+  initialColorMode: "dark",
+  useSystemColorMode: true,
 };
 
 const theme = extendTheme({
@@ -22,7 +22,10 @@ const theme = extendTheme({
 
 ReactDOM.render(
   <React.StrictMode>
-    <ChakraProvider theme={CustomTheme}>
+    <ChakraProvider
+      initialColorMode={theme.config.initialColorMode}
+      theme={CustomTheme}
+    >
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <App />
     </ChakraProvider>

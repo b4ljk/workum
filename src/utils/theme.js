@@ -14,6 +14,8 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import "@fontsource/roboto/900.css";
 const CustomTheme = extendTheme({
+  initialColorMode: "dark",
+  useSystemColorMode: false,
   colors: {
     secondary: "#94dee2",
   },

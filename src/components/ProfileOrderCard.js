@@ -39,6 +39,12 @@ export const ProfileOrderCard = (props) => {
               Хүлээгдэж буй{" "}
             </Text>
             <Text>
+              <Text fontWeight={"bold"} display={"inline"}>
+                Хичээлийн нэр :{" "}
+              </Text>
+              {props.class}
+            </Text>
+            <Text>
               {" "}
               <Text fontWeight={"bold"} display={"inline"}>
                 Эцсийн хугацаа :{" "}

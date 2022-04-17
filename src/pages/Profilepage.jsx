@@ -81,6 +81,7 @@ export default function Profilepage() {
           Udata={value.setU}
           timestamp={year + "-" + month + "-" + days}
           ownerProfile={value.ownerProfile}
+          class={value.class}
         />
       );
     }
@@ -109,6 +110,7 @@ export default function Profilepage() {
           timestamp={year + "-" + month + "-" + days}
           processingPerson={value.processingPerson}
           processingPersonProfile={value.processingPersonProfile}
+          class={value.class}
         />
       );
     }

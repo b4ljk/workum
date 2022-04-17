@@ -46,18 +46,18 @@ export function Navbar() {
           <Box>{!currentUser && <Navlink to="/login" name="Нэвтрэх" />}</Box>
         </Box>
         {currentUser && (
-          <Box>
+          <Box bg={"transparent"}>
             <Navlink
               display={{ md: "block", base: "none" }}
               to="/profile"
               name={"даалгаврууд"}
             />
-            <Box display={{ md: "none", base: "block" }}>
-              <Menu>
+            <Box bg={"transparent"} display={{ md: "none", base: "block" }}>
+              <Menu border={"2px"}>
                 <MenuButton fontSize={"26"} as={Button} variant={"outlined"}>
                   <FaUserCircle />
                 </MenuButton>
-                <MenuList>
+                <MenuList border={"1px"} bg={"transparent"}>
                   <MenuItem as={Navlink} to="/profile" name="профайл" />
                   <MenuDivider />
                   <MenuItem
