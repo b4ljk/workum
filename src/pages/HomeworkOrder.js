@@ -72,6 +72,9 @@ export default function HomworkOrder() {
     showToast();
     history.push("/profile");
   };
+  let buttonShow = true;
+
+  if (additionalInfo?.processingPerson != null) buttonShow = false;
   return (
     <Layout>
       <Container maxW="container.md" py={3}>
@@ -90,12 +93,14 @@ export default function HomworkOrder() {
         <Text>{additionalInfo?.additionalInfo}</Text>
 
         <Text as={"u"} _hover={{ color: "blue" }}>
-          <Link href="https://chakra-ui.com" isExternal>
+          <Link href="https://chakra-ui.com" target="_blank">
             Link: Chakra Design system{" "}
           </Link>
         </Text>
         {/* <FaExternalLinkAlt /> */}
-        <Button onClick={sendReadyData}>Энэ даалгаврыг хийх</Button>
+        {buttonShow && (
+          <Button onClick={sendReadyData}>Энэ даалгаврыг хийх</Button>
+        )}
       </Container>
       <Box>{Payment && <Box>end link baina</Box>}</Box>
     </Layout>

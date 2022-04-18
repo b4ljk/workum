@@ -53,11 +53,11 @@ export function Navbar() {
               name={"даалгаврууд"}
             />
             <Box bg={"transparent"} display={{ md: "none", base: "block" }}>
-              <Menu border={"2px"}>
+              <Menu>
                 <MenuButton fontSize={"26"} as={Button} variant={"outlined"}>
                   <FaUserCircle />
                 </MenuButton>
-                <MenuList border={"1px"} bg={"transparent"}>
+                <MenuList>
                   <MenuItem as={Navlink} to="/profile" name="профайл" />
                   <MenuDivider />
                   <MenuItem

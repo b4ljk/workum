@@ -125,7 +125,7 @@ export default function Profilepage() {
         <Box display={"flex"} alignItems={"center"}>
           <Avatar mr={"3"} src={currentUser?.photoURL} />
           <Text fontWeight={"bold"} fontSize={"2xl"}>
-            {currentUser?.displayName}
+            {currentUser?.displayName ?? currentUser?.email}
           </Text>
         </Box>
         <Divider my="3" />
