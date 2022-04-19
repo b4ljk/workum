@@ -27,7 +27,7 @@ import {
 import React from "react";
 import { Layout } from "../components/Layout";
 import { useState, useEffect } from "react";
-import { FaExternalLinkAlt, FaLink, FaLock } from "react-icons/fa";
+import { FaExternalLinkAlt, FaLink, FaLock, FaUnlock } from "react-icons/fa";
 import {
   BrowserRouter as Router,
   useLocation,
@@ -126,32 +126,43 @@ export default function HomworkOrder() {
             Эцсийн хугацаа : {additionalInfo?.lastestDate}
           </Text>
           <Text fontWeight={"bold"}>
+            Хичээлийн нэр : {additionalInfo?.class}
+          </Text>
+          <Text fontWeight={"bold"}>
             Төлбөр: {additionalInfo?.setU ? "Төлсөн" : "Төлөөгүй"}
           </Text>
           <Divider my={"3"} />
           <Text>{additionalInfo?.additionalInfo}</Text>
 
           <Divider my={"3"} />
-          {additionalInfo?.setU && (
+          {additionalInfo?.privateLink && (
             <Text
               fontFamily={"heading"}
               fontSize={"2xl"}
               textTransform={"uppercase"}
               my={"2"}
               fontWeight={"black"}
+              display="inline-flex"
+              alignItems={"center"}
             >
+              <Box mr={"2"} display={"inline"}>
+                {additionalInfo?.setU ? <FaUnlock /> : <FaLock />}
+              </Box>
               Даалгаврын{" "}
-              <Text display={"inline"} color={"pink.400"}>
+              <Text ml={"2"} color={"pink.400"}>
                 хариу
               </Text>
             </Text>
           )}
           {additionalInfo?.setU && (
-            <Text as={"u"} _hover={{ color: "blue" }}>
-              <Link href={additionalInfo?.privateLink} isExternal>
-                LINK : {additionalInfo?.privateLink}
-              </Link>
-            </Text>
+            <Box>
+              <Text>{additionalInfo.privateInfo}</Text>
+              <Text as={"u"} _hover={{ color: "blue" }}>
+                <Link href={additionalInfo?.privateLink} isExternal>
+                  LINK : {additionalInfo?.privateLink}
+                </Link>
+              </Text>
+            </Box>
           )}
           {/* <FaExternalLinkAlt /> */}
           {buttonShow && !(currentUser?.email == additionalInfo?.ownerMail) && (
@@ -167,8 +178,8 @@ export default function HomworkOrder() {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            <Box display={"flex"}>
-              <FaLock size={"25"} /> <Text ml={"3"}>Хариуг илгээх</Text>
+            <Box display={"flex"} alignItems="center">
+              <FaLock size={"20"} /> <Text ml={"3"}>Хариуг илгээх</Text>
             </Box>
           </ModalHeader>
           <ModalCloseButton />
