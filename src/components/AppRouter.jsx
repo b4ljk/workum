@@ -33,11 +33,7 @@ export default function AppRouter(props) {
           <ProtectedRoute exact path="/homeworks" component={Homeworks} />
           <ProtectedRoute exact path="/ordered" component={Ordered} />
           <ProtectedRoute exact path="/ready" component={Ready} />
-          <ProtectedRoute
-            exact
-            path="/homeworkorder"
-            component={HomworkOrder}
-          />
+          <Route exact path="/homeworkorder" component={HomworkOrder} />
           <ProtectedRoute
             exact
             path="/forgot-password"
