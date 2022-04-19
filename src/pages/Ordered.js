@@ -94,11 +94,9 @@ export default function Ordered() {
     const year = new Date(value.timestamp?.seconds * 1000)
       .getFullYear()
       .toString();
-    const month = new Date(value.timestamp?.seconds * 1000)
-      .getMonth()
-      .toString();
+    let month = new Date(value.timestamp?.seconds * 1000).getMonth().toString();
     const days = new Date(value.timestamp?.seconds * 1000).getDate().toString();
-    // month++;
+    month = parseInt(month) + 1;
     return (
       <OrderCard
         uniquekey={value.uniqueid}

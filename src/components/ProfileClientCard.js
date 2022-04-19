@@ -69,14 +69,16 @@ export const ProfileClientCard = (props) => {
         </Box>
         <Divider my="3" />
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Box display="flex" alignItems="center">
+          <Box display="flex" w={"75%"} alignItems="center">
             <Avatar h="10" w="10" mr="2" src={props.ownerProfile} />
-            <Text>
-              {props.ownerMail}{" "}
-              <Text fontSize={"sm"} color={"gray.400"}>
-                /Захиалагч/
+            <Box maxWidth={"65%"} as={"span"}>
+              <Text>
+                {props.ownerMail}{" "}
+                <Text fontSize={"sm"} color={"gray.400"}>
+                  /Захиалагч/
+                </Text>
               </Text>
-            </Text>
+            </Box>
           </Box>
           <Box>
             <Text>{props.timestamp}</Text>

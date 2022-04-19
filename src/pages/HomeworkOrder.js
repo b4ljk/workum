@@ -11,6 +11,8 @@ import {
   Textarea,
   InputRightElement,
   InputLeftElement,
+  Divider,
+  Link,
 } from "@chakra-ui/react";
 import {
   Modal,
@@ -25,10 +27,9 @@ import {
 import React from "react";
 import { Layout } from "../components/Layout";
 import { useState, useEffect } from "react";
-import { FaExternalLinkAlt, FaLink, FaLock } from "react-icons/fa";
+import { FaExternalLinkAlt, FaLink, FaLock, FaUnlock } from "react-icons/fa";
 import {
   BrowserRouter as Router,
-  Link,
   useLocation,
   useHistory,
 } from "react-router-dom";
@@ -48,6 +49,7 @@ import {
 
 export default function HomworkOrder() {
   const [title, setTitle] = useState();
+  const { currentUser } = useAuth();
   const [moreInfo, setMoreInfo] = useState();
   const [Class, setClass] = useState();
   const [price, setPrice] = useState();
@@ -56,7 +58,6 @@ export default function HomworkOrder() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const history = useHistory();
-  const { currentUser } = useAuth();
   const toast = useToast();
   const showToast = () => {
     toast({
@@ -95,6 +96,15 @@ export default function HomworkOrder() {
     showToast();
     history.push("/profile");
   };
+  const writeDoneWork = () => {
+    updateDoc(doc(db, "num", "numedu", "Orders", `${UniqueNum}`), {
+      privateInfo: privateInfo,
+      privateLink: privateLink,
+    });
+    // onNewClassClose();
+    showToast();
+    history.push("/profile");
+  };
   let buttonShow = true;
 
   if (additionalInfo?.processingPerson != null) buttonShow = false;
@@ -104,65 +114,76 @@ export default function HomworkOrder() {
         <Box display={"flex"} alignItems="center">
           <Text
             fontWeight={"black"}
+            fontFamily={"heading"}
             textTransform={"uppercase"}
             fontSize={"3xl"}
           >
             {additionalInfo?.title}
           </Text>
-          <Spacer mr={"5"} />
-          <Text>{additionalInfo?.lastestDate}</Text>
-          <Spacer />
         </Box>
         <Box display={"flex"} flexDir="column">
+          <Text fontWeight={"bold"}>
+            Эцсийн хугацаа : {additionalInfo?.lastestDate}
+          </Text>
+          <Text fontWeight={"bold"}>
+            Хичээлийн нэр : {additionalInfo?.class}
+          </Text>
+          <Text fontWeight={"bold"}>
+            Төлбөр: {additionalInfo?.setU ? "Төлсөн" : "Төлөөгүй"}
+          </Text>
+          <Divider my={"3"} />
           <Text>{additionalInfo?.additionalInfo}</Text>
 
-          {Payment && (
-            <Text as={"u"} _hover={{ color: "blue" }}>
-              <Link to="https://chakra-ui.com" target="_blank">
-                Link: Chakra Design system{" "}
-              </Link>
+          <Divider my={"3"} />
+          {additionalInfo?.privateLink && (
+            <Text
+              fontFamily={"heading"}
+              fontSize={"2xl"}
+              textTransform={"uppercase"}
+              my={"2"}
+              fontWeight={"black"}
+              display="inline-flex"
+              alignItems={"center"}
+            >
+              <Box mr={"2"} display={"inline"}>
+                {additionalInfo?.setU ? <FaUnlock /> : <FaLock />}
+              </Box>
+              Даалгаврын{" "}
+              <Text ml={"2"} color={"pink.400"}>
+                хариу
+              </Text>
             </Text>
           )}
+          {additionalInfo?.setU && (
+            <Box>
+              <Text>{additionalInfo.privateInfo}</Text>
+              <Text as={"u"} _hover={{ color: "blue" }}>
+                <Link href={additionalInfo?.privateLink} isExternal>
+                  LINK : {additionalInfo?.privateLink}
+                </Link>
+              </Text>
+            </Box>
+          )}
           {/* <FaExternalLinkAlt /> */}
-          {buttonShow && (
+          {buttonShow && !(currentUser?.email == additionalInfo?.ownerMail) && (
             <Button onClick={sendReadyData}>Энэ даалгаврыг хийх</Button>
           )}
-          {currentUser.email == additionalInfo?.processingPerson && (
+          {currentUser?.email == additionalInfo?.processingPerson && (
             <Button onClick={onOpen}>Даалгаврыг илгээх</Button>
           )}
         </Box>
       </Container>
-      <Box>{Payment && <Box>end link baina</Box>}</Box>
+
       <Modal size={"5xl"} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Бэлэн даалгавар нэмэх</ModalHeader>
+          <ModalHeader>
+            <Box display={"flex"} alignItems="center">
+              <FaLock size={"20"} /> <Text ml={"3"}>Хариуг илгээх</Text>
+            </Box>
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Input
-              mb={"3px"}
-              variant="outline"
-              placeholder="Гарчиг жишээ нь : БИЕ ДААЛТ"
-              onChange={(e) => {
-                setTitle(e.target.value);
-              }}
-            />
-            <Input
-              mb={"3px"}
-              variant="outline"
-              placeholder="Хичээлийн нэр"
-              onChange={(e) => {
-                setClass(e.target.value);
-              }}
-            />
-
-            <Textarea
-              mb={"3px"}
-              placeholder="Нэмэлт тайлбараа энд үлдээнэ үү "
-              onChange={(e) => {
-                setMoreInfo(e.target.value);
-              }}
-            />
             {/* <Box display={"flex"} justifyContent="space-between" my={"2"}>
               <FaLock />
             </Box> */}
@@ -171,7 +192,7 @@ export default function HomworkOrder() {
               <Textarea
                 isrequired="true"
                 height={"20vh"}
-                placeholder="Нууцлал бүхий хэсэг "
+                placeholder="Шаардлагатай зүйлсийг оруулна уу"
                 onChange={(e) => {
                   setPrivateInfo(e.target.value);
                 }}
@@ -182,7 +203,7 @@ export default function HomworkOrder() {
               <Input
                 mb={"3px"}
                 variant="outline"
-                placeholder="Зураг файлын линкыг оруулна уу"
+                placeholder="Зураг файлын линкыг оруулна уу "
                 onChange={(e) => {
                   setPrivateLink(e.target.value);
                 }}
@@ -195,7 +216,7 @@ export default function HomworkOrder() {
               color={"white"}
               backgroundColor={"pink.400"}
               mr={3}
-              onClick={sendReadyData}
+              onClick={writeDoneWork}
             >
               ИЛГЭЭХ
             </Button>

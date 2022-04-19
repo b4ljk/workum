@@ -69,9 +69,9 @@ export const ProfileOrderCard = (props) => {
         </Box>
         <Divider my="3" />
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Box display="flex" alignItems="center">
+          <Box display="flex" w={"75%"} alignItems="center">
             <Avatar h="10" w="10" mr="2" src={props.processingPersonProfile} />
-            <Box maxWidth={"50%"} as={"span"}>
+            <Box maxWidth={"65%"} as={"span"}>
               {props.processingPerson}
               <Text fontSize={"sm"} color={"gray.400"}>
                 /Гүйцэтгэгч/
@@ -79,7 +79,7 @@ export const ProfileOrderCard = (props) => {
             </Box>
           </Box>
           <Box>
-            <Text>{props.timestamp}</Text>
+            <Text flexWrap={"nowrap"}>{props.timestamp}</Text>
           </Box>
         </Box>
       </LinkOverlay>
