@@ -123,7 +123,7 @@ export default function HomworkOrder() {
         </Box>
         <Box display={"flex"} flexDir="column">
           <Text fontWeight={"bold"}>
-            Эцэсийн хугацаа : {additionalInfo?.lastestDate}
+            Эцсийн хугацаа : {additionalInfo?.lastestDate}
           </Text>
           <Text fontWeight={"bold"}>
             Төлбөр: {additionalInfo?.setU ? "Төлсөн" : "Төлөөгүй"}
