@@ -91,11 +91,9 @@ export default function Profilepage() {
     const year = new Date(value.timestamp?.seconds * 1000)
       .getFullYear()
       .toString();
-    const month = new Date(value.timestamp?.seconds * 1000)
-      .getMonth()
-      .toString();
+    let month = new Date(value.timestamp?.seconds * 1000).getMonth().toString();
     const days = new Date(value.timestamp?.seconds * 1000).getDate().toString();
-    // month++;
+    month = parseInt(month) + 1;
     if (currentUser.email == value.ownerMail) {
       return (
         <ProfileOrderCard
@@ -130,7 +128,7 @@ export default function Profilepage() {
         <Box display={"flex"} alignItems={"center"}>
           <Avatar mr={"3"} src={currentUser?.photoURL} />
           <Text fontWeight={"bold"} fontSize={"2xl"}>
-            {currentUser?.displayName ?? currentUser?.email}
+            {(currentUser?.displayName ?? currentUser?.email).slice(0, 25)}
           </Text>
         </Box>
         <Divider my="3" />

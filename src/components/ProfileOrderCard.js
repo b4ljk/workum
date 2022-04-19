@@ -71,12 +71,12 @@ export const ProfileOrderCard = (props) => {
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex" alignItems="center">
             <Avatar h="10" w="10" mr="2" src={props.processingPersonProfile} />
-            <Text>
-              {props.processingPerson}{" "}
+            <Box maxWidth={"50%"} as={"span"}>
+              {props.processingPerson}
               <Text fontSize={"sm"} color={"gray.400"}>
                 /Гүйцэтгэгч/
               </Text>
-            </Text>
+            </Box>
           </Box>
           <Box>
             <Text>{props.timestamp}</Text>
