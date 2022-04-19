@@ -121,7 +121,12 @@ export default function Profilepage() {
       <Box mb={"15"}>
         <Navbar />
       </Box>
-      <Box alignSelf={"center"} p="10" minWidth={{ md: "xl", base: "100%" }}>
+      <Box
+        maxW={"110%"}
+        alignSelf={"center"}
+        p="10"
+        minWidth={{ md: "xl", base: "100%" }}
+      >
         <Box display={"flex"} alignItems={"center"}>
           <Avatar mr={"3"} src={currentUser?.photoURL} />
           <Text fontWeight={"bold"} fontSize={"2xl"}>
