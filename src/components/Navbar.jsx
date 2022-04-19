@@ -40,11 +40,20 @@ export function Navbar() {
         mx="auto"
         // spacing={}
       >
-        <Navlink to="/" name="NELP" />
+        <Navlink to="/" name="WORKUM" />
         <Spacer />
         <Box display={"flex"} flexDir={{ md: "row", base: "column" }}>
           <Box>{!currentUser && <Navlink to="/login" name="Нэвтрэх" />}</Box>
         </Box>
+        <IconButton
+          variant="ghost"
+          icon={useColorModeValue(
+            <FaSun size={"26"} />,
+            <FaMoon size={"22"} />
+          )}
+          onClick={toggleColorMode}
+          aria-label="toggle-dark-mode"
+        />
         {currentUser && (
           <Box bg={"transparent"}>
             <Navlink
@@ -52,6 +61,7 @@ export function Navbar() {
               to="/profile"
               name={"даалгаврууд"}
             />
+
             <Box bg={"transparent"} display={{ md: "none", base: "block" }}>
               <Menu>
                 <MenuButton fontSize={"26"} as={Button} variant={"outlined"}>
@@ -85,15 +95,6 @@ export function Navbar() {
             }}
           />
         )}
-        <IconButton
-          variant="ghost"
-          icon={useColorModeValue(
-            <FaSun size={"26"} />,
-            <FaMoon size={"22"} />
-          )}
-          onClick={toggleColorMode}
-          aria-label="toggle-dark-mode"
-        />
       </HStack>
     </Box>
   );
