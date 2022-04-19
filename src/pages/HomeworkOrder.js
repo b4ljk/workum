@@ -132,18 +132,20 @@ export default function HomworkOrder() {
           <Text>{additionalInfo?.additionalInfo}</Text>
 
           <Divider my={"3"} />
-          <Text
-            fontFamily={"heading"}
-            fontSize={"2xl"}
-            textTransform={"uppercase"}
-            my={"2"}
-            fontWeight={"black"}
-          >
-            Даалгаврын{" "}
-            <Text display={"inline"} color={"pink.400"}>
-              хариу
+          {additionalInfo?.setU && (
+            <Text
+              fontFamily={"heading"}
+              fontSize={"2xl"}
+              textTransform={"uppercase"}
+              my={"2"}
+              fontWeight={"black"}
+            >
+              Даалгаврын{" "}
+              <Text display={"inline"} color={"pink.400"}>
+                хариу
+              </Text>
             </Text>
-          </Text>
+          )}
           {additionalInfo?.setU && (
             <Text as={"u"} _hover={{ color: "blue" }}>
               <Link href={additionalInfo?.privateLink} isExternal>
