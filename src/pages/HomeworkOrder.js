@@ -86,14 +86,14 @@ export default function HomworkOrder() {
     const unsub3 = onSnapshot(q3, (doc) => {
       setAdditionalInfo(doc.data());
     });
+    if (setAdditionalInfo?.setU == true) {
+      const q4 = query(doc(db, "num", "numedu", "Private", `${UniqueNum}`));
+      const unsub4 = onSnapshot(q4, (doc) => {
+        setFullInfo(doc.data());
+      });
+      return unsub4;
+    }
     return unsub3;
-  }, []);
-  useEffect(() => {
-    const q4 = query(doc(db, "num", "numedu", "Private", `${UniqueNum}`));
-    const unsub4 = onSnapshot(q4, (doc) => {
-      setFullInfo(doc.data());
-    });
-    return unsub4;
   }, []);
 
   const sendReadyData = () => {
