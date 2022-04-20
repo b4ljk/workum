@@ -84,6 +84,7 @@ export default function Ordered() {
       setU: setU,
       ownerMail: currentUser?.email,
       timestamp: serverTimestamp(),
+      isDone: false,
     });
     // onNewClassClose();
     onClose();

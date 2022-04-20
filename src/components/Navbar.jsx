@@ -16,7 +16,14 @@ import {
   Button,
 } from "@chakra-ui/react";
 import React from "react";
-import { FaMoon, FaSun, FaSignOutAlt, FaUserCircle } from "react-icons/fa";
+import {
+  FaMoon,
+  FaSun,
+  FaSignOutAlt,
+  FaUserCircle,
+  FaAngleDown,
+  FaCog,
+} from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { useAuth } from "../contexts/AuthContext";
 import Navlink from "./Navlink";
@@ -56,19 +63,15 @@ export function Navbar() {
         />
         {currentUser && (
           <Box bg={"transparent"}>
-            <Navlink
-              display={{ md: "block", base: "none" }}
-              to="/profile"
-              name={"даалгаврууд"}
-            />
-
-            <Box bg={"transparent"} display={{ md: "none", base: "block" }}>
+            <Box bg={"transparent"} display={{ md: "block", base: "block" }}>
               <Menu>
                 <MenuButton fontSize={"26"} as={Button} variant={"outlined"}>
-                  <FaUserCircle />
+                  <FaCog size={"24"} />
                 </MenuButton>
                 <MenuList>
                   <MenuItem as={Navlink} to="/profile" name="профайл" />
+                  <MenuDivider />
+                  <MenuItem as={Navlink} to="/ordered" name="Даалгавар" />
                   <MenuDivider />
                   <MenuItem
                     as={Navlink}
@@ -83,17 +86,6 @@ export function Navbar() {
               </Menu>
             </Box>
           </Box>
-        )}
-        {currentUser && (
-          <Navlink
-            display={{ md: "block", base: "none" }}
-            to="/logout"
-            name={<FaSignOutAlt size={"26"} />}
-            onClick={async (e) => {
-              e.preventDefault();
-              await logout();
-            }}
-          />
         )}
       </HStack>
     </Box>

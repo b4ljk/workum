@@ -13,6 +13,7 @@ import {
   InputLeftElement,
   Divider,
   Link,
+  Avatar,
 } from "@chakra-ui/react";
 import {
   Modal,
@@ -56,7 +57,7 @@ export default function HomworkOrder() {
   const [privateInfo, setPrivateInfo] = useState();
   const [privateLink, setPrivateLink] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const [fullInfo, setFullInfo] = useState();
   const history = useHistory();
   const toast = useToast();
   const showToast = () => {
@@ -70,7 +71,7 @@ export default function HomworkOrder() {
     });
   };
   const [additionalInfo, setAdditionalInfo] = useState();
-  console.log(additionalInfo);
+  // console.log(additionalInfo);
   function useQuery() {
     const { search } = useLocation();
 
@@ -87,6 +88,14 @@ export default function HomworkOrder() {
     });
     return unsub3;
   }, []);
+  useEffect(() => {
+    const q4 = query(doc(db, "num", "numedu", "Private", `${UniqueNum}`));
+    const unsub4 = onSnapshot(q4, (doc) => {
+      setFullInfo(doc.data());
+    });
+    return unsub4;
+  }, []);
+
   const sendReadyData = () => {
     updateDoc(doc(db, "num", "numedu", "Orders", `${UniqueNum}`), {
       processingPerson: currentUser?.email,
@@ -94,16 +103,18 @@ export default function HomworkOrder() {
     });
     // onNewClassClose();
     showToast();
-    history.push("/profile");
   };
   const writeDoneWork = () => {
-    updateDoc(doc(db, "num", "numedu", "Orders", `${UniqueNum}`), {
+    setDoc(doc(db, "num", "numedu", "Private", `${UniqueNum}`), {
       privateInfo: privateInfo,
       privateLink: privateLink,
     });
+    updateDoc(doc(db, "num", "numedu", "Orders", `${UniqueNum}`), {
+      isDone: true,
+    });
     // onNewClassClose();
     showToast();
-    history.push("/profile");
+    onClose();
   };
   let buttonShow = true;
 
@@ -123,19 +134,33 @@ export default function HomworkOrder() {
         </Box>
         <Box display={"flex"} flexDir="column">
           <Text fontWeight={"bold"}>
+            Гүйцэтгэгч :{" "}
+            <Text color={"pink.400"} display={"inline"}>
+              {additionalInfo?.processingPerson ?? "Одоохондоо алга"}
+            </Text>
+          </Text>
+          <Text fontWeight={"bold"}>
+            Гүйцэтгэл :{" "}
+            <Text color={"pink.400"} display={"inline"}>
+              {additionalInfo?.processingPerson &&
+                (additionalInfo?.isDone ? "Дууссан" : "Гүйцэтгэж байна.")}
+            </Text>
+          </Text>
+          <Text fontWeight={"bold"}>
+            Төлбөр: {additionalInfo?.setU ? "Төлсөн" : "Төлөөгүй"}
+          </Text>
+          <Text fontWeight={"bold"}>
             Эцсийн хугацаа : {additionalInfo?.lastestDate}
           </Text>
           <Text fontWeight={"bold"}>
             Хичээлийн нэр : {additionalInfo?.class}
           </Text>
-          <Text fontWeight={"bold"}>
-            Төлбөр: {additionalInfo?.setU ? "Төлсөн" : "Төлөөгүй"}
-          </Text>
+
           <Divider my={"3"} />
           <Text>{additionalInfo?.additionalInfo}</Text>
 
           <Divider my={"3"} />
-          {additionalInfo?.privateLink && (
+          {additionalInfo?.isDone && (
             <Text
               fontFamily={"heading"}
               fontSize={"2xl"}
@@ -146,7 +171,11 @@ export default function HomworkOrder() {
               alignItems={"center"}
             >
               <Box mr={"2"} display={"inline"}>
-                {additionalInfo?.setU ? <FaUnlock /> : <FaLock />}
+                {additionalInfo?.setU && additionalInfo?.isDone ? (
+                  <FaUnlock />
+                ) : (
+                  <FaLock />
+                )}
               </Box>
               Даалгаврын{" "}
               <Text ml={"2"} color={"pink.400"}>
@@ -156,10 +185,10 @@ export default function HomworkOrder() {
           )}
           {additionalInfo?.setU && (
             <Box>
-              <Text>{additionalInfo.privateInfo}</Text>
+              <Text>{fullInfo?.privateInfo}</Text>
               <Text as={"u"} _hover={{ color: "blue" }}>
-                <Link href={additionalInfo?.privateLink} isExternal>
-                  LINK : {additionalInfo?.privateLink}
+                <Link href={fullInfo?.privateLink} isExternal>
+                  LINK : {fullInfo?.privateLink}
                 </Link>
               </Text>
             </Box>
