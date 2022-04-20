@@ -33,13 +33,13 @@ export default function Profilepage() {
   let currenTaskCounter = 0;
 
   const { orderData, readyData } = Data();
-  console.log(orderData);
+
   let activecards;
   const [active, setActive] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   const { currentUser } = useAuth();
-  console.log(currentUser);
+
   var buttonBg, buttonBg2;
   const handleActive2 = () => {
     setActive(true);
