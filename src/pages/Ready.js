@@ -127,7 +127,7 @@ export default function Ready() {
           <ModalCloseButton />
           <ModalBody>
             <Input
-              mb={"3px"}
+              mb={"1.5"}
               variant="outline"
               placeholder="Гарчиг жишээ нь : БИЕ ДААЛТ"
               onChange={(e) => {
@@ -135,14 +135,14 @@ export default function Ready() {
               }}
             />
             <Input
-              mb={"3px"}
+              mb={"1.5"}
               variant="outline"
               placeholder="Хичээлийн нэр"
               onChange={(e) => {
                 setClass(e.target.value);
               }}
             />
-            <InputGroup mb={"3px"}>
+            <InputGroup mb={"1.5"}>
               <InputRightElement
                 pointerEvents="none"
                 color="gray.300"
@@ -159,13 +159,13 @@ export default function Ready() {
             </InputGroup>
 
             <Textarea
-              mb={"3px"}
+              mb={"1.5"}
               placeholder="Нэмэлт тайлбараа энд үлдээнэ үү "
               onChange={(e) => {
                 setAdditionalInfo(e.target.value);
               }}
             />
-            <InputGroup>
+            <InputGroup mb={"1.5"}>
               {/* <InputRightElement children={<FaLock />} /> */}
               <Textarea
                 height={"20vh"}

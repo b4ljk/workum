@@ -86,15 +86,18 @@ export default function HomworkOrder() {
     const unsub3 = onSnapshot(q3, (doc) => {
       setAdditionalInfo(doc.data());
     });
-    if (setAdditionalInfo?.setU == true) {
-      const q4 = query(doc(db, "num", "numedu", "Private", `${UniqueNum}`));
+    return unsub3;
+  }, []);
+
+  useEffect(() => {
+    const q4 = query(doc(db, "num", "numedu", "Private", `${UniqueNum}`));
+    if (additionalInfo?.setU == true) {
       const unsub4 = onSnapshot(q4, (doc) => {
         setFullInfo(doc.data());
       });
       return unsub4;
     }
-    return unsub3;
-  }, []);
+  }, [additionalInfo?.setU]);
 
   const sendReadyData = () => {
     updateDoc(doc(db, "num", "numedu", "Orders", `${UniqueNum}`), {
@@ -216,7 +219,7 @@ export default function HomworkOrder() {
             {/* <Box display={"flex"} justifyContent="space-between" my={"2"}>
               <FaLock />
             </Box> */}
-            <InputGroup>
+            <InputGroup mb={"2"}>
               {/* <InputLeftElement children={<FaLock />} /> */}
               <Textarea
                 isrequired="true"

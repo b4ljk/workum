@@ -19,6 +19,7 @@ export const OrderCard = (props) => {
   return (
     isAvailable && (
       <LinkBox
+        bg={"whiteAlpha.50"}
         boxShadow="base"
         p="4"
         borderRadius="10"

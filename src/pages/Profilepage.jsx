@@ -49,12 +49,12 @@ export default function Profilepage() {
     setActive(false);
   };
   if (!active) {
-    buttonBg = "gray.500";
+    buttonBg = "pink.400";
     buttonBg2 = "transparent";
     activecards = <WorkCard />;
   } else {
     buttonBg = "transparent";
-    buttonBg2 = "gray.500";
+    buttonBg2 = "pink.400";
   }
   const meDoing = orderData?.map((value) => {
     value.timestamp?.toDate();

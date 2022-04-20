@@ -17,6 +17,7 @@ import {
   Textarea,
   showToast,
   useToast,
+  Tooltip,
 } from "@chakra-ui/react";
 import {
   Modal,
@@ -153,7 +154,8 @@ export default function Ordered() {
             <ModalCloseButton />
             <ModalBody>
               <Input
-                mb={"2px"}
+                isRequired
+                mb={"2"}
                 variant="outline"
                 placeholder="Гарчиг"
                 onChange={(e) => {
@@ -161,14 +163,15 @@ export default function Ordered() {
                 }}
               />
               <Input
-                mb={"3px"}
+                isRequired
+                mb={"2"}
                 variant="outline"
                 placeholder="Хичээлийн нэр"
                 onChange={(e) => {
                   setClass(e.target.value);
                 }}
               />
-              <InputGroup mb={"2px"}>
+              <InputGroup mb={"2"}>
                 <InputRightElement
                   pointerEvents="none"
                   color="gray.300"
@@ -176,6 +179,7 @@ export default function Ordered() {
                   children="₮"
                 />
                 <Input
+                  isRequired
                   type={"number"}
                   placeholder="Санал болгох үнэ"
                   onChange={(e) => {
@@ -183,7 +187,7 @@ export default function Ordered() {
                   }}
                 />
               </InputGroup>
-              <InputGroup mb={"2px"}>
+              <InputGroup mb={"2"}>
                 <InputLeftAddon
                   bg={"whiteAlpha.50"}
                   pointerEvents="none"
@@ -191,6 +195,7 @@ export default function Ordered() {
                   children="Сүүлийн хугацаа"
                 />
                 <Input
+                  isRequired
                   type={"date"}
                   onChange={(e) => {
                     setDate(e.target.value);
@@ -206,14 +211,29 @@ export default function Ordered() {
             </ModalBody>
 
             <ModalFooter>
-              <Button
-                color={"white"}
-                backgroundColor={"pink.400"}
-                mr={3}
-                onClick={sendReadyData}
-              >
-                Нэмэх
-              </Button>
+              {title && price && date && additionalInfo ? (
+                <Button
+                  color={"white"}
+                  backgroundColor={"pink.400"}
+                  mr={3}
+                  onClick={sendReadyData}
+                >
+                  Нэмэх
+                </Button>
+              ) : (
+                <Tooltip label="Бүх талбар бүрэн байх шаардлагатай .">
+                  <Button
+                    _hover={{
+                      bg: "red.500",
+                    }}
+                    color={"white"}
+                    backgroundColor={"gray.300"}
+                    mr={3}
+                  >
+                    Нэмэх
+                  </Button>
+                </Tooltip>
+              )}
             </ModalFooter>
           </ModalContent>
         </Modal>

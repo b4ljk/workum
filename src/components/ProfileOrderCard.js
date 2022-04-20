@@ -19,6 +19,7 @@ export const ProfileOrderCard = (props) => {
     <LinkBox
       boxShadow="base"
       p="4"
+      bg={"whiteAlpha.50"}
       borderRadius="10"
       w={{ md: "xl", base: "100%" }}
       mt="5"
