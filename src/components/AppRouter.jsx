@@ -22,7 +22,7 @@ import Registerpage from "../pages/Registerpage";
 import ResetPasswordPage from "../pages/ResetPasswordPage";
 import TestPage from "../pages/TestPage";
 import { collection, query, onSnapshot, doc } from "firebase/firestore";
-import adminPanel from "../pages/adminpanel";
+import AdminPanel from "../pages/Adminpanel";
 
 export default function AppRouter(props) {
   return (
@@ -37,7 +37,7 @@ export default function AppRouter(props) {
           <ProtectedRoute exact path="/homeworks" component={Homeworks} />
           <ProtectedRoute exact path="/ordered" component={Ordered} />
           <ProtectedRoute exact path="/ready" component={Ready} />
-          <AdminRoute exact path="/admin" component={adminPanel} />
+          <AdminRoute exact path="/admin" component={AdminPanel} />
           <Route exact path="/homeworkorder" component={HomworkOrder} />
 
           <ProtectedRoute

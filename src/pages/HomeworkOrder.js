@@ -145,6 +145,21 @@ export default function HomworkOrder() {
         processingPersonProfile: currentUser?.photoURL,
       }
     );
+    setDoc(doc(db, "num", "Processing", `foradmin`, `${UniqueNum}`), {
+      uniqueid: UniqueNum,
+      ownerProfile: additionalInfo?.ownerProfile,
+      title: additionalInfo?.title,
+      price: additionalInfo?.price,
+      additionalInfo: additionalInfo?.additionalInfo,
+      lastestDate: additionalInfo?.lastestDate,
+      class: additionalInfo?.class,
+      setU: additionalInfo?.setU,
+      ownerMail: additionalInfo?.ownerMail,
+      timestamp: serverTimestamp(),
+      isDone: false,
+      processingPerson: currentUser?.email,
+      processingPersonProfile: currentUser?.photoURL,
+    });
     deleteDoc(doc(db, "num", "numedu", "Orders", `${UniqueNum}`));
     history.push(`/homeworkorder?uniqueid=${UniqueNum}&type=Processing`);
     // onNewClassClose();
@@ -155,6 +170,11 @@ export default function HomworkOrder() {
       privateInfo: privateInfo,
       privateLink: privateLink,
     });
+    updateDoc(doc(db, "num", "Processing", "foradmin", `${UniqueNum}`), {
+      privateInfo: privateInfo,
+      privateLink: privateLink,
+    });
+
     updateDoc(
       doc(
         db,
@@ -173,6 +193,9 @@ export default function HomworkOrder() {
         isDone: true,
       }
     );
+    updateDoc(doc(db, "num", "Processing", "foradmin", `${UniqueNum}`), {
+      isDone: true,
+    });
     // onNewClassClose();
     showToast();
     onClose();
