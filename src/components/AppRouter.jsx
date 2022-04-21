@@ -14,6 +14,7 @@ import Homepage from "../pages/Homepage";
 import HomworkOrder from "../pages/HomeworkOrder";
 import Homeworks from "../pages/Homeworks";
 import Loginpage from "../pages/Loginpage";
+import AdminPanel from "../pages/adminpanel";
 import NotfoundPage from "../pages/NotfoundPage";
 import Ordered from "../pages/Ordered";
 import Profilepage from "../pages/Profilepage";
@@ -22,7 +23,6 @@ import Registerpage from "../pages/Registerpage";
 import ResetPasswordPage from "../pages/ResetPasswordPage";
 import TestPage from "../pages/TestPage";
 import { collection, query, onSnapshot, doc } from "firebase/firestore";
-import AdminPanel from "../pages/Adminpanel";
 
 export default function AppRouter(props) {
   return (
