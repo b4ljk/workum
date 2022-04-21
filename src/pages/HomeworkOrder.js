@@ -46,6 +46,7 @@ import {
   serverTimestamp,
   arrayUnion,
   setDoc,
+  deleteDoc,
 } from "firebase/firestore";
 
 export default function HomworkOrder() {
@@ -80,18 +81,36 @@ export default function HomworkOrder() {
   let myquery = useQuery();
   const [Payment, Setpayment] = useState(false);
   var UniqueNum = myquery.get("uniqueid");
+  var incomingType = myquery.get("type");
+  // if(incomingType=="Waiting"){
+  //   var dataOwnerMail=additionalInfo.ownerMail;
+  //   var dataProcessorMail=additionalInfo.ownerMail;
+  // }else if(incomingType=="Processing"){ }
 
   useEffect(() => {
-    const q3 = query(doc(db, "num", "numedu", "Orders", `${UniqueNum}`));
-    const unsub3 = onSnapshot(q3, (doc) => {
-      setAdditionalInfo(doc.data());
-    });
-    return unsub3;
-  }, []);
+    if (currentUser?.email != null) {
+      const q3 = query(
+        doc(db, "num", incomingType, currentUser.email, `${UniqueNum}`)
+      );
+      const unsub3 = onSnapshot(q3, (doc) => {
+        setAdditionalInfo(doc.data());
+      });
+      return unsub3;
+    }
+  }, [currentUser?.email, incomingType]);
+  useEffect(() => {
+    if (incomingType == "Main") {
+      const q3 = query(doc(db, "num", "numedu", "Orders", `${UniqueNum}`));
+      const unsub3 = onSnapshot(q3, (doc) => {
+        setAdditionalInfo(doc.data());
+      });
+      return unsub3;
+    }
+  }, [currentUser?.email]);
 
   useEffect(() => {
-    const q4 = query(doc(db, "num", "numedu", "Private", `${UniqueNum}`));
     if (additionalInfo?.setU == true) {
+      const q4 = query(doc(db, "num", "numedu", "Private", `${UniqueNum}`));
       const unsub4 = onSnapshot(q4, (doc) => {
         setFullInfo(doc.data());
       });
@@ -100,10 +119,34 @@ export default function HomworkOrder() {
   }, [additionalInfo?.setU]);
 
   const sendReadyData = () => {
-    updateDoc(doc(db, "num", "numedu", "Orders", `${UniqueNum}`), {
-      processingPerson: currentUser?.email,
-      processingPersonProfile: currentUser?.photoURL,
-    });
+    updateDoc(
+      doc(db, "num", "Waiting", `${additionalInfo?.ownerMail}`, `${UniqueNum}`),
+      {
+        processingPerson: currentUser?.email,
+        processingPersonProfile: currentUser?.photoURL,
+      }
+    );
+
+    setDoc(
+      doc(db, "num", "Processing", `${currentUser?.email}`, `${UniqueNum}`),
+      {
+        uniqueid: UniqueNum,
+        ownerProfile: additionalInfo?.ownerProfile,
+        title: additionalInfo?.title,
+        price: additionalInfo?.price,
+        additionalInfo: additionalInfo?.additionalInfo,
+        lastestDate: additionalInfo?.lastestDate,
+        class: additionalInfo?.class,
+        setU: additionalInfo?.setU,
+        ownerMail: additionalInfo?.ownerMail,
+        timestamp: serverTimestamp(),
+        isDone: false,
+        processingPerson: currentUser?.email,
+        processingPersonProfile: currentUser?.photoURL,
+      }
+    );
+    deleteDoc(doc(db, "num", "numedu", "Orders", `${UniqueNum}`));
+    history.push(`/homeworkorder?uniqueid=${UniqueNum}&type=Processing`);
     // onNewClassClose();
     showToast();
   };
@@ -112,9 +155,24 @@ export default function HomworkOrder() {
       privateInfo: privateInfo,
       privateLink: privateLink,
     });
-    updateDoc(doc(db, "num", "numedu", "Orders", `${UniqueNum}`), {
-      isDone: true,
-    });
+    updateDoc(
+      doc(
+        db,
+        "num",
+        "Processing",
+        additionalInfo?.processingPerson,
+        `${UniqueNum}`
+      ),
+      {
+        isDone: true,
+      }
+    );
+    updateDoc(
+      doc(db, "num", "Waiting", additionalInfo?.ownerMail, `${UniqueNum}`),
+      {
+        isDone: true,
+      }
+    );
     // onNewClassClose();
     showToast();
     onClose();

@@ -26,7 +26,7 @@ export const ProfileClientCard = (props) => {
     >
       <LinkOverlay
         as={ReachLink}
-        to={"homeworkorder?uniqueid=" + props.uniquekey}
+        to={"homeworkorder?uniqueid=" + props.uniquekey + "&type=Processing"}
       >
         <Box display="flex" flexDir={{ md: "row", base: "column" }}>
           <Box mr="5" flex="1">

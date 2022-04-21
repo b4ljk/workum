@@ -6,6 +6,8 @@ import {
   Switch,
   useLocation,
 } from "react-router-dom";
+import { db } from "../utils/init-firebase";
+import { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import ForgotPasswordPage from "../pages/ForgotPasswordPage";
 import Homepage from "../pages/Homepage";
@@ -19,6 +21,8 @@ import Ready from "../pages/Ready";
 import Registerpage from "../pages/Registerpage";
 import ResetPasswordPage from "../pages/ResetPasswordPage";
 import TestPage from "../pages/TestPage";
+import { collection, query, onSnapshot, doc } from "firebase/firestore";
+import adminPanel from "../pages/adminpanel";
 
 export default function AppRouter(props) {
   return (
@@ -33,7 +37,9 @@ export default function AppRouter(props) {
           <ProtectedRoute exact path="/homeworks" component={Homeworks} />
           <ProtectedRoute exact path="/ordered" component={Ordered} />
           <ProtectedRoute exact path="/ready" component={Ready} />
+          <AdminRoute exact path="/admin" component={adminPanel} />
           <Route exact path="/homeworkorder" component={HomworkOrder} />
+
           <ProtectedRoute
             exact
             path="/forgot-password"
@@ -54,9 +60,8 @@ export default function AppRouter(props) {
 function ProtectedRoute(props) {
   const { currentUser } = useAuth();
   const { path } = props;
-  console.log("path", path);
+
   const location = useLocation();
-  console.log("location state", location.state);
 
   if (
     path === "/login" ||
@@ -70,6 +75,7 @@ function ProtectedRoute(props) {
       <Route {...props} />
     );
   }
+
   return currentUser ? (
     <Route {...props} />
   ) : (
@@ -80,4 +86,43 @@ function ProtectedRoute(props) {
       }}
     />
   );
+}
+
+function AdminRoute(props) {
+  const [adminData, setAdminData] = useState();
+  const [isAdmin, setisAdmin] = useState(null);
+
+  useEffect(() => {
+    const q5 = query(collection(db, "num", "Admin", "Admins"));
+    const unsub5 = onSnapshot(q5, (querySnapshot) => {
+      let tmpArray = [];
+      querySnapshot.forEach((doc) => {
+        tmpArray.push({ ...doc.data(), id: doc.id });
+      });
+      setAdminData(tmpArray);
+    });
+    return unsub5;
+  }, []);
+
+  const { currentUser } = useAuth();
+  const { path } = props;
+
+  const location = useLocation();
+
+  useEffect(() => {
+    for (let i = 0; i < adminData?.length; i++) {
+      if (currentUser?.uid === adminData[i].uid) {
+        setisAdmin(true);
+      } else setisAdmin(false);
+    }
+  }, [adminData]);
+
+  if (isAdmin == true) {
+    console.log("fuuuuuuuuuuck");
+    return <Route {...props} />;
+  } else if (isAdmin == false && adminData) {
+    return <Redirect to={"/profile"} />;
+  }
+
+  return null;
 }

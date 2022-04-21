@@ -32,7 +32,7 @@ import { ProfileClientCard } from "../components/ProfileClientCard";
 export default function Profilepage() {
   let currenTaskCounter = 0;
 
-  const { orderData, readyData } = Data();
+  const { processingData, waitingData } = Data();
 
   let activecards;
   const [active, setActive] = useState(false);
@@ -56,7 +56,7 @@ export default function Profilepage() {
     buttonBg = "transparent";
     buttonBg2 = "pink.400";
   }
-  const meDoing = orderData?.map((value) => {
+  const meDoing = processingData?.map((value) => {
     value.timestamp?.toDate();
     const year = new Date(value.timestamp?.seconds * 1000)
       .getFullYear()
@@ -64,27 +64,24 @@ export default function Profilepage() {
     let month = new Date(value.timestamp?.seconds * 1000).getMonth().toString();
     const days = new Date(value.timestamp?.seconds * 1000).getDate().toString();
     month = parseInt(month) + 1;
-    if (currentUser.email == value.processingPerson) {
-      currenTaskCounter++;
-      console.log(currenTaskCounter);
-      return (
-        <ProfileClientCard
-          uniquekey={value.uniqueid}
-          title={value.title}
-          price={value.price}
-          additionalInfo={value.additionalInfo}
-          duedate={value.lastestDate}
-          classname={value.class}
-          ownerMail={value.ownerMail}
-          Udata={value.setU}
-          timestamp={year + "-" + month + "-" + days}
-          ownerProfile={value.ownerProfile}
-          class={value.class}
-        />
-      );
-    }
+
+    return (
+      <ProfileClientCard
+        uniquekey={value.uniqueid}
+        title={value.title}
+        price={value.price}
+        additionalInfo={value.additionalInfo}
+        duedate={value.lastestDate}
+        classname={value.class}
+        ownerMail={value.ownerMail}
+        Udata={value.setU}
+        timestamp={year + "-" + month + "-" + days}
+        ownerProfile={value.ownerProfile}
+        class={value.class}
+      />
+    );
   });
-  const orders = orderData?.map((value) => {
+  const orders = waitingData?.map((value) => {
     value.timestamp?.toDate();
     const year = new Date(value.timestamp?.seconds * 1000)
       .getFullYear()
@@ -92,24 +89,22 @@ export default function Profilepage() {
     let month = new Date(value.timestamp?.seconds * 1000).getMonth().toString();
     const days = new Date(value.timestamp?.seconds * 1000).getDate().toString();
     month = parseInt(month) + 1;
-    if (currentUser.email == value.ownerMail) {
-      return (
-        <ProfileOrderCard
-          uniquekey={value.uniqueid}
-          title={value.title}
-          price={value.price}
-          additionalInfo={value.additionalInfo}
-          duedate={value.lastestDate}
-          classname={value.class}
-          ownerMail={value.ownerMail}
-          Udata={value.setU}
-          timestamp={year + "-" + month + "-" + days}
-          processingPerson={value.processingPerson}
-          processingPersonProfile={value.processingPersonProfile}
-          class={value.class}
-        />
-      );
-    }
+    return (
+      <ProfileOrderCard
+        uniquekey={value.uniqueid}
+        title={value.title}
+        price={value.price}
+        additionalInfo={value.additionalInfo}
+        duedate={value.lastestDate}
+        classname={value.class}
+        ownerMail={value.ownerMail}
+        Udata={value.setU}
+        timestamp={year + "-" + month + "-" + days}
+        processingPerson={value.processingPerson}
+        processingPersonProfile={value.processingPersonProfile}
+        class={value.class}
+      />
+    );
   });
 
   return (

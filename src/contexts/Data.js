@@ -1,16 +1,20 @@
 import { useState, useEffect } from "react";
 import { db } from "../utils/init-firebase";
 import { collection, query, onSnapshot } from "firebase/firestore";
+import { useAuth } from "../contexts/AuthContext";
 
 export const Data = () => {
+  const { currentUser } = useAuth();
   const [orderData, setOrderData] = useState();
-  const [readyData, setReadyData] = useState();
-  const [reviewData, setReviewData] = useState();
+  const [waitingData, setwaitingData] = useState();
+  const [processingData, setprocessingData] = useState();
 
   useEffect(() => {
     const q = query(collection(db, "num", "numedu", "Orders"));
-    const q2 = query(collection(db, "num", "numedu", "readyClass"));
-
+    const q2 = query(collection(db, "num", "Waiting", `${currentUser?.email}`));
+    const q3 = query(
+      collection(db, "num", "Processing", `${currentUser?.email}`)
+    );
     const unsub = onSnapshot(q, (querySnapshot) => {
       let tmpArray = [];
       querySnapshot.forEach((doc) => {
@@ -24,16 +28,15 @@ export const Data = () => {
       querySnapshot.forEach((doc) => {
         tmpArray.push({ ...doc.data(), id: doc.id });
       });
-      setReadyData(tmpArray);
+      setwaitingData(tmpArray);
     });
 
-    const q3 = query(collection(db, "num", "numedu", "reviews"));
     const unsub3 = onSnapshot(q3, (querySnapshot) => {
       let tmpArray = [];
       querySnapshot.forEach((doc) => {
         tmpArray.push({ ...doc.data(), id: doc.id });
       });
-      setReviewData(tmpArray);
+      setprocessingData(tmpArray);
     });
 
     return () => {
@@ -43,5 +46,5 @@ export const Data = () => {
     };
   }, []);
 
-  return { orderData, readyData, reviewData };
+  return { orderData, waitingData, processingData };
 };
