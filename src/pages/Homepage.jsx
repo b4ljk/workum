@@ -50,20 +50,13 @@ export default function Homepage() {
               fontFamily={"heading"}
               textAlign={"center"}
               fontWeight="black"
-              fontSize="5xl"
+              fontSize={{ md: "5xl", base: "3xl", lg: "6xl" }}
             >
               гэрийн даалгавраа{" "}
-              <Text
-                display="inline"
-                color="pink.400"
-                fontWeight="black"
-                fontSize="5xl"
-              >
+              <Text display="inline" color="pink.400" fontWeight="black">
                 хийх шинэ
               </Text>{" "}
-              <Box display="inline" fontSize="5xl">
-                арга
-              </Box>
+              <Box display="inline">арга</Box>
             </Text>
           </Center>
 

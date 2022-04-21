@@ -87,6 +87,22 @@ export default function Ordered() {
       timestamp: serverTimestamp(),
       isDone: false,
     });
+    setDoc(
+      doc(db, "num", "Waiting", `${currentUser?.email}`, `${generatedId}`),
+      {
+        uniqueid: generatedId,
+        ownerProfile: currentUser?.photoURL,
+        title: title,
+        price: price,
+        additionalInfo: additionalInfo,
+        lastestDate: date,
+        class: Class,
+        setU: setU,
+        ownerMail: currentUser?.email,
+        timestamp: serverTimestamp(),
+        isDone: false,
+      }
+    );
     // onNewClassClose();
     onClose();
     showToast();
