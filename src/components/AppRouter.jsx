@@ -113,12 +113,12 @@ function AdminRoute(props) {
     for (let i = 0; i < adminData?.length; i++) {
       if (currentUser?.uid === adminData[i].uid) {
         setisAdmin(true);
+        return;
       } else setisAdmin(false);
     }
   }, [adminData]);
 
   if (isAdmin == true) {
-    console.log("fuuuuuuuuuuck");
     return <Route {...props} />;
   } else if (isAdmin == false && adminData) {
     return <Redirect to={"/profile"} />;
