@@ -97,7 +97,13 @@ export default function Homeworks() {
   //     return unsub4;
   //   }
   // }, [additionalInfo?.setU]);
-
+  useEffect(() => {
+    const q3 = query(doc(db, "num", "ready", "allclass", `${UniqueNum}`));
+    const unsub3 = onSnapshot(q3, (doc) => {
+      setAdditionalInfo(doc.data());
+    });
+    return unsub3;
+  }, [currentUser?.email]);
   const sendReadyData = () => {
     updateDoc(
       doc(db, "num", "Waiting", `${additionalInfo?.ownerMail}`, `${UniqueNum}`),
@@ -181,7 +187,7 @@ export default function Homeworks() {
     onClose();
   };
   let buttonShow = true;
-
+  console.log(additionalInfo);
   if (additionalInfo?.processingPerson != null) buttonShow = false;
   return (
     <Layout>
@@ -200,7 +206,7 @@ export default function Homeworks() {
           <Text fontWeight={"bold"}>
             Гүйцэтгэгч :{" "}
             <Text color={"pink.400"} display={"inline"}>
-              {additionalInfo?.processingPerson ?? "Одоохондоо алга"}
+              {additionalInfo?.ownerMail ?? "Одоохондоо алга"}
             </Text>
           </Text>
           <Text fontWeight={"bold"}>

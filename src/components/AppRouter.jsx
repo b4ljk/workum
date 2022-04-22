@@ -34,7 +34,7 @@ export default function AppRouter(props) {
           <ProtectedRoute exact path="/register" component={Registerpage} />
           <ProtectedRoute exact path="/profile" component={Profilepage} />
           <ProtectedRoute exact path="/test" component={TestPage} />
-          <ProtectedRoute exact path="/homeworks" component={Homeworks} />
+          <Route exact path="/homeworks" component={Homeworks} />
           <ProtectedRoute exact path="/ordered" component={Ordered} />
           <ProtectedRoute exact path="/ready" component={Ready} />
           <AdminRoute exact path="/admin" component={AdminPanel} />

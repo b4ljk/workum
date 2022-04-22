@@ -29,15 +29,22 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import React from "react";
-
+import { v4 as uuidv4 } from "uuid";
 import { Link, useLocation } from "react-router-dom";
 import { Layout } from "../components/Layout";
 import { WorkCard } from "../components/WorkCard";
 import { useAuth } from "../contexts/AuthContext";
 import { FaPlus, FaLink, FaLock } from "react-icons/fa";
 import { db } from "../utils/init-firebase";
-import { useState } from "react";
-import { addDoc, setDoc, doc, collection } from "firebase/firestore";
+import { useState, useEffect } from "react";
+import {
+  addDoc,
+  setDoc,
+  doc,
+  collection,
+  query,
+  onSnapshot,
+} from "firebase/firestore";
 export default function Ready() {
   const toast = useToast();
   const { currentUser } = useAuth();
@@ -48,6 +55,9 @@ export default function Ready() {
   const [privateInfo, setPrivateInfo] = useState();
   const [privateLink, setPrivateLink] = useState();
   const [ActiveButton, SetActiveButton] = useState(1);
+  const [freeData, setFreeData] = useState();
+  const [paidData, setPaidData] = useState();
+  const [teacher, setTeacher] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
   console.log(currentUser.photoURL);
   const showToast = () => {
@@ -61,17 +71,9 @@ export default function Ready() {
     });
   };
   const sendReadyData = () => {
-    setDoc(
-      doc(
-        db,
-        "num",
-        "numedu",
-        "readyClass",
-        `${Class}`,
-        `${currentUser?.email}`,
-        `${title}`
-      ),
-      {
+    const generatedId = uuidv4();
+    if (price <= 500) {
+      setDoc(doc(db, "num", "ready", "freeclass", `${generatedId}`), {
         title: title,
         class: Class,
         price: price,
@@ -80,12 +82,82 @@ export default function Ready() {
         privateLink: privateLink,
         photo: currentUser.photoURL,
         ownerName: currentUser.displayName,
-      }
-    );
+        uniqueId: generatedId,
+        teacher: teacher,
+      });
+    } else {
+      setDoc(doc(db, "num", "ready", "paidclass", `${generatedId}`), {
+        title: title,
+        class: Class,
+        price: price,
+        additionalInfo: additionalInfo,
+        privateInfo: privateInfo,
+        privateLink: privateLink,
+        photo: currentUser.photoURL,
+        ownerName: currentUser.displayName,
+        uniqueId: generatedId,
+        teacher: teacher,
+      });
+    }
     // onNewClassClose();
     onClose();
     showToast();
   };
+  useEffect(() => {
+    const q = query(collection(db, "num", "ready", "freeclass"));
+    const q1 = query(collection(db, "num", "ready", "paidclass"));
+    const unsub = onSnapshot(q, (querySnapshot) => {
+      let tmpArray = [];
+      querySnapshot.forEach((doc) => {
+        tmpArray.push({ ...doc.data(), id: doc.id });
+      });
+      setFreeData(tmpArray);
+    });
+    const unsub1 = onSnapshot(q1, (querySnapshot) => {
+      let tmpArray = [];
+      querySnapshot.forEach((doc) => {
+        tmpArray.push({ ...doc.data(), id: doc.id });
+      });
+      setPaidData(tmpArray);
+    });
+    return () => unsub, unsub1;
+  }, []);
+
+  console.log(freeData);
+  const freeWorks = freeData?.map((ready) => {
+    return (
+      <WorkCard
+        key={ready.uniqueId}
+        title={ready.title}
+        class={ready.class}
+        price={ready.price}
+        additionalInfo={ready.additionalInfo}
+        privateInfo={ready.privateInfo}
+        privateLink={ready.privateLink}
+        photo={ready.photo}
+        ownerName={ready.ownerName}
+        uniqueId={ready.uniqueId}
+        teacher={ready.teacher}
+      />
+    );
+  });
+  const paidWork = paidData?.map((ready) => {
+    return (
+      <WorkCard
+        key={ready.uniqueId}
+        title={ready.title}
+        class={ready.class}
+        price={ready.price}
+        additionalInfo={ready.additionalInfo}
+        privateInfo={ready.privateInfo}
+        privateLink={ready.privateLink}
+        photo={ready.photo}
+        ownerName={ready.ownerName}
+        uniqueId={ready.uniqueId}
+        teacher={ready.teacher}
+      />
+    );
+  });
   return (
     <Layout>
       {/* <Box display="flex" flexDir={{ md: "row", base: "column" }} mt="6">
@@ -138,11 +210,7 @@ export default function Ready() {
           Үнэтэй
         </Button>
       </Box>
-      <Box>
-        <WorkCard />
-        <WorkCard />
-        <WorkCard />
-      </Box>
+      <Box>{ActiveButton === 1 ? freeWorks : paidWork}</Box>
 
       <Modal size={"5xl"} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
@@ -164,6 +232,14 @@ export default function Ready() {
               placeholder="Хичээлийн нэр"
               onChange={(e) => {
                 setClass(e.target.value);
+              }}
+            />
+            <Input
+              mb={"1.5"}
+              variant="outline"
+              placeholder="Багшийн нэр"
+              onChange={(e) => {
+                setTeacher(e.target.value);
               }}
             />
             <InputGroup mb={"1.5"}>

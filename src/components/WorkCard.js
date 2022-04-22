@@ -12,7 +12,7 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { useLocation, Link as ReachLink, useParams } from "react-router-dom";
-export const WorkCard = () => {
+export const WorkCard = (props) => {
   return (
     <LinkBox
       boxShadow="base"
@@ -22,35 +22,36 @@ export const WorkCard = () => {
       w={{ md: "xl", base: "100%" }}
       mt="5"
     >
-      <LinkOverlay as={ReachLink} to="homeworks">
+      <LinkOverlay as={ReachLink} to={"homeworks?uniqueid=" + props.uniqueId}>
         <Box display="flex" flexDir={{ md: "row", base: "column" }}>
           <Box mr="5" flex="1">
             <Text fontWeight="bold" fontSize="2xl" py="2">
-              Түүх бие даалт
+              {props.title}
             </Text>
             <Text>
               <Text fontWeight={"bold"} display={"inline"}>
                 Хичээлийн нэр :{" "}
               </Text>
-              Түүх
+              {props.class}
+            </Text>
+            <Text>
+              <Text fontWeight={"bold"} display={"inline"}>
+                Үнэ:{" "}
+              </Text>
+              {props.price} ₮
             </Text>
             <Text>
               <Text fontWeight={"bold"} display={"inline"}>
                 Хэн багш дээр :{" "}
               </Text>
-              Б.Батням
+              {props.teacher}
             </Text>
             <Text>
               <Text fontWeight={"bold"} display={"inline"}>
                 {" "}
                 Нэмэлт тайлбар :{" "}
               </Text>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
-              euismod gravida velit, nec lobortis tortor venenatis in. Lorem
-              ipsum dolor sit amet, consectetur adipiscing elit. Cras ac mi ac
-              tellus posuere elementum ac vitae ipsum. Donec efficitur lacinia
-              leo at sodales. Nullam semper ornare velit, id mollis dolor
-              vehicula at.
+              {props.additionalInfo?.slice(0, 30)}
             </Text>
           </Box>
         </Box>
@@ -58,9 +59,9 @@ export const WorkCard = () => {
         <Divider my="3" />
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex" alignItems="center">
-            <Avatar h="10" w="10" mr="2" />
+            <Avatar h="10" w="10" mr="2" src={props.photo} />
             <Text>
-              Батаа{" "}
+              {props.ownerName ?? "Нэргүй"}
               <Text fontSize={"sm"} color={"gray.400"}>
                 /Гүйцэтгэгч/
               </Text>
