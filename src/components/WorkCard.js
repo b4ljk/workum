@@ -13,6 +13,12 @@ import {
 } from "@chakra-ui/react";
 import { useLocation, Link as ReachLink, useParams } from "react-router-dom";
 export const WorkCard = (props) => {
+  let toWhere;
+  if (props.isPaid === true) {
+    toWhere = "paidready";
+  } else {
+    toWhere = "homeworks";
+  }
   return (
     <LinkBox
       boxShadow="base"
@@ -24,7 +30,7 @@ export const WorkCard = (props) => {
     >
       <LinkOverlay
         as={ReachLink}
-        to={"homeworks?uniqueid=" + props.uniqueId + "&type=" + props.isPaid}
+        to={toWhere + "?uniqueid=" + props.uniqueId + "&type=" + props.isPaid}
       >
         <Box display="flex" flexDir={{ md: "row", base: "column" }}>
           <Box mr="5" flex="1">

@@ -1,78 +1,17 @@
-import {
-  Container,
-  Heading,
-  Text,
-  Box,
-  Spacer,
-  Button,
-  useToast,
-  Input,
-  InputGroup,
-  Textarea,
-  InputRightElement,
-  InputLeftElement,
-  Divider,
-  Link,
-  Avatar,
-} from "@chakra-ui/react";
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Container, Text, Box, Divider, Link } from "@chakra-ui/react";
 import React from "react";
 import { Layout } from "../components/Layout";
 import { useState, useEffect } from "react";
-import { FaExternalLinkAlt, FaLink, FaLock, FaUnlock } from "react-icons/fa";
-import {
-  BrowserRouter as Router,
-  useLocation,
-  useHistory,
-} from "react-router-dom";
+import { FaUnlock } from "react-icons/fa";
+import { BrowserRouter as Router, useLocation } from "react-router-dom";
 import { db } from "../utils/init-firebase";
 import { useAuth } from "../contexts/AuthContext";
-import {
-  collection,
-  query,
-  onSnapshot,
-  addDoc,
-  doc,
-  updateDoc,
-  serverTimestamp,
-  arrayUnion,
-  setDoc,
-  deleteDoc,
-} from "firebase/firestore";
+import { query, onSnapshot, doc } from "firebase/firestore";
 
 export default function Homeworks() {
-  const [title, setTitle] = useState();
   const { currentUser } = useAuth();
-  const [moreInfo, setMoreInfo] = useState();
-  const [Class, setClass] = useState();
-  const [price, setPrice] = useState();
-  const [privateInfo, setPrivateInfo] = useState();
-  const [privateLink, setPrivateLink] = useState();
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [fullInfo, setFullInfo] = useState();
-  const history = useHistory();
-  const toast = useToast();
-  const showToast = () => {
-    toast({
-      title: "Амжилттай",
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-      variant: "left-accent",
-      position: "top-right",
-    });
-  };
+
   const [additionalInfo, setAdditionalInfo] = useState();
-  // console.log(additionalInfo);
   function useQuery() {
     const { search } = useLocation();
 
@@ -82,29 +21,8 @@ export default function Homeworks() {
   const [Payment, Setpayment] = useState(false);
   var UniqueNum = myquery.get("uniqueid");
   var incomingType = myquery.get("type");
-  // if(incomingType=="Waiting"){
-  //   var dataOwnerMail=additionalInfo.ownerMail;
-  //   var dataProcessorMail=additionalInfo.ownerMail;
-  // }else if(incomingType=="Processing"){ }
 
-  ////private info read---------------------------------------------------------------------------------------------------------------------
-  // useEffect(() => {
-  //   if (additionalInfo?.setU == true) {
-  //     const q4 = query(doc(db, "num", "numedu", "Private", `${UniqueNum}`));
-  //     const unsub4 = onSnapshot(q4, (doc) => {
-  //       setFullInfo(doc.data());
-  //     });
-  //     return unsub4;
-  //   }
-  // }, [additionalInfo?.setU]);
   useEffect(() => {
-    if (incomingType == "true") {
-      const q3 = query(doc(db, "num", "ready", "paidclass", `${UniqueNum}`));
-      const unsub3 = onSnapshot(q3, (doc) => {
-        setAdditionalInfo(doc.data());
-      });
-      return unsub3;
-    }
     const q4 = query(doc(db, "num", "ready", "freeclass", `${UniqueNum}`));
     const unsub4 = onSnapshot(q4, (doc) => {
       setAdditionalInfo(doc.data());
@@ -112,88 +30,7 @@ export default function Homeworks() {
     return unsub4;
   }, [currentUser?.email]);
   console.log(additionalInfo);
-  const sendReadyData = () => {
-    updateDoc(
-      doc(db, "num", "Waiting", `${additionalInfo?.ownerMail}`, `${UniqueNum}`),
-      {
-        processingPerson: currentUser?.email,
-        processingPersonProfile: currentUser?.photoURL,
-      }
-    );
 
-    setDoc(
-      doc(db, "num", "Processing", `${currentUser?.email}`, `${UniqueNum}`),
-      {
-        uniqueid: UniqueNum,
-        ownerProfile: additionalInfo?.ownerProfile,
-        title: additionalInfo?.title,
-        price: additionalInfo?.price,
-        additionalInfo: additionalInfo?.additionalInfo,
-        lastestDate: additionalInfo?.lastestDate,
-        class: additionalInfo?.class,
-        setU: additionalInfo?.setU,
-        ownerMail: additionalInfo?.ownerMail,
-        timestamp: serverTimestamp(),
-        isDone: false,
-        processingPerson: currentUser?.email,
-        processingPersonProfile: currentUser?.photoURL,
-      }
-    );
-    setDoc(doc(db, "num", "Processing", `foradmin`, `${UniqueNum}`), {
-      uniqueid: UniqueNum,
-      ownerProfile: additionalInfo?.ownerProfile,
-      title: additionalInfo?.title,
-      price: additionalInfo?.price,
-      additionalInfo: additionalInfo?.additionalInfo,
-      lastestDate: additionalInfo?.lastestDate,
-      class: additionalInfo?.class,
-      setU: additionalInfo?.setU,
-      ownerMail: additionalInfo?.ownerMail,
-      timestamp: serverTimestamp(),
-      isDone: false,
-      processingPerson: currentUser?.email,
-      processingPersonProfile: currentUser?.photoURL,
-    });
-    deleteDoc(doc(db, "num", "numedu", "Orders", `${UniqueNum}`));
-    history.push(`/homeworkorder?uniqueid=${UniqueNum}&type=Processing`);
-    // onNewClassClose();
-    showToast();
-  };
-  const writeDoneWork = () => {
-    setDoc(doc(db, "num", "numedu", "Private", `${UniqueNum}`), {
-      privateInfo: privateInfo,
-      privateLink: privateLink,
-    });
-    updateDoc(doc(db, "num", "Processing", "foradmin", `${UniqueNum}`), {
-      privateInfo: privateInfo,
-      privateLink: privateLink,
-    });
-
-    updateDoc(
-      doc(
-        db,
-        "num",
-        "Processing",
-        additionalInfo?.processingPerson,
-        `${UniqueNum}`
-      ),
-      {
-        isDone: true,
-      }
-    );
-    updateDoc(
-      doc(db, "num", "Waiting", additionalInfo?.ownerMail, `${UniqueNum}`),
-      {
-        isDone: true,
-      }
-    );
-    updateDoc(doc(db, "num", "Processing", "foradmin", `${UniqueNum}`), {
-      isDone: true,
-    });
-    // onNewClassClose();
-    showToast();
-    onClose();
-  };
   let buttonShow = true;
   console.log(additionalInfo);
   if (additionalInfo?.processingPerson != null) buttonShow = false;
@@ -214,22 +51,19 @@ export default function Homeworks() {
           <Text fontWeight={"bold"}>
             Гүйцэтгэгч :{" "}
             <Text color={"pink.400"} display={"inline"}>
-              {additionalInfo?.ownerMail ?? "Одоохондоо алга"}
+              {additionalInfo?.ownerName ?? "Одоохондоо алга"}
             </Text>
           </Text>
           <Text fontWeight={"bold"}>
             Гүйцэтгэл :{" "}
             <Text color={"pink.400"} display={"inline"}>
-              {additionalInfo?.processingPerson &&
-                (additionalInfo?.isDone ? "Дууссан" : "Гүйцэтгэж байна.")}
+              Бэлэн
             </Text>
           </Text>
           <Text fontWeight={"bold"}>
             Төлбөр: {additionalInfo?.isPaid ? "Төлбөртэй" : "Үнэгүй"}
           </Text>
-          <Text fontWeight={"bold"}>
-            Эцсийн хугацаа : {additionalInfo?.lastestDate}
-          </Text>
+
           <Text fontWeight={"bold"}>
             Хичээлийн нэр : {additionalInfo?.class}
           </Text>
@@ -238,7 +72,7 @@ export default function Homeworks() {
           <Text>{additionalInfo?.additionalInfo}</Text>
 
           <Divider my={"3"} />
-          {additionalInfo?.isDone && (
+          {
             <Text
               fontFamily={"heading"}
               fontSize={"2xl"}
@@ -249,20 +83,20 @@ export default function Homeworks() {
               alignItems={"center"}
             >
               <Box mr={"2"} display={"inline"}>
-                {additionalInfo?.setU ? <FaUnlock /> : <FaLock />}
+                {<FaUnlock />}
               </Box>
               Даалгаврын{" "}
               <Text ml={"2"} color={"pink.400"}>
                 хариу
               </Text>
             </Text>
-          )}
+          }
           {additionalInfo?.isPaid || (
             <Box>
-              <Text>{fullInfo?.privateInfo}</Text>
+              <Text>{additionalInfo?.privateInfo}</Text>
               <Text as={"u"} _hover={{ color: "blue" }}>
-                <Link href={fullInfo?.privateLink} isExternal>
-                  LINK : {fullInfo?.privateLink}
+                <Link href={additionalInfo?.privateLink} isExternal>
+                  LINK : {additionalInfo?.privateLink}
                 </Link>
               </Text>
             </Box>
@@ -276,56 +110,6 @@ export default function Homeworks() {
           )} */}
         </Box>
       </Container>
-
-      <Modal size={"5xl"} isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>
-            <Box display={"flex"} alignItems="center">
-              <FaLock size={"20"} /> <Text ml={"3"}>Хариуг илгээх</Text>
-            </Box>
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            {/* <Box display={"flex"} justifyContent="space-between" my={"2"}>
-              <FaLock />
-            </Box> */}
-            <InputGroup mb={"2"}>
-              {/* <InputLeftElement children={<FaLock />} /> */}
-              <Textarea
-                isrequired="true"
-                height={"20vh"}
-                placeholder="Шаардлагатай зүйлсийг оруулна уу"
-                onChange={(e) => {
-                  setPrivateInfo(e.target.value);
-                }}
-              />
-            </InputGroup>
-            <InputGroup>
-              <InputLeftElement children={<FaLink />} />
-              <Input
-                mb={"3px"}
-                variant="outline"
-                placeholder="Зураг файлын линкыг оруулна уу "
-                onChange={(e) => {
-                  setPrivateLink(e.target.value);
-                }}
-              />
-            </InputGroup>
-          </ModalBody>
-
-          <ModalFooter>
-            <Button
-              color={"white"}
-              backgroundColor={"pink.400"}
-              mr={3}
-              onClick={writeDoneWork}
-            >
-              ИЛГЭЭХ
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
     </Layout>
   );
 }

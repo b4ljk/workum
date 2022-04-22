@@ -23,6 +23,7 @@ import Registerpage from "../pages/Registerpage";
 import ResetPasswordPage from "../pages/ResetPasswordPage";
 import TestPage from "../pages/TestPage";
 import { collection, query, onSnapshot, doc } from "firebase/firestore";
+import PaidReady from "../pages/Paidready";
 
 export default function AppRouter(props) {
   return (
@@ -35,6 +36,7 @@ export default function AppRouter(props) {
           <ProtectedRoute exact path="/profile" component={Profilepage} />
           <ProtectedRoute exact path="/test" component={TestPage} />
           <Route exact path="/homeworks" component={Homeworks} />
+          <Route exact path="/paidready" component={PaidReady} />
           <ProtectedRoute exact path="/ordered" component={Ordered} />
           <ProtectedRoute exact path="/ready" component={Ready} />
           <AdminRoute exact path="/admin" component={AdminPanel} />

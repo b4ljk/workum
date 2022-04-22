@@ -92,13 +92,12 @@ export default function Ready() {
         class: Class,
         price: price,
         additionalInfo: additionalInfo,
-        privateInfo: privateInfo,
-        privateLink: privateLink,
         photo: currentUser.photoURL,
         ownerName: currentUser.displayName,
         uniqueId: generatedId,
         teacher: teacher,
         isPaid: true,
+        setU: false,
       });
       setDoc(doc(db, "num", "numedu", "Private", `${generatedId}`), {
         privateInfo: privateInfo,
@@ -108,6 +107,7 @@ export default function Ready() {
         title: title,
         class: Class,
         price: price,
+        setU: false,
         additionalInfo: additionalInfo,
         privateInfo: privateInfo,
         privateLink: privateLink,
