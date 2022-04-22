@@ -170,7 +170,7 @@ export default function AdminPanel() {
     <Box>
       <Navbar />
       <TableContainer>
-        <Table variant="striped" size={"lg"}>
+        <Table variant="striped" size="md">
           <TableCaption>Admin panel</TableCaption>
           <Thead>
             <Tr>
