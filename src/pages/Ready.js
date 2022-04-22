@@ -47,6 +47,7 @@ export default function Ready() {
   const [additionalInfo, setAdditionalInfo] = useState();
   const [privateInfo, setPrivateInfo] = useState();
   const [privateLink, setPrivateLink] = useState();
+  const [ActiveButton, SetActiveButton] = useState(1);
   const { isOpen, onOpen, onClose } = useDisclosure();
   console.log(currentUser.photoURL);
   const showToast = () => {
@@ -112,6 +113,29 @@ export default function Ready() {
         </Text>
         <Button onClick={onOpen} color={"pink.400"}>
           <FaPlus />
+        </Button>
+      </Box>
+      <Box maxW={"xl"} display={"flex"}>
+        <Button
+          bg={ActiveButton === 1 ? "pink.400" : "whiteAlpha.100"}
+          flex={"1"}
+          mr={"2"}
+          _hover={{ bg: "pink.400" }}
+          onClick={() => {
+            SetActiveButton(1);
+          }}
+        >
+          Үнэгүй
+        </Button>
+        <Button
+          bg={ActiveButton === 2 ? "pink.400" : "whiteAlpha.100"}
+          _hover={{ bg: "pink.400" }}
+          flex={"1"}
+          onClick={() => {
+            SetActiveButton(2);
+          }}
+        >
+          Үнэтэй
         </Button>
       </Box>
       <Box>
