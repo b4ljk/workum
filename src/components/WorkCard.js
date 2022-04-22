@@ -77,7 +77,7 @@ export const WorkCard = (props) => {
             </Text>
           </Box>
           <Box>
-            <Text>2022.12.12</Text>
+            <Text>{props.timestamp}</Text>
           </Box>
         </Box>
       </LinkOverlay>

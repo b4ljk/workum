@@ -44,6 +44,7 @@ import {
   collection,
   query,
   onSnapshot,
+  serverTimestamp,
 } from "firebase/firestore";
 export default function Ready() {
   const toast = useToast();
@@ -77,6 +78,7 @@ export default function Ready() {
         title: title,
         class: Class,
         price: price,
+        timestamp: serverTimestamp(),
         additionalInfo: additionalInfo,
         privateInfo: privateInfo,
         privateLink: privateLink,
@@ -91,6 +93,7 @@ export default function Ready() {
         title: title,
         class: Class,
         price: price,
+        timestamp: serverTimestamp(),
         additionalInfo: additionalInfo,
         photo: currentUser.photoURL,
         ownerName: currentUser.displayName,
@@ -108,6 +111,7 @@ export default function Ready() {
         class: Class,
         price: price,
         setU: false,
+        timestamp: serverTimestamp(),
         additionalInfo: additionalInfo,
         privateInfo: privateInfo,
         privateLink: privateLink,
@@ -146,7 +150,14 @@ export default function Ready() {
 
   console.log(freeData);
   const freeWorks = freeData?.map((ready) => {
-    console.log(ready.isPaid);
+    ready.timestamp?.toDate();
+    const year = new Date(ready.timestamp?.seconds * 1000)
+      .getFullYear()
+      .toString();
+    let month = new Date(ready.timestamp?.seconds * 1000).getMonth().toString();
+    const days = new Date(ready.timestamp?.seconds * 1000).getDate().toString();
+    month = parseInt(month) + 1;
+
     return (
       <WorkCard
         key={ready.uniqueId}
@@ -161,10 +172,18 @@ export default function Ready() {
         uniqueId={ready.uniqueId}
         teacher={ready.teacher}
         isPaid={ready.isPaid}
+        timestamp={year + "-" + month + "-" + days}
       />
     );
   });
   const paidWork = paidData?.map((ready) => {
+    ready.timestamp?.toDate();
+    const year = new Date(ready.timestamp?.seconds * 1000)
+      .getFullYear()
+      .toString();
+    let month = new Date(ready.timestamp?.seconds * 1000).getMonth().toString();
+    const days = new Date(ready.timestamp?.seconds * 1000).getDate().toString();
+    month = parseInt(month) + 1;
     return (
       <WorkCard
         key={ready.uniqueId}
@@ -179,6 +198,7 @@ export default function Ready() {
         uniqueId={ready.uniqueId}
         teacher={ready.teacher}
         isPaid={ready.isPaid}
+        timestamp={year + "-" + month + "-" + days}
       />
     );
   });
