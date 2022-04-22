@@ -84,6 +84,7 @@ export default function Ready() {
         ownerName: currentUser.displayName,
         uniqueId: generatedId,
         teacher: teacher,
+        isPaid: false,
       });
     } else {
       setDoc(doc(db, "num", "ready", "paidclass", `${generatedId}`), {
@@ -97,6 +98,26 @@ export default function Ready() {
         ownerName: currentUser.displayName,
         uniqueId: generatedId,
         teacher: teacher,
+        isPaid: true,
+      });
+      setDoc(doc(db, "num", "numedu", "Private", `${generatedId}`), {
+        privateInfo: privateInfo,
+        privateLink: privateLink,
+      });
+      setDoc(doc(db, "num", "readyforadmin", `foradmin`, `${generatedId}`), {
+        title: title,
+        class: Class,
+        price: price,
+        additionalInfo: additionalInfo,
+        privateInfo: privateInfo,
+        privateLink: privateLink,
+        photo: currentUser.photoURL,
+        ownerName: currentUser.displayName,
+        uniqueId: generatedId,
+        teacher: teacher,
+        isPaid: true,
+        privateInfo: privateInfo,
+        privateLink: privateLink,
       });
     }
     // onNewClassClose();
@@ -125,6 +146,7 @@ export default function Ready() {
 
   console.log(freeData);
   const freeWorks = freeData?.map((ready) => {
+    console.log(ready.isPaid);
     return (
       <WorkCard
         key={ready.uniqueId}
@@ -138,6 +160,7 @@ export default function Ready() {
         ownerName={ready.ownerName}
         uniqueId={ready.uniqueId}
         teacher={ready.teacher}
+        isPaid={ready.isPaid}
       />
     );
   });
@@ -155,6 +178,7 @@ export default function Ready() {
         ownerName={ready.ownerName}
         uniqueId={ready.uniqueId}
         teacher={ready.teacher}
+        isPaid={ready.isPaid}
       />
     );
   });

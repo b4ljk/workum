@@ -22,7 +22,10 @@ export const WorkCard = (props) => {
       w={{ md: "xl", base: "100%" }}
       mt="5"
     >
-      <LinkOverlay as={ReachLink} to={"homeworks?uniqueid=" + props.uniqueId}>
+      <LinkOverlay
+        as={ReachLink}
+        to={"homeworks?uniqueid=" + props.uniqueId + "&type=" + props.isPaid}
+      >
         <Box display="flex" flexDir={{ md: "row", base: "column" }}>
           <Box mr="5" flex="1">
             <Text fontWeight="bold" fontSize="2xl" py="2">

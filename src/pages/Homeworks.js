@@ -98,12 +98,20 @@ export default function Homeworks() {
   //   }
   // }, [additionalInfo?.setU]);
   useEffect(() => {
-    const q3 = query(doc(db, "num", "ready", "allclass", `${UniqueNum}`));
-    const unsub3 = onSnapshot(q3, (doc) => {
+    if (incomingType == "true") {
+      const q3 = query(doc(db, "num", "ready", "paidclass", `${UniqueNum}`));
+      const unsub3 = onSnapshot(q3, (doc) => {
+        setAdditionalInfo(doc.data());
+      });
+      return unsub3;
+    }
+    const q4 = query(doc(db, "num", "ready", "freeclass", `${UniqueNum}`));
+    const unsub4 = onSnapshot(q4, (doc) => {
       setAdditionalInfo(doc.data());
     });
-    return unsub3;
+    return unsub4;
   }, [currentUser?.email]);
+  console.log(additionalInfo);
   const sendReadyData = () => {
     updateDoc(
       doc(db, "num", "Waiting", `${additionalInfo?.ownerMail}`, `${UniqueNum}`),
@@ -217,7 +225,7 @@ export default function Homeworks() {
             </Text>
           </Text>
           <Text fontWeight={"bold"}>
-            Төлбөр: {additionalInfo?.setU ? "Төлсөн" : "Төлөөгүй"}
+            Төлбөр: {additionalInfo?.isPaid ? "Төлбөртэй" : "Үнэгүй"}
           </Text>
           <Text fontWeight={"bold"}>
             Эцсийн хугацаа : {additionalInfo?.lastestDate}
@@ -241,11 +249,7 @@ export default function Homeworks() {
               alignItems={"center"}
             >
               <Box mr={"2"} display={"inline"}>
-                {additionalInfo?.setU && additionalInfo?.isDone ? (
-                  <FaUnlock />
-                ) : (
-                  <FaLock />
-                )}
+                {additionalInfo?.setU ? <FaUnlock /> : <FaLock />}
               </Box>
               Даалгаврын{" "}
               <Text ml={"2"} color={"pink.400"}>
@@ -253,7 +257,7 @@ export default function Homeworks() {
               </Text>
             </Text>
           )}
-          {additionalInfo?.setU && (
+          {additionalInfo?.isPaid || (
             <Box>
               <Text>{fullInfo?.privateInfo}</Text>
               <Text as={"u"} _hover={{ color: "blue" }}>
@@ -264,12 +268,12 @@ export default function Homeworks() {
             </Box>
           )}
           {/* <FaExternalLinkAlt /> */}
-          {buttonShow && !(currentUser?.email == additionalInfo?.ownerMail) && (
+          {/* {buttonShow && !(currentUser?.email == additionalInfo?.ownerMail) && (
             <Button onClick={sendReadyData}>Энэ даалгаврыг хийх</Button>
-          )}
-          {currentUser?.email == additionalInfo?.processingPerson && (
+          )} */}
+          {/* {currentUser?.email == additionalInfo?.processingPerson && (
             <Button onClick={onOpen}>Даалгаврыг илгээх</Button>
-          )}
+          )} */}
         </Box>
       </Container>
 
