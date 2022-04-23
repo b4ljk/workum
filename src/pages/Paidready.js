@@ -133,7 +133,9 @@ export default function PaidReady() {
             </Text>
           </Text>
           <Text fontWeight={"bold"}>Төлбөр: {additionalInfo?.price}₮</Text>
-
+          <Text fontWeight={"bold"}>
+            Зарагдсан тоо: {additionalInfo?.allowedUsers.length}
+          </Text>
           <Text fontWeight={"bold"}>
             Хичээлийн нэр : {additionalInfo?.class}
           </Text>

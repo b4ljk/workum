@@ -60,7 +60,10 @@ export const WorkCard = (props) => {
                 {" "}
                 Нэмэлт тайлбар :{" "}
               </Text>
-              {props.additionalInfo?.slice(0, 30)}
+              {props.additionalInfo?.slice(0, 30)} . . .{" "}
+            </Text>
+            <Text fontWeight={"black"} as={"u"} color={"blue.400"}>
+              Цааш үзэх
             </Text>
           </Box>
         </Box>
