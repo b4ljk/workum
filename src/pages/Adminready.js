@@ -38,6 +38,7 @@ import {
   updateDoc,
   arrayUnion,
   deleteDoc,
+  arrayRemove,
 } from "firebase/firestore";
 import { useAuth } from "../contexts/AuthContext";
 import { FaTrash, FaCheck, FaDollarSign } from "react-icons/fa";
@@ -106,6 +107,9 @@ export default function AdminReady() {
   const Allowed = (props) => {
     updateDoc(doc(db, "num", "ready", `paidclass`, `${MyId}`), {
       allowedUsers: arrayUnion(props),
+    });
+    updateDoc(doc(db, "num", "readyforadmin", `foradmin`, `${MyId}`), {
+      requestedUsers: arrayRemove(props),
     });
     // updateDoc(
     //   doc(
