@@ -1,11 +1,4 @@
 import {
-  Badge,
-  chakra,
-  Code,
-  Heading,
-  List,
-  ListItem,
-  OrderedList,
   Box,
   Text,
   Button,
@@ -13,7 +6,6 @@ import {
   InputLeftElement,
   InputGroup,
   InputRightElement,
-  InputLeftAddon,
   Textarea,
   showToast,
   useToast,
@@ -38,7 +30,6 @@ import { FaPlus, FaLink, FaLock } from "react-icons/fa";
 import { db } from "../utils/init-firebase";
 import { useState, useEffect } from "react";
 import {
-  addDoc,
   setDoc,
   doc,
   collection,

@@ -1,9 +1,7 @@
 import {
   Container,
-  Heading,
   Text,
   Box,
-  Spacer,
   Button,
   useToast,
   Input,
@@ -13,7 +11,6 @@ import {
   InputLeftElement,
   Divider,
   Link,
-  Avatar,
 } from "@chakra-ui/react";
 import {
   Modal,
@@ -29,24 +26,15 @@ import React from "react";
 import { Layout } from "../components/Layout";
 import { useState, useEffect } from "react";
 import { FaExternalLinkAlt, FaLink, FaLock, FaUnlock } from "react-icons/fa";
-import {
-  BrowserRouter as Router,
-  useLocation,
-  useHistory,
-} from "react-router-dom";
+import { BrowserRouter as Router, useLocation } from "react-router-dom";
 import { db } from "../utils/init-firebase";
 import { useAuth } from "../contexts/AuthContext";
 import {
-  collection,
   query,
   onSnapshot,
-  addDoc,
   doc,
   updateDoc,
-  serverTimestamp,
   arrayUnion,
-  setDoc,
-  deleteDoc,
 } from "firebase/firestore";
 /////////////////////// ene huudsan deer setU adminaar hyanagdsan esehiig shalgana.----------------
 export default function PaidReady() {
@@ -54,7 +42,6 @@ export default function PaidReady() {
   const [IsIn, setIsIn] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [fullInfo, setFullInfo] = useState();
-  const history = useHistory();
   const toast = useToast();
   const showToast = () => {
     toast({
@@ -76,7 +63,6 @@ export default function PaidReady() {
   let myquery = useQuery();
   const [Payment, Setpayment] = useState(false);
   var UniqueNum = myquery.get("uniqueid");
-  var incomingType = myquery.get("type");
 
   useEffect(() => {
     for (let i = 0; i < additionalInfo?.allowedUsers.length; i++) {

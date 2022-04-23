@@ -14,7 +14,6 @@ import {
   Link,
   useDisclosure,
   Text,
-  color,
 } from "@chakra-ui/react";
 import {
   Modal,
@@ -26,7 +25,7 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 import React from "react";
-import { Layout } from "../components/Layout";
+
 import { Navbar } from "../components/Navbar";
 import { useState, useEffect } from "react";
 import { db } from "../utils/init-firebase";
@@ -37,14 +36,10 @@ import {
   doc,
   updateDoc,
 } from "firebase/firestore";
-import { useAuth } from "../contexts/AuthContext";
+
 import { FaTrash, FaCheck, FaDollarSign } from "react-icons/fa";
-import { Link as ReachLink } from "react-router-dom";
 
 export default function AdminPanel() {
-  var textlink, texttext;
-  var bataa = "sda";
-
   const {
     isOpen: isLinkOpen,
     onOpen: onLinkOpen,

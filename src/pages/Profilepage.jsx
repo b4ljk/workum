@@ -1,13 +1,4 @@
-import {
-  chakra,
-  Container,
-  Heading,
-  Box,
-  Text,
-  Avatar,
-  Divider,
-  Button,
-} from "@chakra-ui/react";
+import { Box, Text, Avatar, Divider, Button } from "@chakra-ui/react";
 import {
   Drawer,
   DrawerBody,
