@@ -60,7 +60,6 @@ export default function Ready() {
   const [paidData, setPaidData] = useState();
   const [teacher, setTeacher] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  console.log(currentUser.photoURL);
   const showToast = () => {
     toast({
       title: "Амжилттай",
@@ -152,7 +151,6 @@ export default function Ready() {
     return () => unsub, unsub1;
   }, []);
 
-  console.log(freeData);
   const freeWorks = freeData?.map((ready) => {
     ready.timestamp?.toDate();
     const year = new Date(ready.timestamp?.seconds * 1000)

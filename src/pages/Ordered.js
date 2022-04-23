@@ -50,8 +50,6 @@ import {
 import { v4 as uuidv4 } from "uuid";
 export default function Ordered() {
   const { orderData, readyData } = Data();
-  console.log("haha");
-  console.log(orderData);
   // console.log(readyData);
   const { currentUser } = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();

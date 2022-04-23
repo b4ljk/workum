@@ -29,10 +29,9 @@ export default function Homeworks() {
     });
     return unsub4;
   }, [currentUser?.email]);
-  console.log(additionalInfo);
 
   let buttonShow = true;
-  console.log(additionalInfo);
+
   if (additionalInfo?.processingPerson != null) buttonShow = false;
   return (
     <Layout>

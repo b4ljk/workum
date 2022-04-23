@@ -72,7 +72,7 @@ export default function HomworkOrder() {
     });
   };
   const [additionalInfo, setAdditionalInfo] = useState();
-  // console.log(additionalInfo);
+
   function useQuery() {
     const { search } = useLocation();
 

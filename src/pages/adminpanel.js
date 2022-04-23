@@ -65,8 +65,6 @@ export default function AdminPanel() {
     return unsub;
   }, []);
   const Paid = (props) => {
-    console.log(props.ownerMail);
-    console.log(props.uniqueid);
     updateDoc(
       doc(db, "num", "Waiting", `${props?.ownerMail}`, `${props?.uniqueid}`),
       {
