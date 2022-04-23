@@ -55,6 +55,7 @@ export default function Profilepage() {
     let month = new Date(value.timestamp?.seconds * 1000).getMonth().toString();
     const days = new Date(value.timestamp?.seconds * 1000).getDate().toString();
     month = parseInt(month) + 1;
+    //order by time
 
     return (
       <ProfileClientCard

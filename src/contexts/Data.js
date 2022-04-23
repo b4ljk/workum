@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { db } from "../utils/init-firebase";
-import { collection, query, onSnapshot } from "firebase/firestore";
+import { collection, query, onSnapshot, orderBy } from "firebase/firestore";
 import { useAuth } from "../contexts/AuthContext";
 
 export const Data = () => {
@@ -10,10 +10,17 @@ export const Data = () => {
   const [processingData, setprocessingData] = useState();
 
   useEffect(() => {
-    const q = query(collection(db, "num", "numedu", "Orders"));
-    const q2 = query(collection(db, "num", "Waiting", `${currentUser?.email}`));
+    const q = query(
+      collection(db, "num", "numedu", "Orders"),
+      orderBy("timestamp", "desc")
+    );
+    const q2 = query(
+      collection(db, "num", "Waiting", `${currentUser?.email}`),
+      orderBy("timestamp", "desc")
+    );
     const q3 = query(
-      collection(db, "num", "Processing", `${currentUser?.email}`)
+      collection(db, "num", "Processing", `${currentUser?.email}`),
+      orderBy("timestamp", "desc")
     );
     const unsub = onSnapshot(q, (querySnapshot) => {
       let tmpArray = [];

@@ -38,19 +38,19 @@ import { WorkCard } from "../components/WorkCard";
 import { useAuth } from "../contexts/AuthContext";
 import { FaPlus, FaLink, FaLock } from "react-icons/fa";
 import { db } from "../utils/init-firebase";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Data } from "../contexts/Data";
 import {
-  addDoc,
   setDoc,
   doc,
-  collection,
+  query,
+  onSnapshot,
   serverTimestamp,
+  updateDoc,
 } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 export default function Ordered() {
-  const { orderData, readyData } = Data();
-  // console.log(readyData);
+  const { orderData } = Data();
   const { currentUser } = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [title, setTitle] = useState();
@@ -59,7 +59,16 @@ export default function Ordered() {
   const [price, setPrice] = useState();
   const [date, setDate] = useState();
   const [additionalInfo, setAdditionalInfo] = useState();
+  const [currentDone, setCurrentDone] = useState();
   const toast = useToast();
+  var customcounter = currentDone?.Counter;
+  useEffect(() => {
+    const q3 = query(doc(db, "num", "counter"));
+    const unsub3 = onSnapshot(q3, (doc) => {
+      setCurrentDone(doc.data());
+    });
+    return unsub3;
+  }, []);
   const showToast = () => {
     toast({
       title: "Амжилттай",
@@ -101,11 +110,16 @@ export default function Ordered() {
         isDone: false,
       }
     );
+    customcounter++;
+    updateDoc(doc(db, "num", "counter"), {
+      Counter: customcounter,
+    });
     // onNewClassClose();
     onClose();
     showToast();
   };
   const orders = orderData?.map((value) => {
+    console.log(value.timestamp);
     value.timestamp?.toDate();
     const year = new Date(value.timestamp?.seconds * 1000)
       .getFullYear()
@@ -155,12 +169,15 @@ export default function Ordered() {
               хийлгэх
             </Text>
           </Text>
-          <Button onClick={onOpen} color={"pink.400"}>
+
+          <Button mr={5} onClick={onOpen} color={"pink.400"}>
             <FaPlus />
           </Button>
         </Box>
+        <Text mt={"-2"} color={"GrayText"} fontSize={"smaller"}>
+          Нийт хийлгэсэн : {customcounter}
+        </Text>
         <Box>{orders}</Box>
-
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
