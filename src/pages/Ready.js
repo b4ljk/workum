@@ -36,6 +36,7 @@ import {
   query,
   onSnapshot,
   serverTimestamp,
+  orderBy,
 } from "firebase/firestore";
 export default function Ready() {
   const toast = useToast();
@@ -123,8 +124,14 @@ export default function Ready() {
     showToast();
   };
   useEffect(() => {
-    const q = query(collection(db, "num", "ready", "freeclass"));
-    const q1 = query(collection(db, "num", "ready", "paidclass"));
+    const q = query(
+      collection(db, "num", "ready", "freeclass"),
+      orderBy("timestamp", "desc")
+    );
+    const q1 = query(
+      collection(db, "num", "ready", "paidclass"),
+      orderBy("timestamp", "desc")
+    );
     const unsub = onSnapshot(q, (querySnapshot) => {
       let tmpArray = [];
       querySnapshot.forEach((doc) => {

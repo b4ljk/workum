@@ -35,6 +35,7 @@ import {
   onSnapshot,
   doc,
   updateDoc,
+  orderBy,
 } from "firebase/firestore";
 
 import { FaTrash, FaCheck, FaDollarSign } from "react-icons/fa";
@@ -49,7 +50,10 @@ export default function AdminPanel() {
   const [privateInfo1, setPrivateInfo1] = useState();
   const [privateLink1, setPrivateLink1] = useState();
   useEffect(() => {
-    const q = query(collection(db, "num", "Processing", "foradmin"));
+    const q = query(
+      collection(db, "num", "Processing", "foradmin"),
+      orderBy("timestamp", "desc")
+    );
     const unsub = onSnapshot(q, (querySnapshot) => {
       let tmpArray = [];
       querySnapshot.forEach((doc) => {

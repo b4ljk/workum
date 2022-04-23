@@ -38,6 +38,7 @@ import {
   updateDoc,
   arrayUnion,
   deleteDoc,
+  orderBy,
   arrayRemove,
 } from "firebase/firestore";
 import { useAuth } from "../contexts/AuthContext";
@@ -62,7 +63,10 @@ export default function AdminReady() {
   const [MyId, setMyId] = useState();
 
   useEffect(() => {
-    const q = query(collection(db, "num", "readyforadmin", "foradmin"));
+    const q = query(
+      collection(db, "num", "readyforadmin", "foradmin"),
+      orderBy("timestamp", "desc")
+    );
     const unsub = onSnapshot(q, (querySnapshot) => {
       let tmpArray = [];
       querySnapshot.forEach((doc) => {
