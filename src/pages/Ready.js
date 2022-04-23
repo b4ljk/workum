@@ -101,8 +101,9 @@ export default function Ready() {
         teacher: teacher,
         isPaid: true,
         setU: false,
+        allowedUsers: [],
       });
-      setDoc(doc(db, "num", "numedu", "Private", `${generatedId}`), {
+      setDoc(doc(db, "num", "privateReadyClass", "Private", `${generatedId}`), {
         privateInfo: privateInfo,
         privateLink: privateLink,
       });
@@ -117,11 +118,14 @@ export default function Ready() {
         privateLink: privateLink,
         photo: currentUser.photoURL,
         ownerName: currentUser.displayName,
+        ownerMail: currentUser.email,
         uniqueId: generatedId,
         teacher: teacher,
         isPaid: true,
         privateInfo: privateInfo,
         privateLink: privateLink,
+        allowedUsers: [],
+        requestedUsers: [],
       });
     }
     // onNewClassClose();

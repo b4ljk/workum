@@ -48,22 +48,17 @@ import {
   setDoc,
   deleteDoc,
 } from "firebase/firestore";
-
+/////////////////////// ene huudsan deer setU adminaar hyanagdsan esehiig shalgana.----------------
 export default function PaidReady() {
-  const [title, setTitle] = useState();
   const { currentUser } = useAuth();
-  const [moreInfo, setMoreInfo] = useState();
-  const [Class, setClass] = useState();
-  const [price, setPrice] = useState();
-  const [privateInfo, setPrivateInfo] = useState();
-  const [privateLink, setPrivateLink] = useState();
+  const [IsIn, setIsIn] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [fullInfo, setFullInfo] = useState();
   const history = useHistory();
   const toast = useToast();
   const showToast = () => {
     toast({
-      title: "Амжилттай",
+      title: "Амжилттай хүсэлтийг илгээлээ",
       status: "success",
       duration: 3000,
       isClosable: true,
@@ -72,7 +67,7 @@ export default function PaidReady() {
     });
   };
   const [additionalInfo, setAdditionalInfo] = useState();
-  // console.log(additionalInfo);
+
   function useQuery() {
     const { search } = useLocation();
 
@@ -82,21 +77,22 @@ export default function PaidReady() {
   const [Payment, Setpayment] = useState(false);
   var UniqueNum = myquery.get("uniqueid");
   var incomingType = myquery.get("type");
-  // if(incomingType=="Waiting"){
-  //   var dataOwnerMail=additionalInfo.ownerMail;
-  //   var dataProcessorMail=additionalInfo.ownerMail;
-  // }else if(incomingType=="Processing"){ }
 
   useEffect(() => {
-    if (additionalInfo?.setU == true) {
-      const q4 = query(doc(db, "num", "numedu", "Private", `${UniqueNum}`));
-      const unsub4 = onSnapshot(q4, (doc) => {
-        setFullInfo(doc.data());
-      });
-      return unsub4;
+    for (let i = 0; i < additionalInfo?.allowedUsers.length; i++) {
+      if (additionalInfo?.allowedUsers[i] == currentUser?.uid) {
+        setIsIn(true);
+        const q4 = query(
+          doc(db, "num", "privateReadyClass", "Private", `${UniqueNum}`)
+        );
+        const unsub4 = onSnapshot(q4, (doc) => {
+          setFullInfo(doc.data());
+        });
+        return unsub4;
+      }
     }
   }, [additionalInfo?.setU]);
-  console.log(fullInfo);
+
   useEffect(() => {
     const q3 = query(doc(db, "num", "ready", "paidclass", `${UniqueNum}`));
     const unsub3 = onSnapshot(q3, (doc) => {
@@ -104,11 +100,12 @@ export default function PaidReady() {
     });
     return unsub3;
   }, []);
-
-  //   console.log(additionalInfo);
-
-  let buttonShow = true;
-  if (additionalInfo?.processingPerson != null) buttonShow = false;
+  const buyRequest = () => {
+    updateDoc(doc(db, "num", "readyforadmin", `foradmin`, `${UniqueNum}`), {
+      requestedUsers: arrayUnion(currentUser?.uid),
+    });
+    showToast();
+  };
   return (
     <Layout>
       <Container maxW="container.md" py={3}>
@@ -126,22 +123,17 @@ export default function PaidReady() {
           <Text fontWeight={"bold"}>
             Гүйцэтгэгч :{" "}
             <Text color={"pink.400"} display={"inline"}>
-              {additionalInfo?.ownerMail ?? "Одоохондоо алга"}
+              {additionalInfo?.ownerName ?? "Нууцалсан"}
             </Text>
           </Text>
           <Text fontWeight={"bold"}>
             Гүйцэтгэл :{" "}
             <Text color={"pink.400"} display={"inline"}>
-              {additionalInfo?.processingPerson &&
-                (additionalInfo?.isDone ? "Дууссан" : "Гүйцэтгэж байна.")}
+              Бэлэн
             </Text>
           </Text>
-          <Text fontWeight={"bold"}>
-            Төлбөр: {additionalInfo?.isPaid ? "Төлбөртэй" : "Үнэгүй"}
-          </Text>
-          <Text fontWeight={"bold"}>
-            Эцсийн хугацаа : {additionalInfo?.lastestDate}
-          </Text>
+          <Text fontWeight={"bold"}>Төлбөр: {additionalInfo?.price}₮</Text>
+
           <Text fontWeight={"bold"}>
             Хичээлийн нэр : {additionalInfo?.class}
           </Text>
@@ -150,7 +142,7 @@ export default function PaidReady() {
           <Text>{additionalInfo?.additionalInfo}</Text>
 
           <Divider my={"3"} />
-          {additionalInfo?.isDone && (
+          {additionalInfo?.setU && (
             <Text
               fontFamily={"heading"}
               fontSize={"2xl"}
@@ -161,7 +153,7 @@ export default function PaidReady() {
               alignItems={"center"}
             >
               <Box mr={"2"} display={"inline"}>
-                {additionalInfo?.isPaid ? <FaUnlock /> : <FaLock />}
+                {IsIn ? <FaUnlock /> : <FaLock />}
               </Box>
               Даалгаврын{" "}
               <Text ml={"2"} color={"pink.400"}>
@@ -169,7 +161,7 @@ export default function PaidReady() {
               </Text>
             </Text>
           )}
-          {additionalInfo?.isPaid || (
+          {IsIn && (
             <Box>
               <Text>{fullInfo?.privateInfo}</Text>
               <Text as={"u"} _hover={{ color: "blue" }}>
@@ -180,8 +172,12 @@ export default function PaidReady() {
             </Box>
           )}
 
-          {buttonShow && !(currentUser?.email == additionalInfo?.ownerMail) && (
-            <Button>Энэ даалгаврыг авах</Button>
+          {additionalInfo?.setU ? (
+            <Button onClick={buyRequest}>Энэ даалгаврыг авах</Button>
+          ) : (
+            <Text fontSize={"3xl"} fontWeight={"black"} alignSelf={"center"}>
+              Хянагдаж байна.
+            </Text>
           )}
           {/* {currentUser?.email == additionalInfo?.processingPerson && (
               <Button onClick={onOpen}>Даалгаврыг илгээх</Button>
@@ -208,9 +204,7 @@ export default function PaidReady() {
                 isrequired="true"
                 height={"20vh"}
                 placeholder="Шаардлагатай зүйлсийг оруулна уу"
-                onChange={(e) => {
-                  setPrivateInfo(e.target.value);
-                }}
+                onChange={(e) => {}}
               />
             </InputGroup>
             <InputGroup>
@@ -219,9 +213,7 @@ export default function PaidReady() {
                 mb={"3px"}
                 variant="outline"
                 placeholder="Зураг файлын линкыг оруулна уу "
-                onChange={(e) => {
-                  setPrivateLink(e.target.value);
-                }}
+                onChange={(e) => {}}
               />
             </InputGroup>
           </ModalBody>
