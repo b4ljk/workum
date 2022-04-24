@@ -59,6 +59,7 @@ export default function AdminReady() {
   const [processingData, setprocessingData] = useState();
   const [privateInfo1, setPrivateInfo1] = useState();
   const [privateLink1, setPrivateLink1] = useState();
+  const [dansinfo, setdansinfo] = useState();
   const [Requests, setRequests] = useState();
   const [MyId, setMyId] = useState();
 
@@ -110,6 +111,9 @@ export default function AdminReady() {
   };
   const Allowed = (props) => {
     updateDoc(doc(db, "num", "ready", `paidclass`, `${MyId}`), {
+      allowedUsers: arrayUnion(props),
+    });
+    updateDoc(doc(db, "num", "readyforadmin", `foradmin`, `${MyId}`), {
       allowedUsers: arrayUnion(props),
     });
     updateDoc(doc(db, "num", "readyforadmin", `foradmin`, `${MyId}`), {
@@ -179,6 +183,8 @@ export default function AdminReady() {
     return (
       <Tr color={colorfordone ?? ""}>
         <Td>{value.ownerMail}</Td>
+        <Td>{value.allowedUsers.length}</Td>
+        <Td>{value.uniqueId}</Td>
         <Td>{value.price}</Td>
         <Td>{`${value.setU}`}</Td>
         <Td>
@@ -187,6 +193,7 @@ export default function AdminReady() {
               onLinkOpen();
               setPrivateInfo1(value.privateInfo);
               setPrivateLink1(value.privateLink);
+              setdansinfo(value.dansInfo);
             }}
           >{`${value.privateInfo?.slice(0, 15)}`}</Button>
         </Td>
@@ -196,6 +203,7 @@ export default function AdminReady() {
               onLinkOpen();
               setPrivateInfo1(value.privateInfo);
               setPrivateLink1(value.privateLink);
+              setdansinfo(value.dansInfo);
             }}
           >{`${value.privateLink?.slice(0, 15)}`}</Button>
         </Td>
@@ -244,6 +252,7 @@ export default function AdminReady() {
           <ModalHeader>Мэдээлэл</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
+            <Text>Данс : {dansinfo}</Text>
             <Text>{privateInfo1}</Text>
             <Button>
               <Link href={privateLink1} isExternal>
@@ -296,6 +305,8 @@ export default function AdminReady() {
           <Thead>
             <Tr>
               <Th>Эзэмшигч</Th>
+              <Th>Зарагдсан тоо</Th>
+              <Th>uniqueid</Th>
               <Th>ҮНэ</Th>
               <Th>Баталгаажсан</Th>
               <Th>Нууц</Th>

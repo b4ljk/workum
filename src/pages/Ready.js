@@ -47,6 +47,7 @@ export default function Ready() {
   const [additionalInfo, setAdditionalInfo] = useState();
   const [privateInfo, setPrivateInfo] = useState();
   const [privateLink, setPrivateLink] = useState();
+  const [dansInfo, setdansInfo] = useState();
   const [ActiveButton, SetActiveButton] = useState(1);
   const [freeData, setFreeData] = useState();
   const [paidData, setPaidData] = useState();
@@ -97,6 +98,7 @@ export default function Ready() {
       setDoc(doc(db, "num", "privateReadyClass", "Private", `${generatedId}`), {
         privateInfo: privateInfo,
         privateLink: privateLink,
+        dansInfo: dansInfo,
       });
       setDoc(doc(db, "num", "readyforadmin", `foradmin`, `${generatedId}`), {
         title: title,
@@ -117,6 +119,7 @@ export default function Ready() {
         privateLink: privateLink,
         allowedUsers: [],
         requestedUsers: [],
+        dansInfo: dansInfo,
       });
     }
     // onNewClassClose();
@@ -330,6 +333,19 @@ export default function Ready() {
                 }}
               />
             </InputGroup>
+            <Input
+              mb={"3px"}
+              variant="outline"
+              placeholder="Дансны дугаар аль банк гэдгээ оруулна уу  "
+              onChange={(e) => {
+                setdansInfo(e.target.value);
+              }}
+            />
+            <Text>
+              Тухайн өдрийн төгсгөлд худалдан авалт бүрийн мөнгө таны дансруу
+              шилжинэ. Та худалдан авсан тоог тухайн даалгаврын мэдээлэл хэсгээс
+              орж харж болно.
+            </Text>
           </ModalBody>
 
           <ModalFooter>

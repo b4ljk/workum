@@ -58,6 +58,7 @@ export default function HomworkOrder() {
   const [price, setPrice] = useState();
   const [privateInfo, setPrivateInfo] = useState();
   const [privateLink, setPrivateLink] = useState();
+  const [dansInfo, setdansInfo] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [fullInfo, setFullInfo] = useState();
   const history = useHistory();
@@ -170,10 +171,12 @@ export default function HomworkOrder() {
     setDoc(doc(db, "num", "numedu", "Private", `${UniqueNum}`), {
       privateInfo: privateInfo,
       privateLink: privateLink,
+      dansInfo: dansInfo,
     });
     updateDoc(doc(db, "num", "Processing", "foradmin", `${UniqueNum}`), {
       privateInfo: privateInfo,
       privateLink: privateLink,
+      dansInfo: dansInfo,
     });
 
     updateDoc(
@@ -329,6 +332,19 @@ export default function HomworkOrder() {
                 }}
               />
             </InputGroup>
+            <Input
+              mb={"3px"}
+              variant="outline"
+              placeholder="Дансны дугаар аль банк гэдгээ оруулна уу  "
+              onChange={(e) => {
+                setdansInfo(e.target.value);
+              }}
+            />
+
+            <Text>
+              Таны мөнгө даалгавраа явуулснаас 20 минутаас 2 цагын дотор таны
+              дансанд байршина.
+            </Text>
           </ModalBody>
 
           <ModalFooter>

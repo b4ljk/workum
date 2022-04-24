@@ -49,6 +49,7 @@ export default function AdminPanel() {
   const [processingData, setprocessingData] = useState();
   const [privateInfo1, setPrivateInfo1] = useState();
   const [privateLink1, setPrivateLink1] = useState();
+  const [dansinfo, setdansinfo] = useState();
   useEffect(() => {
     const q = query(
       collection(db, "num", "Processing", "foradmin"),
@@ -96,6 +97,7 @@ export default function AdminPanel() {
       <Tr color={colorfordone ?? ""}>
         <Td>{value.ownerMail}</Td>
         <Td>{value.processingPerson}</Td>
+        <Td>{value.uniqueid}</Td>
         <Td>{value.price}</Td>
         <Td>{`${value.isDone}`}</Td>
         <Td>{`${value.setU}`}</Td>
@@ -105,6 +107,7 @@ export default function AdminPanel() {
               onLinkOpen();
               setPrivateInfo1(value.privateInfo);
               setPrivateLink1(value.privateLink);
+              setdansinfo(value.dansInfo);
             }}
           >{`${value.privateInfo?.slice(0, 15)}`}</Button>
         </Td>
@@ -114,6 +117,7 @@ export default function AdminPanel() {
               onLinkOpen();
               setPrivateInfo1(value.privateInfo);
               setPrivateLink1(value.privateLink);
+              setdansinfo(value.dansInfo);
             }}
           >{`${value.privateLink?.slice(0, 15)}`}</Button>
         </Td>
@@ -150,6 +154,7 @@ export default function AdminPanel() {
           <ModalHeader>Мэдээлэл</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
+            <Text>Данс : {dansinfo}</Text>
             <Text>{privateInfo1}</Text>
             <Button>
               <Link href={privateLink1} isExternal>
@@ -173,6 +178,7 @@ export default function AdminPanel() {
             <Tr>
               <Th>Эзэмшигч</Th>
               <Th>Хэрэгжүүлэгч</Th>
+              <Th>uniqueId</Th>
               <Th>ҮНэ</Th>
               <Th>хэрэгжүүлэлт</Th>
               <Th>Төлбөр</Th>
