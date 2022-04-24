@@ -27,8 +27,8 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { Layout } from "../components/Layout";
-import { useState, useEffect } from "react";
 import { FaExternalLinkAlt, FaLink, FaLock, FaUnlock } from "react-icons/fa";
+import { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   useLocation,
@@ -48,6 +48,7 @@ import {
   setDoc,
   deleteDoc,
 } from "firebase/firestore";
+import PaymentButton from "../components/PaymentButton";
 
 export default function HomworkOrder() {
   const [title, setTitle] = useState();
@@ -244,6 +245,12 @@ export default function HomworkOrder() {
           <Text>{additionalInfo?.additionalInfo}</Text>
 
           <Divider my={"3"} />
+          {additionalInfo?.ownerMail == currentUser?.email && (
+            <PaymentButton
+              utga={additionalInfo?.ownerMail}
+              dun={additionalInfo?.price}
+            />
+          )}
           {additionalInfo?.isDone && (
             <Text
               fontFamily={"heading"}

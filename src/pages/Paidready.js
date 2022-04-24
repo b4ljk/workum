@@ -11,6 +11,7 @@ import {
   InputLeftElement,
   Divider,
   Link,
+  Flex,
 } from "@chakra-ui/react";
 import {
   Modal,
@@ -36,6 +37,7 @@ import {
   updateDoc,
   arrayUnion,
 } from "firebase/firestore";
+import PaymentButton from "../components/PaymentButton";
 /////////////////////// ene huudsan deer setU adminaar hyanagdsan esehiig shalgana.----------------
 export default function PaidReady() {
   const { currentUser } = useAuth();
@@ -161,7 +163,15 @@ export default function PaidReady() {
           )}
 
           {additionalInfo?.setU ? (
-            <Button onClick={buyRequest}>Энэ даалгаврыг авах</Button>
+            <Flex flexDir={"column"}>
+              <Button mb={"2"} onClick={buyRequest}>
+                Энэ даалгаврыг авах
+              </Button>
+              <PaymentButton
+                utga={currentUser?.uid + " " + UniqueNum}
+                dun={additionalInfo?.price}
+              />
+            </Flex>
           ) : (
             <Text fontSize={"3xl"} fontWeight={"black"} alignSelf={"center"}>
               Хянагдаж байна.
