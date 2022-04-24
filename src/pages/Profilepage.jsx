@@ -118,10 +118,21 @@ export default function Profilepage() {
         </Box>
         <Divider my="3" />
         <Box display={"flex"} alignItems={"center"}>
-          <Button flex={1} mr={"3"} onClick={handleActive} bg={buttonBg}>
+          <Button
+            _hover={{ bg: "pink.400" }}
+            flex={1}
+            mr={"3"}
+            onClick={handleActive}
+            bg={buttonBg}
+          >
             Миний захиалсан
           </Button>
-          <Button flex={1} bg={buttonBg2} onClick={handleActive2}>
+          <Button
+            _hover={{ bg: "pink.400" }}
+            flex={1}
+            bg={buttonBg2}
+            onClick={handleActive2}
+          >
             Миний хийж буй
           </Button>
         </Box>

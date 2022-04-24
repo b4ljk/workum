@@ -21,11 +21,17 @@ import { WorkCard } from "../components/WorkCard";
 import { useAuth } from "../contexts/AuthContext";
 import { useState } from "react";
 import { FaCheck, FaBook, FaBookMedical } from "react-icons/fa";
+import SmallWithLogoLeft from "../components/Footer";
 export default function Homepage() {
   const { logout, currentUser } = useAuth();
   const { colorMode, toggleColorMode } = useColorMode();
   return (
-    <Box>
+    <Box
+      height={"100vh"}
+      display="flex"
+      flexDir={"column"}
+      justifyContent="space-between"
+    >
       {colorMode === "light" ? (
         <Box
           w="100%"
@@ -35,7 +41,7 @@ export default function Homepage() {
           bgGradient="linear(to-bl, blue.100, secondary, pink.100, blue.100)"
         />
       ) : (
-        <Box></Box>
+        <Box w="100%" h="100vh" position={"absolute"} zIndex={"-1"}></Box>
       )}
       <Layout>
         <Box
@@ -149,6 +155,8 @@ export default function Homepage() {
         </Button>
       </Box> */}
       </Layout>
+
+      <SmallWithLogoLeft />
     </Box>
   );
 }

@@ -69,9 +69,9 @@ export function Navbar() {
                   <FaCog size={"24"} />
                 </MenuButton>
                 <MenuList>
-                  <MenuItem as={Navlink} to="/profile" name="профайл" />
+                  <MenuItem as={Navlink} to="/profile" name="Захиалга" />
                   <MenuDivider />
-                  <MenuItem as={Navlink} to="/ordered" name="Даалгавар" />
+                  <MenuItem as={Navlink} to="/ordered" name="Захиалах" />
                   <MenuDivider />
                   <MenuItem
                     as={Navlink}
