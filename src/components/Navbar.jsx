@@ -73,6 +73,8 @@ export function Navbar() {
                   <MenuDivider />
                   <MenuItem as={Navlink} to="/ordered" name="Захиалах" />
                   <MenuDivider />
+                  <MenuItem as={Navlink} to="/aboutus" name="About us" />
+                  <MenuDivider />
                   <MenuItem
                     as={Navlink}
                     to="/logout"
