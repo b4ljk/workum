@@ -250,7 +250,7 @@ export default function HomworkOrder() {
           <Divider my={"3"} />
           {additionalInfo?.ownerMail == currentUser?.email && (
             <PaymentButton
-              utga={additionalInfo?.ownerMail}
+              utga={additionalInfo?.ownerMail + " " + UniqueNum}
               dun={additionalInfo?.price}
             />
           )}
