@@ -350,6 +350,15 @@ export default function Ready() {
 
           <ModalFooter>
             <Button
+              disabled={
+                !title ||
+                !Class ||
+                !teacher ||
+                !price ||
+                !privateInfo ||
+                !privateLink ||
+                !dansInfo
+              }
               color={"white"}
               backgroundColor={"pink.400"}
               mr={3}
