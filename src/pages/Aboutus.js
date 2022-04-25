@@ -31,6 +31,13 @@ export default function AboutUs() {
           <Text color={"gray.500"} fontSize="18px" mt={-3} mb={2}>
             workum.me
           </Text>
+          <Text>
+            This website will not work from now on because some people hate it
+            so much they say it's illegal and immoral.
+          </Text>
+          <Text color={"red"} mb={6}>
+            rip dis site :)))
+          </Text>
           <Text mb={6}>
             Энэхүү сайтын гол зорилго нь оюутнууд хоорондоо даалгавраа
             аюулгүйгээр солилцож нэгэндээ бага ч гэсэн дэм болоход нь туслах

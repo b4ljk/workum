@@ -72,7 +72,7 @@ export default function SmallWithLogoLeft() {
         align={{ base: "center", md: "center" }}
       >
         {/* <Logo /> */}
-        <Text>Made with ❤️ for fellow students</Text>
+        <Text>Made with ❤️ by b4ljk</Text>
         <Stack direction={"row"} spacing={6}>
           <SocialButton
             label={"Twitter"}
