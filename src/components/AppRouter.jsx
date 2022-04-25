@@ -26,6 +26,7 @@ import { collection, query, onSnapshot, doc } from "firebase/firestore";
 import PaidReady from "../pages/Paidready";
 import AdminReady from "../pages/Adminready";
 import AboutUs from "../pages/Aboutus";
+import Zaavar from "../pages/Zaavar";
 
 export default function AppRouter(props) {
   return (
@@ -40,6 +41,7 @@ export default function AppRouter(props) {
           <Route exact path="/homeworks" component={Homeworks} />
           <Route exact path="/paidready" component={PaidReady} />
           <Route exact path="/aboutus" component={AboutUs} />
+          <Route exact path="/zaavar" component={Zaavar} />
           <ProtectedRoute exact path="/ordered" component={Ordered} />
           <ProtectedRoute exact path="/ready" component={Ready} />
           <AdminRoute exact path="/admin" component={AdminPanel} />

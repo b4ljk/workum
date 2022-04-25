@@ -119,7 +119,7 @@ export default function Homepage() {
                   color="white"
                   bg={"pink.400"}
                 >
-                  Даалгавраа хийлгэх
+                  Даалгавраа хийлгэх/хийх
                 </Button>
               </Link>
             ) : (
@@ -139,7 +139,7 @@ export default function Homepage() {
                     color="white"
                     bg={"pink.400"}
                   >
-                    Даалгавраа хийлгэх
+                    Даалгавраа хийлгэх/хийх
                   </Button>
                 </Link>
               </Tooltip>
