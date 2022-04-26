@@ -165,13 +165,18 @@ export default function HomworkOrder() {
       processingPerson: currentUser?.email,
       processingPersonProfile: currentUser?.photoURL,
     });
+    setDoc(doc(db, "num", "numedu", "Private", `${UniqueNum}`), {
+      privateInfo: "123",
+      privateLink: "123",
+      dansInfo: "123",
+    });
     deleteDoc(doc(db, "num", "numedu", "Orders", `${UniqueNum}`));
     history.push(`/homeworkorder?uniqueid=${UniqueNum}&type=Processing`);
     // onNewClassClose();
     showToast();
   };
   const writeDoneWork = () => {
-    setDoc(doc(db, "num", "numedu", "Private", `${UniqueNum}`), {
+    updateDoc(doc(db, "num", "numedu", "Private", `${UniqueNum}`), {
       privateInfo: privateInfo,
       privateLink: privateLink,
       dansInfo: dansInfo,
@@ -308,7 +313,10 @@ export default function HomworkOrder() {
               <Button mb={"2"} onClick={onOpen}>
                 Даалгаврыг илгээх
               </Button>
-              <FilesUploader UniqueNum={UniqueNum} />
+              <FilesUploader
+                UniqueNum={UniqueNum}
+                additionalInfo={additionalInfo}
+              />
             </Box>
           )}
         </Box>

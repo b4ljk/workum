@@ -19,8 +19,7 @@ import {
 import { doc, updateDoc } from "firebase/firestore";
 import { FaFileUpload, FaCloudUploadAlt } from "react-icons/fa";
 import { v4 as uuidv4 } from "uuid";
-export default function FilesUploader({ UniqueNum }) {
-  const generatedId1 = uuidv4();
+export default function FilesUploader({ UniqueNum, additionalInfo }) {
   const toast = useToast();
   const showToast = () => {
     toast({
@@ -52,7 +51,10 @@ export default function FilesUploader({ UniqueNum }) {
   const uploadFiles = (file) => {
     //
     if (!file) return;
-    const sotrageRef = ref(storage, `files/${generatedId1 + file.name}`);
+    const sotrageRef = ref(
+      storage,
+      `${additionalInfo?.ownerMail}/${file.name}`
+    );
     const uploadTask = uploadBytesResumable(sotrageRef, file);
 
     uploadTask.on(
@@ -77,6 +79,33 @@ export default function FilesUploader({ UniqueNum }) {
           });
           updateDoc(doc(db, "num", "Processing", "foradmin", `${UniqueNum}`), {
             url: downloadURL,
+          });
+          updateDoc(
+            doc(
+              db,
+              "num",
+              "Processing",
+              additionalInfo?.processingPerson,
+              `${UniqueNum}`
+            ),
+            {
+              isDone: true,
+            }
+          );
+          updateDoc(
+            doc(
+              db,
+              "num",
+              "Waiting",
+              additionalInfo?.ownerMail,
+              `${UniqueNum}`
+            ),
+            {
+              isDone: true,
+            }
+          );
+          updateDoc(doc(db, "num", "Processing", "foradmin", `${UniqueNum}`), {
+            isDone: true,
           });
         });
       }
