@@ -19,6 +19,7 @@ import {
 import { doc, updateDoc } from "firebase/firestore";
 import { FaFileUpload, FaCloudUploadAlt } from "react-icons/fa";
 import { v4 as uuidv4 } from "uuid";
+import { Tooltip } from "@chakra-ui/react";
 export default function FilesUploader({ UniqueNum, additionalInfo }) {
   const toast = useToast();
   const showToast = () => {
@@ -117,12 +118,14 @@ export default function FilesUploader({ UniqueNum, additionalInfo }) {
       <form id="idiot" onSubmit={formHandler}>
         <Box display={"flex"} flexDir={{ md: "row", base: "column" }}>
           <Input mr={"1"} mb="1" flex={"1"} type="file" />
-          <Button type="submit">
-            Нэмэлт файл-г илгээх
-            <Box ml={"2"}>
-              <FaCloudUploadAlt size={"20"} />
-            </Box>
-          </Button>
+          <Tooltip label="3MB хүртэл хэмжээтэй зөвхөн нэг файл оруулна уу!">
+            <Button type="submit">
+              Оруулсан файл-г илгээх
+              <Box ml={"2"}>
+                <FaCloudUploadAlt size={"20"} />
+              </Box>
+            </Button>
+          </Tooltip>
         </Box>
         <Progress
           borderRadius={"3"}

@@ -14,6 +14,7 @@ import {
   Divider,
   Link,
   Avatar,
+  Flex,
 } from "@chakra-ui/react";
 import {
   Modal,
@@ -25,10 +26,21 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverAnchor,
+} from "@chakra-ui/react";
 import React from "react";
 import { Layout } from "../components/Layout";
 import {
-  FaExternalLinkAlt,
+  FaTrash,
   FaLink,
   FaLock,
   FaUnlock,
@@ -122,7 +134,21 @@ export default function HomworkOrder() {
       return unsub4;
     }
   }, [additionalInfo?.setU]);
-
+  const deleteAll = () => {
+    deleteDoc(
+      doc(db, "num", "Waiting", `${additionalInfo?.ownerMail}`, `${UniqueNum}`)
+    );
+    deleteDoc(
+      doc(
+        db,
+        "num",
+        "Processing",
+        `${additionalInfo?.processingPerson}`,
+        `${UniqueNum}`
+      )
+    );
+    deleteDoc(doc(db, "num", "Processing", `foradmin`, `${UniqueNum}`));
+  };
   const sendReadyData = () => {
     updateDoc(
       doc(db, "num", "Waiting", `${additionalInfo?.ownerMail}`, `${UniqueNum}`),
@@ -213,12 +239,47 @@ export default function HomworkOrder() {
     onClose();
   };
   let buttonShow = true;
-
+  const UserAllowed = () => {
+    updateDoc(
+      doc(
+        db,
+        "num",
+        "Waiting",
+        `${additionalInfo?.ownerMail}`,
+        `${additionalInfo?.uniqueid}`
+      ),
+      {
+        setU: true,
+      }
+    );
+    updateDoc(
+      doc(
+        db,
+        "num",
+        "Processing",
+        `${additionalInfo?.processingPerson}`,
+        `${additionalInfo?.uniqueid}`
+      ),
+      {
+        setU: true,
+      }
+    );
+    updateDoc(
+      doc(db, "num", "Processing", `foradmin`, `${additionalInfo?.uniqueid}`),
+      {
+        setU: true,
+      }
+    );
+  };
   if (additionalInfo?.processingPerson != null) buttonShow = false;
   return (
     <Layout>
       <Container maxW="container.md" py={3}>
-        <Box display={"flex"} alignItems="center">
+        <Box
+          display={"flex"}
+          justifyContent="space-between"
+          alignItems="center"
+        >
           <Text
             fontWeight={"black"}
             fontFamily={"heading"}
@@ -251,11 +312,110 @@ export default function HomworkOrder() {
           <Text fontWeight={"bold"}>
             Хичээлийн нэр : {additionalInfo?.class}
           </Text>
+          {currentUser?.email == additionalInfo?.ownerMail && (
+            <Popover>
+              <PopoverTrigger>
+                <Button
+                  display={"flex"}
+                  padding={"auto"}
+                  variant={"outline"}
+                  _hover={{ bg: "red.500" }}
+                >
+                  Устгах
+                  <Box ml={"2"} display={"inline"}>
+                    <FaTrash size={"20"} />{" "}
+                  </Box>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent>
+                <PopoverArrow />
+                <PopoverCloseButton />
+                <PopoverHeader>
+                  Та энэ даалгаврыг бүр мөсөн устгахдаа итгэлтэй байна уу ?
+                </PopoverHeader>
+                <PopoverBody>
+                  <Flex>
+                    <Button onClick={deleteAll} bg={"red.500"} mr="2">
+                      Тийм
+                    </Button>
+                    <Button>Үгүй</Button>
+                  </Flex>
+                </PopoverBody>
+              </PopoverContent>
+            </Popover>
+          )}
+          {currentUser?.email == additionalInfo?.processingPerson && (
+            <Flex flexDir={{ md: "row", base: "column" }}>
+              <Popover>
+                <PopoverTrigger>
+                  <Button
+                    display={"flex"}
+                    padding={"auto"}
+                    colorScheme="red"
+                    variant={"outline"}
+                    _hover={{ bg: "red.500" }}
+                    mr="2"
+                  >
+                    Устгах
+                    <Box ml={"2"} display={"inline"}>
+                      <FaTrash size={"20"} />{" "}
+                    </Box>
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent>
+                  <PopoverArrow />
+                  <PopoverCloseButton />
+                  <PopoverHeader>
+                    Та энэ даалгаврыг бүр мөсөн устгахдаа итгэлтэй байна уу ?
+                  </PopoverHeader>
+                  <PopoverBody>
+                    <Flex>
+                      <Button onClick={deleteAll} bg={"red.500"} mr="2">
+                        Тийм
+                      </Button>
+                      <Button>Үгүй</Button>
+                    </Flex>
+                  </PopoverBody>
+                </PopoverContent>
+              </Popover>
+              <Popover>
+                <PopoverTrigger>
+                  <Button
+                    display={"flex"}
+                    padding={"auto"}
+                    mr="2"
+                    _hover={{ bg: "green.500" }}
+                  >
+                    Нууцалсан мэдээллийг харуулах
+                    <Box ml={"2"} display={"inline"}>
+                      <FaUnlock size={"20"} />{" "}
+                    </Box>
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent>
+                  <PopoverArrow />
+                  <PopoverCloseButton />
+                  <PopoverHeader>
+                    Энэ нь буцаах боломжгүй үйлдэл бөгөөд хэрэглэгч таны
+                    нууцалсан мэдээллийг харж чадна та итгэлтэй байна уу?
+                  </PopoverHeader>
+                  <PopoverBody>
+                    <Flex>
+                      <Button onClick={UserAllowed} bg={"green.500"} mr="2">
+                        Тийм
+                      </Button>
+                      <Button>Үгүй</Button>
+                    </Flex>
+                  </PopoverBody>
+                </PopoverContent>
+              </Popover>
+            </Flex>
+          )}
 
           <Divider my={"3"} />
           <Text>{additionalInfo?.additionalInfo}</Text>
 
-          <Divider my={"3"} />
+          <Divider bg={"green.500"} my={"3"} />
           {additionalInfo?.ownerMail == currentUser?.email && (
             <PaymentButton
               utga={additionalInfo?.ownerMail + " " + UniqueNum}
