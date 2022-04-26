@@ -27,7 +27,13 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { Layout } from "../components/Layout";
-import { FaExternalLinkAlt, FaLink, FaLock, FaUnlock } from "react-icons/fa";
+import {
+  FaExternalLinkAlt,
+  FaLink,
+  FaLock,
+  FaUnlock,
+  FaCloudDownloadAlt,
+} from "react-icons/fa";
 import { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
@@ -49,13 +55,10 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import PaymentButton from "../components/PaymentButton";
+import FilesUploader from "../components/Filesuploader";
 
 export default function HomworkOrder() {
-  const [title, setTitle] = useState();
   const { currentUser } = useAuth();
-  const [moreInfo, setMoreInfo] = useState();
-  const [Class, setClass] = useState();
-  const [price, setPrice] = useState();
   const [privateInfo, setPrivateInfo] = useState();
   const [privateLink, setPrivateLink] = useState();
   const [dansInfo, setdansInfo] = useState();
@@ -278,13 +281,22 @@ export default function HomworkOrder() {
             </Text>
           )}
           {additionalInfo?.setU && (
-            <Box>
+            <Box display={"flex"} flexDir="column">
               <Text>{fullInfo?.privateInfo}</Text>
-              <Text as={"u"} _hover={{ color: "blue" }}>
+              <Text mb="2" as={"u"} _hover={{ color: "blue" }}>
                 <Link href={fullInfo?.privateLink} isExternal>
                   LINK : {fullInfo?.privateLink}
                 </Link>
               </Text>
+
+              {fullInfo?.url && (
+                <Button as={"a"} href={fullInfo?.url} mb={"2"}>
+                  Нэмэлт файл татах
+                  <Box ml={"2"}>
+                    <FaCloudDownloadAlt size={"20"} />
+                  </Box>
+                </Button>
+              )}
             </Box>
           )}
           {/* <FaExternalLinkAlt /> */}
@@ -292,7 +304,12 @@ export default function HomworkOrder() {
             <Button onClick={sendReadyData}>Энэ даалгаврыг хийх</Button>
           )}
           {currentUser?.email == additionalInfo?.processingPerson && (
-            <Button onClick={onOpen}>Даалгаврыг илгээх</Button>
+            <Box display={"flex"} flexDir="column">
+              <Button mb={"2"} onClick={onOpen}>
+                Даалгаврыг илгээх
+              </Button>
+              <FilesUploader UniqueNum={UniqueNum} />
+            </Box>
           )}
         </Box>
       </Container>
@@ -332,6 +349,7 @@ export default function HomworkOrder() {
                 }}
               />
             </InputGroup>
+
             <Input
               mb={"3px"}
               variant="outline"

@@ -26,7 +26,13 @@ import {
 import React from "react";
 import { Layout } from "../components/Layout";
 import { useState, useEffect } from "react";
-import { FaExternalLinkAlt, FaLink, FaLock, FaUnlock } from "react-icons/fa";
+import {
+  FaExternalLinkAlt,
+  FaLink,
+  FaLock,
+  FaUnlock,
+  FaCloudDownloadAlt,
+} from "react-icons/fa";
 import { BrowserRouter as Router, useLocation } from "react-router-dom";
 import { db } from "../utils/init-firebase";
 import { useAuth } from "../contexts/AuthContext";
@@ -159,6 +165,12 @@ export default function PaidReady() {
                   LINK : {fullInfo?.privateLink}
                 </Link>
               </Text>
+              <Button as={"a"} href={fullInfo?.url} mb={"2"}>
+                Нэмэлт файл татах
+                <Box ml={"2"}>
+                  <FaCloudDownloadAlt size={"20"} />
+                </Box>
+              </Button>
             </Box>
           )}
 

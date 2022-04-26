@@ -38,6 +38,7 @@ import {
   serverTimestamp,
   orderBy,
 } from "firebase/firestore";
+import FilesUploader from "../components/Filesuploader";
 export default function Ready() {
   const toast = useToast();
   const { currentUser } = useAuth();
@@ -51,6 +52,7 @@ export default function Ready() {
   const [ActiveButton, SetActiveButton] = useState(1);
   const [freeData, setFreeData] = useState();
   const [paidData, setPaidData] = useState();
+  const [FileIdUploader, setFileIdUploader] = useState();
   const [teacher, setTeacher] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const showToast = () => {
@@ -63,8 +65,10 @@ export default function Ready() {
       position: "top-right",
     });
   };
+
   const sendReadyData = () => {
     const generatedId = uuidv4();
+    setFileIdUploader(generatedId);
     if (price <= 500) {
       setDoc(doc(db, "num", "ready", "freeclass", `${generatedId}`), {
         title: title,
@@ -333,6 +337,7 @@ export default function Ready() {
                 }}
               />
             </InputGroup>
+            <FilesUploader UniqueNum={FileIdUploader} />
             <Input
               mb={"3px"}
               variant="outline"
