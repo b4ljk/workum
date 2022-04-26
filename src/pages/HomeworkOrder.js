@@ -334,11 +334,21 @@ export default function HomworkOrder() {
                   Та энэ даалгаврыг бүр мөсөн устгахдаа итгэлтэй байна уу ?
                 </PopoverHeader>
                 <PopoverBody>
-                  <Flex>
-                    <Button onClick={deleteAll} bg={"red.500"} mr="2">
+                  <Flex alignItems={"center"}>
+                    <Button
+                      variant="unstyled"
+                      onClick={deleteAll}
+                      bg={"red.500"}
+                    >
                       Тийм
                     </Button>
-                    <Button>Үгүй</Button>
+                    <Button variant={"unstyled"} ml={"2"}>
+                      <PopoverCloseButton variant={"unstyled"}>
+                        <Button mt={2} fontSize={"15"}>
+                          Үгүй
+                        </Button>
+                      </PopoverCloseButton>
+                    </Button>
                   </Flex>
                 </PopoverBody>
               </PopoverContent>
@@ -373,7 +383,13 @@ export default function HomworkOrder() {
                       <Button onClick={deleteAll} bg={"red.500"} mr="2">
                         Тийм
                       </Button>
-                      <Button>Үгүй</Button>
+                      <Button variant={"unstyled"} ml={"2"}>
+                        <PopoverCloseButton variant={"unstyled"}>
+                          <Button mt={2} fontSize={"15"}>
+                            Үгүй
+                          </Button>
+                        </PopoverCloseButton>
+                      </Button>
                     </Flex>
                   </PopoverBody>
                 </PopoverContent>
