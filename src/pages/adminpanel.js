@@ -36,6 +36,7 @@ import {
   doc,
   updateDoc,
   orderBy,
+  deleteDoc,
 } from "firebase/firestore";
 
 import { FaTrash, FaCheck, FaDollarSign } from "react-icons/fa";
@@ -87,7 +88,21 @@ export default function AdminPanel() {
       setU: true,
     });
   };
-
+  const deleteAll = (props) => {
+    deleteDoc(
+      doc(db, "num", "Waiting", `${props?.ownerMail}`, `${props?.uniqueid}`)
+    );
+    deleteDoc(
+      doc(
+        db,
+        "num",
+        "Processing",
+        `${props?.processingPerson}`,
+        `${props?.uniqueid}`
+      )
+    );
+    deleteDoc(doc(db, "num", "Processing", `foradmin`, `${props?.uniqueid}`));
+  };
   const tabledata = processingData?.map((value) => {
     var colorfordone;
     if (value.setU === true) {
@@ -135,6 +150,9 @@ export default function AdminPanel() {
             <FaCheck />
           </Button>
           <Button
+            onClick={() => {
+              deleteAll(value);
+            }}
             borderWidth={"3px"}
             borderColor={"red.500"}
             rounded={"none"}
