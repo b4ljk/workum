@@ -33,7 +33,7 @@ export default function PaymentButton({ utga, dun }) {
               {" "}
               <Input
                 textAlign={"center"}
-                value={"ХаанБанк - 5042585802 - Бал...ям"}
+                value={"Coming soon ... page is under construction"}
                 isReadOnly
                 placeholder="Welcome"
               />
@@ -61,11 +61,7 @@ export default function PaymentButton({ utga, dun }) {
             <Text color="pink.400" fontWeight={"black"} fontSize={"xl"}>
               Дүн: {dun}{" "}
             </Text>
-            <Text>
-              Таны гүйлгээ хийгдэснээс 20 минутаас 2 цагийн дотор баталгаажих ба
-              даалгавартай холбоотой асуудал гарвал та тухайн өдрийн дотор
-              бидэнд мэдэгдэснээр мөнгөө буцаан авах юм.
-            </Text>
+            <Text></Text>
           </ModalBody>
 
           <ModalFooter>
