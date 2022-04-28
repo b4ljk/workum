@@ -1,11 +1,4 @@
 import {
-  Badge,
-  chakra,
-  Code,
-  Heading,
-  List,
-  ListItem,
-  OrderedList,
   Box,
   Text,
   Button,

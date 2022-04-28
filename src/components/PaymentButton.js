@@ -1,4 +1,4 @@
-import { Box, Heading, Text, Button, Link } from "@chakra-ui/react";
+import { Text, Button } from "@chakra-ui/react";
 
 import { FaFacebookF } from "react-icons/fa";
 import {

@@ -2,14 +2,12 @@ import {
   Box,
   chakra,
   Container,
-  Link,
   Stack,
   Text,
   useColorModeValue,
   VisuallyHidden,
 } from "@chakra-ui/react";
-import { FaInstagram, FaGithub, FaYoutube, FaFacebookF } from "react-icons/fa";
-import { ReactNode } from "react";
+import { FaInstagram, FaGithub, FaFacebookF } from "react-icons/fa";
 
 // const Logo = (props) => {
 //   return (

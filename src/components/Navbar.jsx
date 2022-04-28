@@ -9,22 +9,11 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
   MenuDivider,
   Button,
 } from "@chakra-ui/react";
 import React from "react";
-import {
-  FaMoon,
-  FaSun,
-  FaSignOutAlt,
-  FaUserCircle,
-  FaAngleDown,
-  FaCog,
-} from "react-icons/fa";
-import { CgProfile } from "react-icons/cg";
+import { FaMoon, FaSun, FaSignOutAlt, FaCog } from "react-icons/fa";
 import { useAuth } from "../contexts/AuthContext";
 import Navlink from "./Navlink";
 

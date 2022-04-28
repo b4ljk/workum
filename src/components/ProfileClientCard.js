@@ -1,15 +1,10 @@
 import {
   Box,
   Text,
-  Link,
-  Badge,
-  Grid,
   Avatar,
-  Button,
   LinkBox,
   LinkOverlay,
   Divider,
-  Flex,
 } from "@chakra-ui/react";
 import { useLocation, Link as ReachLink, useParams } from "react-router-dom";
 export const ProfileClientCard = (props) => {

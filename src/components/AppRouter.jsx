@@ -113,9 +113,6 @@ function AdminRoute(props) {
   }, []);
 
   const { currentUser } = useAuth();
-  const { path } = props;
-
-  const location = useLocation();
 
   useEffect(() => {
     for (let i = 0; i < adminData?.length; i++) {
