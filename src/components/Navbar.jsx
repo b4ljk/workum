@@ -62,9 +62,9 @@ export function Navbar() {
                   <MenuDivider />
                   <MenuItem as={Navlink} to="/ordered" name="Захиалах" />
                   <MenuDivider />
-                  <MenuItem as={Navlink} to="/aboutus" name="About us" />
+                  <MenuItem as={Navlink} to="/aboutus" name="Бидний тухай" />
                   <MenuDivider />
-                  <MenuItem as={Navlink} to="/zaavar" name="Zaavar" />
+                  <MenuItem as={Navlink} to="/zaavar" name="Заавар" />
                   <MenuDivider />
                   <MenuItem
                     as={Navlink}
