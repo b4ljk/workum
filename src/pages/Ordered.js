@@ -245,13 +245,13 @@ export default function Ordered() {
                   Нэмэх
                 </Button>
               ) : (
-                <Tooltip label="Бүх талбар бүрэн байх шаардлагатай .">
+                <Tooltip label="Бүх талбар бүрэн байх шаардлагатай.">
                   <Button
                     _hover={{
-                      bg: "red.500",
+                      bg: "pink.500",
                     }}
                     color={"white"}
-                    backgroundColor={"gray.300"}
+                    backgroundColor={"pink.400"}
                     mr={3}
                   >
                     Нэмэх

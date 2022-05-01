@@ -6,6 +6,7 @@ import {
   Switch,
   useLocation,
 } from "react-router-dom";
+import { Center, Spinner } from '@chakra-ui/react'
 import { db } from "../utils/init-firebase";
 import { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
@@ -71,6 +72,9 @@ function ProtectedRoute(props) {
 
   const location = useLocation();
 
+  if (currentUser === undefined)
+    return <Center height={'100vh'}><Spinner size={'xl'} /></Center>
+
   if (
     path === "/login" ||
     path === "/register" ||
@@ -123,9 +127,9 @@ function AdminRoute(props) {
     }
   }, [adminData]);
 
-  if (isAdmin == true) {
+  if (isAdmin === true) {
     return <Route {...props} />;
-  } else if (isAdmin == false && adminData) {
+  } else if (isAdmin === false && adminData) {
     return <Redirect to={"/profile"} />;
   }
 
