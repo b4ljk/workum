@@ -13,7 +13,6 @@ import {
   InputLeftElement,
   Divider,
   Link,
-  Avatar,
   Flex,
 } from "@chakra-ui/react";
 import {
