@@ -46,7 +46,7 @@ export default function AboutUs() {
             шингээн бүтээв.
           </Text>
           <Text mb={6}>
-            Зарим хүмүүс буруу зүйлыг хөхүүлэн
+            Зарим хүмүүс буруу зүйлыг хөхиүлэн
             <Text display={"inline"} color="gray.500">
 
               :))
