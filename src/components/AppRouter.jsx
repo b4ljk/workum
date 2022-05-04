@@ -6,7 +6,7 @@ import {
   Switch,
   useLocation,
 } from "react-router-dom";
-import { Center, Spinner } from '@chakra-ui/react'
+import { Center, Spinner } from "@chakra-ui/react";
 import { db } from "../utils/init-firebase";
 import { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
@@ -59,7 +59,7 @@ export default function AppRouter(props) {
             path="/reset-password"
             component={ResetPasswordPage}
           />
-          <Route exact path="*" component={NotfoundPage} />
+          <Route exact path="*" component={NotfoundPage} status={404} />
         </Switch>
       </Router>
     </>
@@ -73,7 +73,11 @@ function ProtectedRoute(props) {
   const location = useLocation();
 
   if (currentUser === undefined)
-    return <Center height={'100vh'}><Spinner size={'xl'} /></Center>
+    return (
+      <Center height={"100vh"}>
+        <Spinner size={"xl"} />
+      </Center>
+    );
 
   if (
     path === "/login" ||
